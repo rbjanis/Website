@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1532878225508.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "882797806",
+    "id" : "41A829B5",
+    "lastKnownWriteTime" : 1532878304,
+    "last_content_update" : 1532878304991,
+    "path" : "~/Box Sync/Rebecca/Website/data/config/widgets.toml",
+    "project_path" : "data/config/widgets.toml",
+    "properties" : {
+        "cursorPosition" : "4,7",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "toml"
+}

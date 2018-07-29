@@ -1,0 +1,9 @@
+]0;~/Box Sync/Rebecca/Website[?1034hRebeccas-MacBook-Pro-4:Website rbjanis$ [KRebeccas-MacBook-Pro-4:Website rbjanis$ hugo -v
+INFO 2018/07/29 16:25:39 Using config file: /Users/rbjanis/Box Sync/Rebecca/Website/config.toml
+[?25lBuilding sites … INFO 2018/07/29 16:25:39 syncing static files to /Users/rbjanis/Box Sync/Rebecca/Website/public/
+INFO 2018/07/29 16:25:39 found taxonomies: map[string]string{"author":"authors", "category":"categories", "series":"series", "tag":"tags"}
+INFO 2018/07/29 16:25:39 Alias "/docs/page/1/index.html" translated to "docs/page/1/index.html"
+INFO 2018/07/29 16:25:39 Alias "/tags/algolia/page/1/index.html" translated to "tags/algolia/page/1/index.html"
+INFO 2018/07/29 16:25:39 Alias "/tags/authors/page/1/index.html" translated to "tags/authors/page/1/index.html"
+ERROR 2018/07/29 16:25:39 Error while rendering "taxonomyTerm" in "authors/": template: taxonomy/author.terms.html:11:24: executing "taxonomy/author.terms.html" at <index $author $lang>: error calling index: index of untyped nil
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ 
