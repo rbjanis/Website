@@ -22,6 +22,15 @@ Graduate Research Assistant: The Center for Collegiate Mental Health, Fall 2014 
     </item>
     
     <item>
+      <title>Visualizations</title>
+      <link>/visualizations/</link>
+      <pubDate>Thu, 28 Sep 2017 08:00:00 +0600</pubDate>
+      
+      <guid>/visualizations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Pubs</title>
       <link>/pubs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -40,24 +49,6 @@ Castonguay, L.G., Janis, R.A., Youn, S., Xiao, H., McAleavey, A.A., Boswell, J.F
       <guid>/blog/first/</guid>
       <description>Test1 Test2
 load(&amp;quot;file&amp;quot;) # test3 plot(1:6, 1:6)  </description>
-    </item>
-    
-    <item>
-      <title>Hello World!</title>
-      <link>/blog/firstpost/</link>
-      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/firstpost/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Third</title>
-      <link>/blog/thirdpost/</link>
-      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/thirdpost/</guid>
-      <description>This is my third post!</description>
     </item>
     
     <item>
