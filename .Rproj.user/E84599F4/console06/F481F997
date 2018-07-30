@@ -34,4 +34,15 @@ INFO 2018/07/29 19:13:09 Alias "/page/page/1/index.html" translated to "page/pag
   Cleaned          |  0  
 
 Total in 143 ms
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ w[Kpwd
+/Users/rbjanis/Box Sync/Rebecca/Website
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ touch .gitignore
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ curl https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore -o ~ /.gitignore
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   402  100   402    0     0   2227      0 --:--:-- --:--:-- --:--:--  2576
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ ls
+Website.Rproj	config.toml	data		layouts		resources	themes
+archetypes	content		index.Rmd	public		static
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ touch .gitignore
 ]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ 
