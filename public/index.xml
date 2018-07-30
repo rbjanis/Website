@@ -52,6 +52,15 @@ load(&amp;quot;file&amp;quot;) # test3 plot(1:6, 1:6)  </description>
     </item>
     
     <item>
+      <title>Third</title>
+      <link>/blog/thirdpost/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/thirdpost/</guid>
+      <description>This is my third post!</description>
+    </item>
+    
+    <item>
       <title>Search</title>
       <link>/search/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
