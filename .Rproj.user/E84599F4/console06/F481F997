@@ -45,4 +45,6 @@ Total in 143 ms
 Website.Rproj	config.toml	data		layouts		resources	themes
 archetypes	content		index.Rmd	public		static
 ]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ touch .gitignore
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ hugo version [flags]
+Hugo Static Site Generator v0.45.1/extended darwin/amd64 BuildDate: unknown
 ]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ 
