@@ -47,4 +47,26 @@ archetypes	content		index.Rmd	public		static
 ]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ touch .gitignore
 ]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ hugo version [flags]
 Hugo Static Site Generator v0.45.1/extended darwin/amd64 BuildDate: unknown
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ hugo -v
+INFO 2018/07/30 08:32:31 Using config file: /Users/rbjanis/Box Sync/Rebecca/Website/config.toml
+[?25lBuilding sites … INFO 2018/07/30 08:32:31 syncing static files to /Users/rbjanis/Box Sync/Rebecca/Website/public/
+INFO 2018/07/30 08:32:31 found taxonomies: map[string]string{"category":"categories", "series":"series", "tag":"tags"}
+INFO 2018/07/30 08:32:31 Alias "/blog/page/1/index.html" translated to "blog/page/1/index.html"
+INFO 2018/07/30 08:32:31 Alias "/authors/page/1/index.html" translated to "authors/page/1/index.html"
+INFO 2018/07/30 08:32:31 Alias "/tags/config/page/1/index.html" translated to "tags/config/page/1/index.html"
+INFO 2018/07/30 08:32:31 Alias "/tags/og/page/1/index.html" translated to "tags/og/page/1/index.html"
+INFO 2018/07/30 08:32:31 Alias "/page/page/1/index.html" translated to "page/page/1/index.html"
+[?25h[K
+                   | EN  
++------------------+----+
+  Pages            | 26  
+  Paginator pages  |  0  
+  Non-page files   |  2  
+  Static files     | 32  
+  Processed images |  0  
+  Aliases          |  5  
+  Sitemaps         |  1  
+  Cleaned          |  0  
+
+Total in 125 ms
 ]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ 
