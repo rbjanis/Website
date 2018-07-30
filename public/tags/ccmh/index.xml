@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CCMH on THE WAY I R</title>
+    <link>/tags/ccmh/</link>
+    <description>Recent content in CCMH on THE WAY I R</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 29 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ccmh/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>First</title>
+      <link>/blog/first/</link>
+      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/first/</guid>
+      <description>Test1 Test2
+load(&amp;quot;file&amp;quot;) # test3 plot(1:6, 1:6)  </description>
+    </item>
+    
+  </channel>
+</rss>
