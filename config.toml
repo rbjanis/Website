@@ -26,7 +26,7 @@ description = "REBECCA JANIS"
 title404 = "Nothing's here!"
 
 [params.assets]
-favicon = "favicon.ico"
+favicon = "favicon navy.ico"
 customCSS = ["css/custom.css"]
 customJS = ["js/custom.js"]
 gopher = "" # used in 404 template ( Generator: https://gopherize.me )
@@ -52,8 +52,8 @@ hideMainMenu = false
 enable = true
 
 [params.widgets]
-sidebar = ["about","search","recent_posts", "taxonomy_cloud"]
-footer = ["social_menu"]
+sidebar = ["about","search","recent_posts", "taxonomy_cloud", "social_menu"]
+footer = []
 
 [params.opengraph.facebook]
 admins = [] # array of Facebook IDs
