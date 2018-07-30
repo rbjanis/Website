@@ -6,4 +6,32 @@ INFO 2018/07/29 16:25:39 Alias "/docs/page/1/index.html" translated to "docs/pag
 INFO 2018/07/29 16:25:39 Alias "/tags/algolia/page/1/index.html" translated to "tags/algolia/page/1/index.html"
 INFO 2018/07/29 16:25:39 Alias "/tags/authors/page/1/index.html" translated to "tags/authors/page/1/index.html"
 ERROR 2018/07/29 16:25:39 Error while rendering "taxonomyTerm" in "authors/": template: taxonomy/author.terms.html:11:24: executing "taxonomy/author.terms.html" at <index $author $lang>: error calling index: index of untyped nil
+hugo -v
+INFO 2018/07/29 19:02:47 Using config file: /Users/rbjanis/Box Sync/Rebecca/Website/config.toml
+[?25lBuilding sites … INFO 2018/07/29 19:02:47 syncing static files to /Users/rbjanis/Box Sync/Rebecca/Website/public/
+INFO 2018/07/29 19:02:47 found taxonomies: map[string]string{"category":"categories", "series":"series", "tag":"tags", "author":"authors"}
+INFO 2018/07/29 19:02:47 Alias "/blog/page/1/index.html" translated to "blog/page/1/index.html"
+ERROR 2018/07/29 19:02:47 Error while rendering "taxonomyTerm" in "authors/": template: taxonomy/author.terms.html:11:24: executing "taxonomy/author.terms.html" at <index $author $lang>: error calling index: index of untyped nil
+]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ hugo -v
+INFO 2018/07/29 19:13:09 Using config file: /Users/rbjanis/Box Sync/Rebecca/Website/config.toml
+[?25lBuilding sites … INFO 2018/07/29 19:13:09 syncing static files to /Users/rbjanis/Box Sync/Rebecca/Website/public/
+INFO 2018/07/29 19:13:09 found taxonomies: map[string]string{"category":"categories", "series":"series", "tag":"tags"}
+INFO 2018/07/29 19:13:09 Alias "/blog/page/1/index.html" translated to "blog/page/1/index.html"
+INFO 2018/07/29 19:13:09 Alias "/authors/page/1/index.html" translated to "authors/page/1/index.html"
+INFO 2018/07/29 19:13:09 Alias "/tags/config/page/1/index.html" translated to "tags/config/page/1/index.html"
+INFO 2018/07/29 19:13:09 Alias "/tags/og/page/1/index.html" translated to "tags/og/page/1/index.html"
+INFO 2018/07/29 19:13:09 Alias "/page/page/1/index.html" translated to "page/page/1/index.html"
+[?25h[K
+                   | EN  
++------------------+----+
+  Pages            | 26  
+  Paginator pages  |  0  
+  Non-page files   |  3  
+  Static files     | 29  
+  Processed images |  0  
+  Aliases          |  5  
+  Sitemaps         |  1  
+  Cleaned          |  0  
+
+Total in 143 ms
 ]0;~/Box Sync/Rebecca/WebsiteRebeccas-MacBook-Pro-4:Website rbjanis$ 

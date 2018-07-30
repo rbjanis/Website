@@ -6,60 +6,58 @@ slug: Resume
 menu: main
 weight: -230
 ---
-Here is a paragraph. **Lorem ipsum _dolor_ sit amet**, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+## EXPERIENCE
 
-## Heading 2
+**Data Analyst**: The Center for Collegiate Mental Health, Fall 2018 -- present
 
-Another one. Ut enim ad minim veniam, _quis nostrud exercitation **ullamco** laboris nisi ut aliquip ex ea commodo consequat_. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+**Graduate Research Assistant**: The Center for Collegiate Mental Health, Fall 2014 -- Summer 2018  
 
-{{% center %}}
-### Heading 3
+- Managed large databases of longitudinal psychotherapy data from 700,000+ clients and 200+ college counseling centers, including data merging and cleaning.
+- Converted data management, analysis and reporting system from SPSS to R, making data processes more efficient and reproducible.
+- Created annual reports distilling quantitative data on college student mental health to primary stakeholders.
+Produced and prepared data for standardized reporting templates and online reporting platforms, allowing 200+ counseling centers to view key metrics from their local data
+- Prepared data for an online reporting platform accessible to outside parties.
+- Consulted with outside researchers to provide data and analyses to answer research questions.
+- Conducted independent research, including building statistical models from psychotherapy data to generate clinically relevant prediction systems: Client recovery trajectories, client risk of suicide attempts, client resource utilization.  
 
-Yet another, but centered! Excepteur sint occaecat ~~cupidatat non proident, sunt in culpa qui officia~~ deserunt mollit anim id est laborum.
-{{% /center %}}
+**Research Assistant**: Brigham Young University, Winter 2013 -- Summer 2014
 
-#### Heading 4
+- Conducted analyses to confirm the factor structure of a group psychotherapy measure using multilevel structural equation modeling, allowing for its implementation in clinical settings.
+- Coded, managed, and analyzed data for two meta-analyses comparing individual to group psychotherapy.
+- Analyzed data for a trial of an inpatient wellness program, resulting in optimized treatment delivery.
+- Authored a methodological publication on performing multilevel confirmatory factor analysis.  
 
-1. First item
-2. Second item
-  - Nested unordered item
-3. Third item
-  1. Nested ordered item 1
-  2. Nested ordered item 2
+**Data Analyst**: Counseling and Career Center, Brigham Young University, Summer 2012 -- Summer 2014
 
-##### Heading 5
-
-Where are the quotes!!!
-
-> Simplify, then add lightness.  
-— Colin Chapman
-
-Now, [time for some links](/typography#heading-5)!
-
-- [GoHugo]
- - [Hugo Themes][1]
-
-[GoHugo]: https://gohugo.io
-[1]: https://themes.gohugo.io/
-
-###### Heading 6
-
-Inline code: `echo "What is the meaning of life?"`. Who knows?
-
-```javascript
-// Codeblock
-
-var meaningOfLife = 42;
-console.log('The meaning of life is: ', meaningOfLife);
-```
+- Managed a longitudinal database of psychotherapy outcome data from 3,000+ clients per year and integrated this data with other academic databases.
+- Conducted analyses with faculty to answer research questions that improved clinical practice.
+- Generated a predictive equation for psychotherapy treatment failure based on client data.  
 
 ---
 
-Who wants some table?
+## TECHNICAL SKILLS
 
-  Minimo  |  Caption  | More Caption
- -------- | --------- | ------------
-   Cool   |   What?   |  Now, wut?!
+**Software and Programming Languages**: R, SPSS, Tableau, SAS, Mplus, Stata, SQL, Excel
 
+**Statistical Methods**: general linear modeling, mixed effects modeling, multivariate analyses, structural equation modeling, Bayesian estimation, meta-analysis, data mining, data visualization
 
-Ah, enough for today, eh?
+---
+
+## AWARDS
+
+Marty Murphy Award for excellence - Penn State Psychology Department 2017
+
+Psychotherapy Most Valuable Paper (MVP) Award 2016
+
+- “Outcome Differences Between Individual and Group Formats When Identical and Nonidentical Treatments, Patients, and Doses Are Compared: A 25-Year Meta-Analytic Perspective”
+
+Pennsylvania State University Clinical Psychology Graduate Scholar Award 2014
+
+---
+
+## EDUCATION
+Ph.D. Clinical Psychology- Pennsylvania State University Expected 2021
+
+M.S. Psychology- Pennsylvania State University 2017
+
+B.S. Psychology- Brigham Young University 2014
