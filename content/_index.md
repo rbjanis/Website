@@ -5,7 +5,7 @@ menu:
   - sidebar
 weight: -270
 ---
-I am currently a fifth year graduate student in the clinical psychology doctoral program at Penn State and hope to attain a data science position after graduating.  I recently attained my MS degree on the way to my PhD.  Currently, I work as a  data analyst for [The Center for Collegiate Mental Health (CCMH)](www.ccmh.psu.edu), a network of 400+ college counseling centers collecting  standardized data on college students seeking mental health treatment.  My current research focuses on statistical methods  for analyzing longitudinal psychotherapy outcome data and the prediction of psychotherapy outcomes. 
+I am currently a fifth year graduate student in the clinical psychology doctoral program at Penn State and hope to attain a data science position after graduating.  I recently attained my MS degree on the way to my PhD.  Currently, I work as a  data analyst for [The Center for Collegiate Mental Health (CCMH)](www.ccmh.psu.edu), a network of 500+ college counseling centers collecting  standardized data on college students seeking mental health treatment.  My current research focuses on statistical methods for analyzing longitudinal psychotherapy outcome data and the prediction of psychotherapy outcomes. 
 
 Much of my time is spent playing with data in R, both for my research and for fun. I enjoy visualizations, tidy data, and  knitting Rmarkdown documents. This blog is a way for me to consolidate and share things I learn in R.  On my blog, you can  check out some projects I've done, as well as a gallery of some of the visualizations I've created. You can also find a list of my publications and my resume. Enjoy!
 

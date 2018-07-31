@@ -14,7 +14,6 @@ Test2
 load("file")
 ```
 
-
 ```{r}
 # test3
 plot(1:6, 1:6)
