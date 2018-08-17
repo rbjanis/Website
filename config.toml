@@ -1,4 +1,4 @@
-baseURL = "http://www.thewayIR.com"
+baseURL = "https://www.thewayIR.com"
 title = "THE WAY I R"
 # for smart copyright line, leave this blank and check [params.copyright]
 copyright = ""
