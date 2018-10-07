@@ -8,9 +8,9 @@ weight: -230
 ---
 ## EXPERIENCE
 
-**Data Analyst**: The Center for Collegiate Mental Health, Fall 2018 -- present
+**Data Analyst**: The Center for Collegiate Mental Health, August 2018 -- present
 
-**Graduate Research Assistant**: The Center for Collegiate Mental Health, Fall 2014 -- Summer 2018  
+**Graduate Research Assistant**: The Center for Collegiate Mental Health, August 2014 -- August 2018  
 
 - Managed large databases of longitudinal psychotherapy data from 700,000+ clients and 200+ college counseling centers, including data merging and cleaning.
 - Converted data management, analysis and reporting system from SPSS to R, making data processes more efficient and reproducible.
