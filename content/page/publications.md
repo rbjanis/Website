@@ -1,9 +1,11 @@
----
+  ---
 title: Pubs
 description: Publications
 menu: main
 weight: -210
 ---
+
+Lefevor, G.T., **Janis, R.A.**, Fraklin, A., Stone, & W.M. (in press). Initial distress and change through therapy among transgender and gender non-conforming racial and ethnic minorities. The Counseling Psychologist.
 
 **Janis, R.A.**, Burlingame, G.M. & Olsen, J.A. (2018). Developing a therapeutic relationship monitoring system for group treatment. *Psychotherapy, 55*(2), 105-115.
 
