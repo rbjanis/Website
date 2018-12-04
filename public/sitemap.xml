@@ -9,6 +9,7 @@
   
   <url>
     <loc>/blog/</loc>
+    <lastmod>2018-12-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -23,6 +24,16 @@
   
   <url>
     <loc>/pubs/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/batch-rmarkdown/</loc>
+    <lastmod>2018-12-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/multilevel-modeling/</loc>
+    <lastmod>2018-12-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>

@@ -5,9 +5,28 @@
     <link>/blog/</link>
     <description>Recent content in Blog Posts on THE WAY I R</description>
     <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 04 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Batch Producing Rmarkdown documents</title>
+      <link>/blog/batch-rmarkdown/</link>
+      <pubDate>Tue, 04 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/batch-rmarkdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Multilevel Modeling</title>
+      <link>/blog/multilevel-modeling/</link>
+      <pubDate>Tue, 04 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/multilevel-modeling/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
