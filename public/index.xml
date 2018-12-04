@@ -16,8 +16,8 @@
       <pubDate>Thu, 28 Sep 2017 08:00:00 +0600</pubDate>
       
       <guid>/resume/</guid>
-      <description>EXPERIENCE Data Analyst: The Center for Collegiate Mental Health, Fall 2018 &amp;ndash; present
-Graduate Research Assistant: The Center for Collegiate Mental Health, Fall 2014 &amp;ndash; Summer 2018
+      <description>EXPERIENCE Data Analyst: The Center for Collegiate Mental Health, August 2018 &amp;ndash; present
+Graduate Research Assistant: The Center for Collegiate Mental Health, August 2014 &amp;ndash; August 2018
  Managed large databases of longitudinal psychotherapy data from 700,000+ clients and 200+ college counseling centers, including data merging and cleaning. Converted data management, analysis and reporting system from SPSS to R, making data processes more efficient and reproducible. Created annual reports distilling quantitative data on college student mental health to primary stakeholders.</description>
     </item>
     
@@ -28,9 +28,7 @@ Graduate Research Assistant: The Center for Collegiate Mental Health, Fall 2014 
       
       <guid>/visualizations/</guid>
       <description>2017 CCMH Annual Report
-Code
-2017 CCMH Annual Report
-Code</description>
+2017 CCMH Annual Report</description>
     </item>
     
     <item>
@@ -39,9 +37,18 @@ Code</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/pubs/</guid>
-      <description>Janis, R.A., Burlingame, G.M. &amp;amp; Olsen, J.A. (2018). Developing a therapeutic relationship monitoring system for group treatment. Psychotherapy, 55(2), 105-115.
-Erekson, D.M., Janis, R.A., Bailey, R.J., Cattani, K., &amp;amp; Pedersen, T.R. (2017). A Longitudinal Investigation of the Impact of Psychotherapist Experience: Does Therapist Experience Improve Client Outcomes? Journal of Counseling Psychology, 64(5), 514-524.
-Castonguay, L.G., Janis, R.A., Youn, S., Xiao, H., McAleavey, A.A., Boswell, J.F., Carney, D., Boutselis, M., Braver, M.</description>
+      <description>Lefevor, G.T., Janis, R.A., Fraklin, A., Stone, &amp;amp; W.M. (in press). Initial distress and change through therapy among transgender and gender non-conforming racial and ethnic minorities. The Counseling Psychologist.
+Janis, R.A., Burlingame, G.M. &amp;amp; Olsen, J.A. (2018). Developing a therapeutic relationship monitoring system for group treatment. Psychotherapy, 55(2), 105-115.
+Erekson, D.M., Janis, R.A., Bailey, R.J., Cattani, K., &amp;amp; Pedersen, T.R. (2017). A Longitudinal Investigation of the Impact of Psychotherapist Experience: Does Therapist Experience Improve Client Outcomes?</description>
+    </item>
+    
+    <item>
+      <title>Concerns over time</title>
+      <link>/post/concerns-over-time/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/concerns-over-time/</guid>
+      <description>library(ggplot2) ggplot(Data, aes(x = Year, y = Percentage, col = factor(Concern), group=factor(Concern))) + geom_line(size = 1) + geom_point(size = 1.5) + ylab(&amp;quot;Percent&amp;quot;) + xlab(&amp;quot;Data year&amp;quot;) + labs(x = &amp;quot;Academic year&amp;quot;, y = &amp;quot;Percent of students&amp;quot;, colour = &amp;quot;Concern&amp;quot;, caption = &amp;quot;Source: The Center for Collegiate Mental Health&amp;quot;) + theme_light() + scale_x_discrete(expand = c(.02,.02)) + scale_color_discrete(breaks=c(order)) + ggtitle(&amp;quot;Presenting concerns for college students seeking counseling&amp;quot;) + theme(axis.ticks = element_line(size = 5.6), axis.title = element_text(size = 12), axis.</description>
     </item>
     
     <item>
@@ -55,22 +62,11 @@ Castonguay, L.G., Janis, R.A., Youn, S., Xiao, H., McAleavey, A.A., Boswell, J.F
     
     <item>
       <title>Change over time code</title>
-      <link>/post/change_code/</link>
+      <link>/post/change-code/</link>
       <pubDate>Mon, 30 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/change_code/</guid>
-      <description>Test
-# Some code </description>
-    </item>
-    
-    <item>
-      <title>First</title>
-      <link>/blog/first/</link>
-      <pubDate>Sun, 29 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/first/</guid>
-      <description>Test1 Test2
-load(&amp;quot;file&amp;quot;) # test3 plot(1:6, 1:6)  </description>
+      <guid>/post/change-code/</guid>
+      <description></description>
     </item>
     
     <item>

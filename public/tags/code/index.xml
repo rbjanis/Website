@@ -5,10 +5,19 @@
     <link>/tags/code/</link>
     <description>Recent content in Code on THE WAY I R</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 30 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/code/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Concerns over time</title>
+      <link>/post/concerns-over-time/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/concerns-over-time/</guid>
+      <description>library(ggplot2) ggplot(Data, aes(x = Year, y = Percentage, col = factor(Concern), group=factor(Concern))) + geom_line(size = 1) + geom_point(size = 1.5) + ylab(&amp;quot;Percent&amp;quot;) + xlab(&amp;quot;Data year&amp;quot;) + labs(x = &amp;quot;Academic year&amp;quot;, y = &amp;quot;Percent of students&amp;quot;, colour = &amp;quot;Concern&amp;quot;, caption = &amp;quot;Source: The Center for Collegiate Mental Health&amp;quot;) + theme_light() + scale_x_discrete(expand = c(.02,.02)) + scale_color_discrete(breaks=c(order)) + ggtitle(&amp;quot;Presenting concerns for college students seeking counseling&amp;quot;) + theme(axis.ticks = element_line(size = 5.6), axis.title = element_text(size = 12), axis.</description>
+    </item>
     
     <item>
       <title>CLICC code</title>
@@ -21,12 +30,11 @@
     
     <item>
       <title>Change over time code</title>
-      <link>/post/change_code/</link>
+      <link>/post/change-code/</link>
       <pubDate>Mon, 30 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/change_code/</guid>
-      <description>Test
-# Some code </description>
+      <guid>/post/change-code/</guid>
+      <description></description>
     </item>
     
   </channel>

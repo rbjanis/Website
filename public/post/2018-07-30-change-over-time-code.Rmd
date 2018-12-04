@@ -2,16 +2,11 @@
 title: Change over time code
 author: ~
 date: '2018-07-30'
-slug: change_code
+slug: change-code
 categories: []
 tags: 
  - visualizations
  - code
 authors: []
 ---
-
-Test
-```{r}
-# Some code
-```
 
