@@ -5,6 +5,8 @@ menu: main
 weight: -210
 ---
 
+Lefevor, G. T., Jensen, D. R., Jones, P. J., **Janis, R. A.**, & Hsieh, C. H. (2018). An Undergraduate Positive Psychology Course as Prevention and Outreach. Retrieved from [osf.io/uj7na](osf.io/uj7na).  
+
 Lefevor, G.T., **Janis, R.A.**, Fraklin, A., Stone, & W.M. (in press). Initial distress and change through therapy among transgender and gender non-conforming racial and ethnic minorities. The Counseling Psychologist.
 
 **Janis, R.A.**, Burlingame, G.M. & Olsen, J.A. (2018). Developing a therapeutic relationship monitoring system for group treatment. *Psychotherapy, 55*(2), 105-115.
