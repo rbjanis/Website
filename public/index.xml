@@ -17,8 +17,10 @@
       
       <guid>/resume/</guid>
       <description>EXPERIENCE Data Analyst: The Center for Collegiate Mental Health, August 2018 &amp;ndash; present
-Graduate Research Assistant: The Center for Collegiate Mental Health, August 2014 &amp;ndash; August 2018
- Managed large databases of longitudinal psychotherapy data from 700,000+ clients and 200+ college counseling centers, including data merging and cleaning. Converted data management, analysis and reporting system from SPSS to R, making data processes more efficient and reproducible. Created annual reports distilling quantitative data on college student mental health to primary stakeholders.</description>
+ Maintained graduate research assistant responsibilities, while taking on ownership of data cleaning, standardization, and management.
+ Created an R package to standardize R functions for internal use (https://github.com/CCMH-PSU/CCMHr).
+  Graduate Research Assistant: The Center for Collegiate Mental Health, August 2014 &amp;ndash; August 2018
+ Managed large databases of longitudinal psychotherapy data from 700,000+ clients and 200+ college counseling centers, including data merging and cleaning.</description>
     </item>
     
     <item>
