@@ -1,6 +1,6 @@
   ---
-title: Pubs
-description: Publications
+title: Publications
+description: 
 menu: main
 weight: -210
 ---
@@ -37,5 +37,8 @@ Youn, S., Castonguay, L.G., Xiao, H., **Janis, R.**, McAleavey, A.A., Lockard, A
 
 Garcia, D.J., Flom, R., & **Janis, R.** (2015). Children’s recognition of pride. *Journal of Experimental Child Psychology, 137*, 85-98.
 
-Flom, R., **Janis, R.B.**, Garcia, D.J., & Kirwan, C.B. (2014). The effects of exposure to dynamic expressions of affect on 5-month-olds’ memory.  *Infant Behavior and Development, 37*, 752-759.
+Flom, R., **Janis, R.B.**, Garcia, D.J., & Kirwan, C.B. (2014). The effects of exposure to dynamic expressions of affect on 5-month-olds’ memory.  *Infant Behavior and Development, 37*, 752-759.  
 
+## Collaborator Network Graph
+![Collaborator Network Graph](/images/Rebecca author network.svg)  
+[code](/post/authnetwork)

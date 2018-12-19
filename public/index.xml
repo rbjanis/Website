@@ -34,14 +34,24 @@
     </item>
     
     <item>
-      <title>Pubs</title>
-      <link>/pubs/</link>
+      <title>Publications</title>
+      <link>/publications/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/pubs/</guid>
+      <guid>/publications/</guid>
       <description>Lefevor, G. T., Jensen, D. R., Jones, P. J., Janis, R. A., &amp;amp; Hsieh, C. H. (2018). An Undergraduate Positive Psychology Course as Prevention and Outreach. Retrieved from osf.io/uj7na.
 Lefevor, G.T., Janis, R.A., Fraklin, A., Stone, &amp;amp; W.M. (in press). Initial distress and change through therapy among transgender and gender non-conforming racial and ethnic minorities. The Counseling Psychologist.
 Janis, R.A., Burlingame, G.M. &amp;amp; Olsen, J.A. (2018). Developing a therapeutic relationship monitoring system for group treatment.</description>
+    </item>
+    
+    <item>
+      <title>Author Network Graph</title>
+      <link>/post/authnetwork/</link>
+      <pubDate>Wed, 19 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/authnetwork/</guid>
+      <description>Code from Eiko Fried
+library(scholarnetwork) library(igraph) library(ggplot2) d &amp;lt;- extractNetwork(id=&amp;quot;tW1w9JEAAAAJ&amp;quot;, n=500) # google scholar ID str(d) plotNetwork(d$nodes, d$edges, file=&amp;quot;network.html&amp;quot;) # cleaning network data network &amp;lt;- graph_from_data_frame(d$edges, directed=FALSE) set.seed(123) l &amp;lt;- layout.fruchterman.reingold(network, niter=1500) # layout fc &amp;lt;- walktrap.community(network) # community detection # node locations nodes &amp;lt;- data.frame(l); names(nodes) &amp;lt;- c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;) nodes$cluster &amp;lt;- factor(fc$membership) nodes$label &amp;lt;- fc$names nodes$degree &amp;lt;- degree(network) # edge locations edgelist &amp;lt;- get.edgelist(network, names=FALSE) edges &amp;lt;- data.frame(nodes[edgelist[,1],c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;)], nodes[edgelist[,2],c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;)]) names(edges) &amp;lt;- c(&amp;quot;x1&amp;quot;, &amp;quot;y1&amp;quot;, &amp;quot;x2&amp;quot;, &amp;quot;y2&amp;quot;) # and now visualizing it.</description>
     </item>
     
     <item>
@@ -50,7 +60,7 @@ Janis, R.A., Burlingame, G.M. &amp;amp; Olsen, J.A. (2018). Developing a therape
       <pubDate>Tue, 04 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>/blog/batch-rmarkdown/</guid>
-      <description></description>
+      <description>Dyamically updating YAML  Rendering Issue I ran into an issue where the loop would render reports for a single school or even a couple schools just fine, but when I tried to run the loop on all 28 schools, Rstudio would inexplicably hang and eventually abort after about 5 reports. I found a solution on stack overflow to add knitr::knit_meta(class=NULL, clean = TRUE) to the beginning of the for loop, which allowed all the reports to render successfully.</description>
     </item>
     
     <item>
@@ -87,6 +97,15 @@ Janis, R.A., Burlingame, G.M. &amp;amp; Olsen, J.A. (2018). Developing a therape
       
       <guid>/post/change-code/</guid>
       <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/post/network/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/network/</guid>
+      <description>     forceNetwork    {&#34;x&#34;:{&#34;links&#34;:{&#34;source&#34;:[1,2,18,20,28,33,38,18,28,33,38,7,8,13,33,36,0,18,20,28,33,38,14,17,30,33,32,13,33,36,7,13,33,36,0,2,18,33,39,6,16,32,34,17,33,42,6,32,34,28,33,38,1,18,28,33,38,9,18,28,33,38,15,33,15,11,31,33,6,10,16,32,34,22,41,15,23,33,9,18,33,38,22,26,33,41,14,17,11,33,12,33,0,2,9,11,12,13,14,15,17,18,20,22,23,26,28,30,38,39,41,42,6,32,15,23,27,33,13,33,17,33,9,18,28,33,0,2,11,24,31,33,22],&#34;target&#34;:[0,0,0,0,0,0,0,1,1,1,1,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,6,7,7,7,8,8,8,8,9,9,9,9,9,10,10,10,10,14,15,15,16,16,16,18,18,18,19,19,19,19,19,20,20,20,20,20,21,21,23,24,24,24,25,25,25,25,25,26,26,27,27,27,28,28,28,28,29,29,29,29,30,30,31,31,32,32,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,33,34,34,35,35,35,35,36,36,37,37,38,38,38,38,39,39,40,40,40,40,41],&#34;colour&#34;:[&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;,&#34;#666&#34;]},&#34;nodes&#34;:{&#34;name&#34;:[&#34;A Lockard&#34;,&#34;A Mcaleavey&#34;,&#34;A Pérez&#34;,&#34;B Brown&#34;,&#34;B Locke&#34;,&#34;C Hsieh&#34;,&#34;C Janis&#34;,&#34;C Keith&#34;,&#34;D Bennett&#34;,&#34;D Carney&#34;,&#34;D Darren J.&#34;,&#34;D Erekson&#34;,&#34;D Garcia&#34;,&#34;D Hedges&#34;,&#34;D Jensen&#34;,&#34;G Burlingame&#34;,&#34;G Garcia&#34;,&#34;G Lefevor&#34;,&#34;H Xiao&#34;,&#34;J Boswell&#34;,&#34;J Hayes&#34;,&#34;J Olsen&#34;,&#34;J Pachankis&#34;,&#34;J Seebeck&#34;,&#34;K Cattani&#34;,&#34;K Kirwan&#34;,&#34;K Wang&#34;,&#34;K Whitcomb&#34;,&#34;L Castonguay&#34;,&#34;M Hatzenbuehler&#34;,&#34;P Jones&#34;,&#34;R Bailey&#34;,&#34;R Flom&#34;,&#34;R Janis&#34;,&#34;R Rebecca B.&#34;,&#34;S Barkowski&#34;,&#34;S Mickelson&#34;,&#34;S Park&#34;,&#34;S Youn&#34;,&#34;T Bartholomew&#34;,&#34;T Pedersen&#34;,&#34;T Sullivan&#34;,&#34;V King&#34;],&#34;group&#34;:[3,3,3,6,3,4,1,6,6,3,1,7,1,6,4,2,1,4,3,3,3,2,5,2,7,1,5,2,3,5,4,7,1,2,1,2,6,4,3,3,7,5,2],&#34;nodesize&#34;:[2.38333333333333,1.66666666666667,0.8,0.833333333333333,1.58333333333333,0.8,0.833333333333333,0.833333333333333,0.833333333333333,1.63333333333333,0.833333333333333,0.8,0.666666666666667,0.833333333333333,0.8,2.8,0.833333333333333,1.46666666666667,3.33333333333333,0.833333333333333,2.41666666666667,1.33333333333333,0.8,0.8,0.8,0.833333333333333,0.8,0.8,3.33333333333333,0.8,0.8,0.8,1.5,12.25,0.833333333333333,0.8,0.833333333333333,0.666666666666667,3.33333333333333,0.8,0.8,0.8,0.666666666666667]},&#34;options&#34;:{&#34;NodeID&#34;:&#34;label&#34;,&#34;Group&#34;:&#34;group&#34;,&#34;colourScale&#34;:&#34;d3.scaleOrdinal(d3.schemeCategory20);&#34;,&#34;fontSize&#34;:10,&#34;fontFamily&#34;:&#34;serif&#34;,&#34;clickTextSize&#34;:25,&#34;linkDistance&#34;:50,&#34;linkWidth&#34;:&#34;1&#34;,&#34;charge&#34;:-400,&#34;opacity&#34;:0.75,&#34;zoom&#34;:false,&#34;legend&#34;:false,&#34;arrows&#34;:false,&#34;nodesize&#34;:true,&#34;radiusCalculation&#34;:&#34; Math.sqrt(d.nodesize)+6&#34;,&#34;bounded&#34;:false,&#34;opacityNoHover&#34;:0,&#34;clickAction&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]} {&#34;viewer&#34;:{&#34;width&#34;:550,&#34;height&#34;:400,&#34;padding&#34;:10,&#34;fill&#34;:false},&#34;browser&#34;:{&#34;width&#34;:550,&#34;height&#34;:400,&#34;padding&#34;:10,&#34;fill&#34;:false}}   </description>
     </item>
     
     <item>
