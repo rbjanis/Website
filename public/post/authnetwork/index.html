@@ -13,7 +13,7 @@ library(scholarnetwork) library(igraph) library(ggplot2) d &lt;- extractNetwork(
 library(scholarnetwork) library(igraph) library(ggplot2) d &lt;- extractNetwork(id=&quot;tW1w9JEAAAAJ&quot;, n=500) # google scholar ID str(d) plotNetwork(d$nodes, d$edges, file=&quot;network.html&quot;) # cleaning network data network &lt;- graph_from_data_frame(d$edges, directed=FALSE) set.seed(123) l &lt;- layout.fruchterman.reingold(network, niter=1500) # layout fc &lt;- walktrap.community(network) # community detection # node locations nodes &lt;- data.frame(l); names(nodes) &lt;- c(&quot;x&quot;, &quot;y&quot;) nodes$cluster &lt;- factor(fc$membership) nodes$label &lt;- fc$names nodes$degree &lt;- degree(network) # edge locations edgelist &lt;- get.edgelist(network, names=FALSE) edges &lt;- data.frame(nodes[edgelist[,1],c(&quot;x&quot;, &quot;y&quot;)], nodes[edgelist[,2],c(&quot;x&quot;, &quot;y&quot;)]) names(edges) &lt;- c(&quot;x1&quot;, &quot;y1&quot;, &quot;x2&quot;, &quot;y2&quot;) # and now visualizing it.'>
 <meta property='og:url' content='/post/authnetwork/'>
 <meta property='og:site_name' content='THE WAY I R'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2018-12-19T00:00:00Z'/><meta property='article:modified_time' content='2018-12-19T00:00:00Z'/><meta name='twitter:card' content='summary'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='code'><meta property='article:tag' content='visualizations'><meta property='article:published_time' content='2018-12-19T00:00:00Z'/><meta property='article:modified_time' content='2018-12-19T00:00:00Z'/><meta name='twitter:card' content='summary'>
 
 <meta name="generator" content="Hugo 0.45.1" />
 
@@ -334,7 +334,16 @@ pq</code></pre>
   
 <footer class='entry-footer'>
   <div class='container sep-before'>
+  <div class='tags'>
+  <span class='taxonomy-icon'><svg class='icon' viewbox='0 0 24 24' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' aria-hidden='true'>
   
+  <path d="M20.59,13.41l-7.17,7.17a2,2,0,0,1-2.83,0L2,12V2H12l8.59,8.59A2,2,0,0,1,20.59,13.41Z"/>
+  <line x1="7" y1="7" x2="7" y2="7"/>
+  
+</svg>
+</span>
+  <span class='screen-reader-text'>Tags: </span><a class='tag' href='/tags/code'>Code</a>, <a class='tag' href='/tags/visualizations'>Visualizations</a></div>
+
   </div>
 </footer>
 

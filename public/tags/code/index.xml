@@ -5,10 +5,20 @@
     <link>/tags/code/</link>
     <description>Recent content in Code on THE WAY I R</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/code/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Author Network Graph</title>
+      <link>/post/authnetwork/</link>
+      <pubDate>Wed, 19 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/authnetwork/</guid>
+      <description>Code from Eiko Fried
+library(scholarnetwork) library(igraph) library(ggplot2) d &amp;lt;- extractNetwork(id=&amp;quot;tW1w9JEAAAAJ&amp;quot;, n=500) # google scholar ID str(d) plotNetwork(d$nodes, d$edges, file=&amp;quot;network.html&amp;quot;) # cleaning network data network &amp;lt;- graph_from_data_frame(d$edges, directed=FALSE) set.seed(123) l &amp;lt;- layout.fruchterman.reingold(network, niter=1500) # layout fc &amp;lt;- walktrap.community(network) # community detection # node locations nodes &amp;lt;- data.frame(l); names(nodes) &amp;lt;- c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;) nodes$cluster &amp;lt;- factor(fc$membership) nodes$label &amp;lt;- fc$names nodes$degree &amp;lt;- degree(network) # edge locations edgelist &amp;lt;- get.edgelist(network, names=FALSE) edges &amp;lt;- data.frame(nodes[edgelist[,1],c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;)], nodes[edgelist[,2],c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;)]) names(edges) &amp;lt;- c(&amp;quot;x1&amp;quot;, &amp;quot;y1&amp;quot;, &amp;quot;x2&amp;quot;, &amp;quot;y2&amp;quot;) # and now visualizing it.</description>
+    </item>
     
     <item>
       <title>Concerns over time</title>
