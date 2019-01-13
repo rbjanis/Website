@@ -1,5 +1,5 @@
 baseURL = "https://www.thewayIR.com"
-title = "THE WAY I R"
+title = "Rebecca Janis"
 # for smart copyright line, leave this blank and check [params.copyright]
 copyright = ""
 
@@ -22,7 +22,7 @@ enableEmoji = true
 defaultContentLanguage = "en"
 
 [params.info]
-description = "REBECCA JANIS"
+# description = "My journey through data science and R"
 title404 = "Nothing's here!"
 
 [params.assets]
