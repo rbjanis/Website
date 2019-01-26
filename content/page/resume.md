@@ -10,15 +10,17 @@ weight: -230
 
 **Data Analyst**: The Center for Collegiate Mental Health, August 2018 -- present
 
-- Maintained graduate research assistant responsibilities, while taking on ownership of data cleaning, standardization, and management.  
+- Maintained graduate research assistant responsibilities, while taking on ownership of data cleaning, standardization, and management of large multiyear longitudinal psychotherapy data sets.  
 - Created an R package to standardize R functions for internal use (https://github.com/CCMH-PSU/CCMHr).  
+- Created annual reports distilling quantitative data on college student mental health to primary stakeholders.  
+- Produced and prepared data for standardized reporting templates and online reporting platforms, allowing 200+ counseling centers to view key metrics from their local data.
+- Created Shiny app to allow stakeholders to more easily explore relationships within the data. 
+- Consulted with outside researchers to provide data and analyses to answer research questions.
 
 **Graduate Research Assistant**: The Center for Collegiate Mental Health, August 2014 -- August 2018  
 
 - Managed large databases of longitudinal psychotherapy data from 700,000+ clients and 200+ college counseling centers, including data merging and cleaning.
 - Converted data management, analysis and reporting system from SPSS to R, making data processes more efficient and reproducible.
-- Created annual reports distilling quantitative data on college student mental health to primary stakeholders.  
-- Produced and prepared data for standardized reporting templates and online reporting platforms, allowing 200+ counseling centers to view key metrics from their local data
 - Prepared data for an online reporting platform accessible to outside parties.
 - Consulted with outside researchers to provide data and analyses to answer research questions.
 - Conducted independent research, including building statistical models from psychotherapy data to generate clinically relevant prediction systems: Client recovery trajectories, client risk of suicide attempts, client resource utilization.  
