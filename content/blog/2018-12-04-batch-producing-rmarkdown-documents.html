@@ -11,4 +11,10 @@ draft: true
 
 
 
-
+<div id="dyamically-updating-yaml" class="section level2">
+<h2>Dyamically updating YAML</h2>
+</div>
+<div id="rendering-issue" class="section level2">
+<h2>Rendering Issue</h2>
+<p>I ran into an issue where the loop would render reports for a single school or even a couple schools just fine, but when I tried to run the loop on all 28 schools, Rstudio would inexplicably hang and eventually abort after about 5 reports. I found a solution on stack overflow to add <code>knitr::knit_meta(class=NULL, clean = TRUE)</code> to the beginning of the for loop, which allowed all the reports to render successfully.</p>
+</div>
