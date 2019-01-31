@@ -1,0 +1,15 @@
+---
+title: Batch Producing Rmarkdown documents
+author: ~
+date: '2018-12-04'
+slug: batch-rmarkdown
+categories: []
+tags: []
+authors: []
+draft: true
+---
+
+## Dyamically updating YAML
+
+## Rendering Issue
+I ran into an issue where the loop would render reports for a single school or even a couple schools just fine, but when I tried to run the loop on all 28 schools, Rstudio would inexplicably hang and eventually abort after about 5 reports. I found a solution on stack overflow to add `knitr::knit_meta(class=NULL, clean = TRUE)` to the beginning of the for loop, which allowed all the reports to render successfully.  

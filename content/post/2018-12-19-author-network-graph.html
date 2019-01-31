@@ -1,0 +1,69 @@
+---
+title: Author Network Graph
+author: ~
+date: '2018-12-19'
+slug: authnetwork
+categories: []
+tags: [code, visualizations]
+authors: []
+---
+
+
+
+<p>Code from <a href="http://eiko-fried.com/create-your-collaborator-network-in-r/">Eiko Fried</a></p>
+<pre class="r"><code>library(scholarnetwork)
+library(igraph)
+library(ggplot2)</code></pre>
+<pre class="r"><code>d &lt;- extractNetwork(id=&quot;tW1w9JEAAAAJ&quot;, n=500) # google scholar ID
+str(d)
+
+plotNetwork(d$nodes, d$edges, file=&quot;network.html&quot;)
+
+# cleaning network data
+network &lt;- graph_from_data_frame(d$edges, directed=FALSE)
+set.seed(123)
+l &lt;- layout.fruchterman.reingold(network, niter=1500) # layout
+fc &lt;- walktrap.community(network) # community detection
+
+# node locations
+nodes &lt;- data.frame(l); names(nodes) &lt;- c(&quot;x&quot;, &quot;y&quot;)
+nodes$cluster &lt;- factor(fc$membership)
+nodes$label &lt;- fc$names
+nodes$degree &lt;- degree(network)
+
+# edge locations
+edgelist &lt;- get.edgelist(network, names=FALSE)
+edges &lt;- data.frame(nodes[edgelist[,1],c(&quot;x&quot;, &quot;y&quot;)], nodes[edgelist[,2],c(&quot;x&quot;, &quot;y&quot;)])
+names(edges) &lt;- c(&quot;x1&quot;, &quot;y1&quot;, &quot;x2&quot;, &quot;y2&quot;)
+
+# and now visualizing it...
+p &lt;- ggplot(nodes, aes(x=x, y=y, color=cluster, label=label, size=degree))
+pq &lt;- p + geom_text(color=&quot;black&quot;, aes(label=label, size=degree),
+                    show_guide=FALSE) +
+  # nodes
+  geom_point(color=&quot;grey20&quot;, aes(fill=cluster),
+             shape=21, show_guide=FALSE, alpha=1/2) +
+  # edges
+  geom_segment(
+    aes(x=x1, y=y1, xend=x2, yend=y2, label=NA),
+    data=edges, size=0.25, color=&quot;grey20&quot;, alpha=1/5) +
+  ## note that here I add a border to the points
+  scale_fill_discrete(labels=labels) +
+  scale_size_continuous(range = c(5, 8)) +
+  theme(
+    panel.background = element_rect(fill = &quot;white&quot;),
+    plot.background = element_rect(fill=&quot;white&quot;),
+    axis.line = element_blank(), axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_blank(), panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    legend.background = element_rect(colour = F, fill = &quot;black&quot;),
+    legend.key = element_rect(fill = &quot;black&quot;, colour = F),
+    legend.title = element_text(color=&quot;white&quot;),
+    legend.text = element_text(color=&quot;white&quot;)
+  ) +
+  ## changing size of points in legend
+  guides(fill = guide_legend(override.aes = list(size=5)))
+
+pq</code></pre>

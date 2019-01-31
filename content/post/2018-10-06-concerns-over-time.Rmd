@@ -1,0 +1,27 @@
+---
+title: Concerns over time
+author: ''
+date: '2018-10-06'
+slug: concerns-over-time
+categories: []
+tags:
+  - code
+  - visualizations
+authors: []
+---
+
+```{r, eval = F}
+library(ggplot2)
+
+ggplot(Data, aes(x = Year, y = Percentage, col = factor(Concern), group=factor(Concern))) 
+  + geom_line(size = 1) 
+  + geom_point(size = 1.5) 
+  + ylab("Percent") + xlab("Data year") + labs(x = "Academic year", y = "Percent of students", colour = "Concern", caption = "Source: The Center for Collegiate Mental Health")
+  + theme_light()
+  + scale_x_discrete(expand = c(.02,.02)) + scale_color_discrete(breaks=c(order)) 
+  + ggtitle("Presenting concerns for college students seeking counseling") 
+  + theme(axis.ticks = element_line(size = 5.6), axis.title = element_text(size = 12), axis.text = element_text(size = 11),
+          axis.text.x = element_text(size = 11), axis.text.y = element_text(size = 11), plot.title = element_text(size = 16, 
+          face = "bold"), legend.text = element_text(size = 12), legend.title = element_text(size = 14)) 
+```
+
