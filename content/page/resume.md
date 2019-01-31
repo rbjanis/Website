@@ -42,7 +42,7 @@ weight: -230
 
 ## TECHNICAL SKILLS
 
-**Software and Programming Languages**: R (tidyverse, shiny, data.table), SPSS, Tableau, SAS, Mplus, Stata, SQL, Excel
+**Software and Programming Languages**: R (tidyverse, shiny, Rmarkdown), SPSS, Tableau, SAS, Mplus, Stata, SQL, Excel
 
 **Statistical Methods**: general linear modeling, mixed effects modeling, multivariate analyses, structural equation modeling, Bayesian estimation, meta-analysis, data mining, data visualization
 
@@ -63,7 +63,7 @@ Psychology Valedictorian- Brigham Young University 2014
 ---
 
 ## EDUCATION
-Ph.D. Clinical Psychology- Pennsylvania State University Expected 2021
+Ph.D. Psychology- Pennsylvania State University Expected 2020
 
 M.S. Psychology- Pennsylvania State University 2017
 
