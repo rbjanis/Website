@@ -2,7 +2,7 @@
 [about]
 title = ""                            # default: .Site.Title
 description = ""                      # default: .Site.Params.info.description
-logo = "/images/headshot_circle.png"             # default: "/images/logo.png"
+logo = "/images/Headshot_circle.png"             # default: "/images/logo.png"
 
 # Recent Posts Widget config
 [recent_posts]
