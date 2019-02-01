@@ -16,3 +16,6 @@ weight: -230
 ![CLICC sessions](/images/CLICC session numbers-mock up_edited.png)  
 [2017 CCMH Annual Report](https://sites.psu.edu/ccmh/files/2018/02/2017_CCMH_Report-1r4m88x.pdf)  
 
+![Top concerns for college students seeking counseling](/images/CLICC top trends graph_2018.png)
+[2018 CCMH Annual Report](https://sites.psu.edu/ccmh/files/2019/01/2018-Annual-Report-1.30.19-ziytkb.pdf)  
+[code](/post/concerns-over-time)
