@@ -10,6 +10,8 @@ tags:
 authors: []
 ---
 
+![](/images/CLICC top trends graph_2018.png)
+
 ```{r, eval = F}
 library(ggplot2)
 
