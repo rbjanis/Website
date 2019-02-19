@@ -7,7 +7,8 @@ categories: []
 tags: [code, visualizations]
 authors: []
 ---
-Code from [Eiko Fried](http://eiko-fried.com/create-your-collaborator-network-in-r/)
+Code from [Eiko Fried](http://eiko-fried.com/create-your-collaborator-network-in-r/)  
+[View my author network at the bottom of my publications page](/publications)
 
 ```{r, eval = F}
 library(scholarnetwork)

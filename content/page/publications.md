@@ -42,5 +42,5 @@ Garcia, D.J., Flom, R., & **Janis, R.** (2015). Children’s recognition of prid
 Flom, R., **Janis, R.B.**, Garcia, D.J., & Kirwan, C.B. (2014). The effects of exposure to dynamic expressions of affect on 5-month-olds’ memory.  *Infant Behavior and Development, 37*, 752-759.  
 
 ## Collaborator Network Graph
-![Collaborator Network Graph](/images/Rebecca author network.svg)  
+![Collaborator Network Graph](/images/Rebecca author network.png)  
 [code](/post/authnetwork)

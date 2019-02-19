@@ -14,13 +14,178 @@ draft: true
 <p>With 2018 coming to a close and many of my friends posting their Spotify year in review showing their most listened to songs, I was feeling jealous as an Apple Music user that I couldn’t see my music year in review. So, in what could prove to be an embarassing foray into my very basic taste in music, I decided to make my own Apple Music year in review!</p>
 <p>If you want to download your own Apple Music data, head to <a href="https://privacy.apple.com/account">Apple’s Data and Privacy</a> page, and select “Request a copy of your data.” You can select what specific data you want, and they will put together a file for you to download, emailing you when it’s ready. Mine took about 6 days for Apple to create the download. The specific file with your Apple Music listening history is “Apple Music Play Activity.csv”.</p>
 <pre class="r"><code>require(magrittr)
+require(dplyr)
 music &lt;- read.csv(here::here(&quot;content/blog/data/Apple Music Play Activity.csv&quot;), stringsAsFactors = F)</code></pre>
 <p>A quick visual inspection of the data showed that this file dates back to 2015 when I first subscribed to Apple Music, but since I’m just interested in this past year, I created a data set of only this year’s data. In order to do that, I first had to convert the dates to a format R recognizes.</p>
 <pre class="r"><code>music$Event.Start.Timestamp &lt;- lubridate::ymd(substr(music$Event.Start.Timestamp, 1, 10))
 
 music2018 &lt;- dplyr::filter(music, Event.Start.Timestamp &gt;= &quot;2018-01-01&quot; &amp; Event.Start.Timestamp &lt;= &quot;2018-12-31&quot;)  %&gt;% 
   dplyr::arrange(Event.Start.Timestamp)</code></pre>
-<p>I noticed some interesting things about how song listening is recorded. If a song is paused in the middle, or if other events occur, the song is recorded on multiple rows broken up by the time the event occurred. In order to avoid counting duplicates or songs that I started playing then skipped, I decided to only include songs that I listened to at least half of, which removed about half of the lines in the data set.</p>
+<p>I noticed some interesting things about how song listening is recorded. If a song is paused in the middle, or if other events occur, the song is recorded on multiple rows broken up by the time the event occurred.</p>
+<pre class="r"><code>head(music)</code></pre>
+<pre><code>##   Event.Start.Timestamp      Event.End.Timestamp
+## 1                  &lt;NA&gt; 2015-10-31T03:29:38.084Z
+## 2                  &lt;NA&gt; 2015-10-31T03:29:38.089Z
+## 3                  &lt;NA&gt; 2015-10-31T03:29:38.989Z
+## 4                  &lt;NA&gt; 2015-11-25T22:27:32.261Z
+## 5                  &lt;NA&gt; 2016-06-13T12:53:37.136Z
+## 6                  &lt;NA&gt; 2016-06-13T12:53:58.965Z
+##                     Song.Name       Artist.Name Container.Name
+## 1 Video Killed the Radio Star       The Buggles               
+## 2 Video Killed the Radio Star       The Buggles               
+## 3 Video Killed the Radio Star       The Buggles               
+## 4                In the Night        The Weeknd               
+## 5                        Home Ingrid Michaelson               
+## 6                        Home Ingrid Michaelson               
+##   Event.Received.Timestamp Play.Duration.Milliseconds
+## 1 2015-10-31T03:32:05.445Z                     -13000
+## 2 2015-10-31T03:32:05.445Z                     -37000
+## 3 2015-10-31T03:32:05.445Z                     -16000
+## 4 2015-11-25T22:28:07.027Z                      -2000
+## 5 2016-06-13T12:54:03.984Z                     -16000
+## 6 2016-06-13T12:54:03.984Z                      -9000
+##   Media.Duration.In.Milliseconds End.Position.In.Milliseconds
+## 1                         253000                        54000
+## 2                         253000                        17000
+## 3                         253000                         1000
+## 4                         235000                        12000
+## 5                         264000                            0
+## 6                         264000                            0
+##   End.Reason.Type Apple.Id.Number                        Device.Identifier
+## 1       SCRUB_END       151864814 3eff9383b68899acb9459cac493b5fab57e6f3a7
+## 2     SCRUB_BEGIN       151864814 3eff9383b68899acb9459cac493b5fab57e6f3a7
+## 3       SCRUB_END       151864814 3eff9383b68899acb9459cac493b5fab57e6f3a7
+## 4       SCRUB_END       151864814 3eff9383b68899acb9459cac493b5fab57e6f3a7
+## 5       SCRUB_END       151864814 3eff9383b68899acb9459cac493b5fab57e6f3a7
+## 6       SCRUB_END       151864814 3eff9383b68899acb9459cac493b5fab57e6f3a7
+##                Metrics.Client.Id Metrics.Bucket.Id Client.IP.Address
+## 1 3z2Ar2HqzH2az4Xjz9Olz12Zurnp1o              1917    166.171.56.102
+## 2 3z2Ar2HqzH2az4Xjz9Olz12Zurnp1o              1917    166.171.56.102
+## 3 3z2Ar2HqzH2az4Xjz9Olz12Zurnp1o              1917    166.171.56.102
+## 4 3z2Ar2HqzH2az4Xjz9Olz12Zurnp1o              1917                  
+## 5 3z2eBJUVz5fQz5HszALxz1IFOKt2fW              1939     152.160.72.34
+## 6 3z2eBJUVz5fQz5HszALxz1IFOKt2fW              1939     152.160.72.34
+##            Feature.Name Media.Type Milliseconds.Since.Play Offline
+## 1  search:none / search                             147361        
+## 2  search:none / search                             147356        
+## 3  search:none / search                             146456        
+## 4 radio:none / grouping                              34766        
+## 5  search:none / search      AUDIO                   26848   false
+## 6  search:none / search      AUDIO                    5019   false
+##   Apple.Music.Subscription        Source.Type
+## 1                     true                   
+## 2                     true                   
+## 3                     true                   
+## 4                     true                   
+## 5                     true ORIGINATING_DEVICE
+## 6                     true ORIGINATING_DEVICE
+##   Start.Position.In.Milliseconds            Item.Type
+## 1                          67000 ITUNES_STORE_CONTENT
+## 2                          54000 ITUNES_STORE_CONTENT
+## 3                          17000 ITUNES_STORE_CONTENT
+## 4                          14000 ITUNES_STORE_CONTENT
+## 5                          16000 ITUNES_STORE_CONTENT
+## 6                           9000 ITUNES_STORE_CONTENT
+##   UTC.Offset.In.Seconds Event.Type Event.Reason.Hint.Type Build.Version
+## 1                -14400                                                
+## 2                -14400                                                
+## 3                -14400                                                
+## 4                -18000                                                
+## 5                -14400   PLAY_END          NOT_SPECIFIED              
+## 6                -14400   PLAY_END          NOT_SPECIFIED              
+##   Store.Country.Name
+## 1      United States
+## 2      United States
+## 3      United States
+## 4      United States
+## 5      United States
+## 6      United States</code></pre>
+<pre class="r"><code>tail(music)</code></pre>
+<pre><code>##       Event.Start.Timestamp Event.End.Timestamp
+## 11609            2019-01-05                    
+## 11610            2019-01-05                    
+## 11611            2019-01-05                    
+## 11612            2019-01-05                    
+## 11613            2019-01-05                    
+## 11614            2019-01-05                    
+##                                     Song.Name  Artist.Name Container.Name
+## 11609 Dusk Till Dawn (feat. Sia) [Radio Edit]         ZAYN               
+## 11610                              Chandelier          Sia               
+## 11611                    Titanium (feat. Sia) David Guetta               
+## 11612                            The Greatest          Sia               
+## 11613                           Elastic Heart          Sia               
+## 11614                           Cheap Thrills          Sia               
+##       Event.Received.Timestamp Play.Duration.Milliseconds
+## 11609 2019-01-05T18:32:08.524Z                         NA
+## 11610 2019-01-05T18:33:15.483Z                         NA
+## 11611 2019-01-05T18:36:52.854Z                         NA
+## 11612 2019-01-05T18:40:58.103Z                         NA
+## 11613 2019-01-05T18:44:28.933Z                         NA
+## 11614 2019-01-05T18:48:46.266Z                         NA
+##       Media.Duration.In.Milliseconds End.Position.In.Milliseconds
+## 11609                         239049                           NA
+## 11610                         216177                           NA
+## 11611                         245109                           NA
+## 11612                         210976                           NA
+## 11613                         257253                           NA
+## 11614                         211719                           NA
+##       End.Reason.Type Apple.Id.Number         Device.Identifier
+## 11609                       151864814 00008020-001C1D521A08002E
+## 11610                       151864814 00008020-001C1D521A08002E
+## 11611                       151864814 00008020-001C1D521A08002E
+## 11612                       151864814 00008020-001C1D521A08002E
+## 11613                       151864814 00008020-001C1D521A08002E
+## 11614                       151864814 00008020-001C1D521A08002E
+##                  Metrics.Client.Id Metrics.Bucket.Id Client.IP.Address
+## 11609 3zvboVXz8w8z4SvzBeAz3TaGpBiM              4919       71.58.99.69
+## 11610 3zvboVXz8w8z4SvzBeAz3TaGpBiM              4919       71.58.99.69
+## 11611 3zvboVXz8w8z4SvzBeAz3TaGpBiM              4919       71.58.99.69
+## 11612 3zvboVXz8w8z4SvzBeAz3TaGpBiM              4919       71.58.99.69
+## 11613 3zvboVXz8w8z4SvzBeAz3TaGpBiM              4919       71.58.99.69
+## 11614 3zvboVXz8w8z4SvzBeAz3TaGpBiM              4919       71.58.99.69
+##                 Feature.Name Media.Type Milliseconds.Since.Play Offline
+## 11609 search / artist_detail      AUDIO                     385   false
+## 11610 search / artist_detail      AUDIO                      76   false
+## 11611 search / artist_detail      AUDIO                      39   false
+## 11612 search / artist_detail      AUDIO                     415   false
+## 11613 search / artist_detail      AUDIO                     391   false
+## 11614 search / artist_detail      AUDIO                     415   false
+##       Apple.Music.Subscription        Source.Type
+## 11609                     true ORIGINATING_DEVICE
+## 11610                     true ORIGINATING_DEVICE
+## 11611                     true ORIGINATING_DEVICE
+## 11612                     true ORIGINATING_DEVICE
+## 11613                     true ORIGINATING_DEVICE
+## 11614                     true ORIGINATING_DEVICE
+##       Start.Position.In.Milliseconds            Item.Type
+## 11609                              0 ITUNES_STORE_CONTENT
+## 11610                              0 ITUNES_STORE_CONTENT
+## 11611                              0 ITUNES_STORE_CONTENT
+## 11612                              0 ITUNES_STORE_CONTENT
+## 11613                              0 ITUNES_STORE_CONTENT
+## 11614                              0 ITUNES_STORE_CONTENT
+##       UTC.Offset.In.Seconds Event.Type Event.Reason.Hint.Type
+## 11609                -18000 PLAY_START          NOT_SPECIFIED
+## 11610                -18000 PLAY_START          NOT_SPECIFIED
+## 11611                -18000 PLAY_START          NOT_SPECIFIED
+## 11612                -18000 PLAY_START          NOT_SPECIFIED
+## 11613                -18000 PLAY_START          NOT_SPECIFIED
+## 11614                -18000 PLAY_START          NOT_SPECIFIED
+##                                                                  Build.Version
+## 11609 Music/3.1 iOS/12.1.2 model/iPhone11,2 hwp/t8020 build/16C101 (6; dt:185)
+## 11610 Music/3.1 iOS/12.1.2 model/iPhone11,2 hwp/t8020 build/16C101 (6; dt:185)
+## 11611 Music/3.1 iOS/12.1.2 model/iPhone11,2 hwp/t8020 build/16C101 (6; dt:185)
+## 11612 Music/3.1 iOS/12.1.2 model/iPhone11,2 hwp/t8020 build/16C101 (6; dt:185)
+## 11613 Music/3.1 iOS/12.1.2 model/iPhone11,2 hwp/t8020 build/16C101 (6; dt:185)
+## 11614 Music/3.1 iOS/12.1.2 model/iPhone11,2 hwp/t8020 build/16C101 (6; dt:185)
+##       Store.Country.Name
+## 11609      United States
+## 11610      United States
+## 11611      United States
+## 11612      United States
+## 11613      United States
+## 11614      United States</code></pre>
+<p>In order to avoid counting duplicates or songs that I started playing then skipped, I decided to only include songs that I listened to at least half of, which removed about half of the lines in the data set.</p>
 <p>Before removing entries, I totaled my play time to find that I listened to <strong>192</strong> hours of music last year.</p>
 <pre class="r"><code>music2018 &lt;- dplyr::filter(music2018, Play.Duration.Milliseconds/Media.Duration.In.Milliseconds &gt; .5)
 music2018 &lt;- dplyr::filter(music2018, Play.Duration.Milliseconds == Media.Duration.In.Milliseconds)</code></pre>
