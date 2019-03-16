@@ -6,6 +6,7 @@ slug: boardgames
 categories: []
 tags: []
 authors: []
+draft: TRUE
 ---
 
 First time participating in Tidy Tuesday, but board games + data (my two true loves in life) finally convinced me. 
