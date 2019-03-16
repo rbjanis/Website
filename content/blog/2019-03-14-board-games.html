@@ -1,0 +1,155 @@
+---
+title: Board Games
+author: ~
+date: '2019-03-15'
+slug: boardgames
+categories: []
+tags: []
+authors: []
+---
+
+
+
+<p>First time participating in Tidy Tuesday, but board games + data (my two true loves in life) finally convinced me.</p>
+<p>I first loaded packages I knew I would be using as well as the data from the Tidy Tuesday GitHub.</p>
+<pre class="r"><code>require(&quot;tidyverse&quot;)
+require(&quot;magrittr&quot;)
+require(&quot;here&quot;)
+conflicted::conflict_prefer(&quot;filter&quot;, &quot;dplyr&quot;)
+theme_set(theme_minimal())
+pal &lt;- wesanderson::wes_palette(&quot;FantasticFox1&quot;, type = &quot;discrete&quot;)
+
+board_games &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv&quot;)</code></pre>
+<p>Wanted to first get a sense of board game ratings over time, similar to 538, contextualizing it by labeling some of my favorite games.</p>
+<pre class="r"><code>favorites &lt;- c(&quot;Small World&quot;, &quot;7 Wonders&quot;, &quot;Catan&quot;, &quot;Carcassonne&quot;, &quot;Dominion&quot;, 
+               &quot;Codenames&quot;, &quot;Betrayal at House on the Hill&quot;, &quot;Incan Gold&quot;, 
+               &quot;Citadels&quot;, &quot;Caverna: The Cave Farmers&quot;, &quot;Deception: Murder in Hong Kong&quot;)
+
+board_games %&gt;% 
+  ggplot(aes(x = year_published, y = average_rating)) +
+  geom_point(alpha = .25, color = &quot;lightskyblue&quot;) +
+  #geom_smooth(method = &quot;loess&quot;, span = .5) + 
+  ggrepel::geom_text_repel(data = . %&gt;% filter(name %in% favorites), 
+            aes(label = name),size = 4.3) + 
+  geom_point(data = . %&gt;% filter(name %in% favorites), 
+             aes(x = year_published, y = average_rating), size = 2) +
+  labs(x = &quot;Year published&quot;, 
+       y = &quot;Average rating&quot;, 
+       title = &quot;Average board game ratings over time&quot;) +
+  # ggthemes::theme_fivethirtyeight()
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=14,face=&quot;bold&quot;),
+        plot.title=element_text(size=20,face=&quot;bold&quot;))</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Figuring out how to selectively label only some data points was a useful exercise, and I rarely think to perform additional data manipulation inside a <code>ggplot</code> geom. Because the labeled points were so close together, the labels overlapped, making them hard to read. Luckily, the <code>ggrepel</code> package came to the rescue in spacing them out a bit more. They’re still a bit cramped, but much better than without it.</p>
+<p>Two takeaways from this graph:</p>
+<ol style="list-style-type: decimal">
+<li>As noted by the <a href="https://fivethirtyeight.com/features/designing-the-best-board-game-on-the-planet/">538</a> article that prompted the use of this data for Tidy Tuesday, board game ratings are increasing over time.</li>
+<li>I seem to have pretty good taste in board games, at least based on their average ratings :)</li>
+</ol>
+<p>I also wanted to get a sense for how number of ratings and average ratings are related. Do games that are more frequently rated have higher average ratings?</p>
+<p>What do the other game attributes look like?</p>
+<pre class="r"><code>board_games &lt;- board_games %&gt;% 
+  splitstackshape::concat.split(&quot;expansion&quot;, sep = &quot;,&quot;, structure = &quot;list&quot;) %&gt;% 
+  splitstackshape::concat.split(&quot;mechanic&quot;, sep = &quot;,&quot;, structure = &quot;list&quot;) %&gt;% 
+  mutate(expansion_n = map(expansion_list, function(x) sum(!is.na(x))), 
+        mechanic_n = map(mechanic_list, function(x) sum(!is.na(x)))) %&gt;% 
+  mutate(min_players_fct = as.factor(case_when(min_players == 0 ~ NA_character_,
+                                                  min_players == 1 ~ &quot;1&quot;,
+                                                  min_players == 2 ~ &quot;2&quot;,
+                                                  min_players == 3 ~ &quot;3&quot;,
+                                                  min_players == 4 ~ &quot;4&quot;, 
+                                                  min_players &gt;= 5 ~ &quot;5+&quot;,
+                                                  TRUE ~ NA_character_)))</code></pre>
+<p>Games by mechanic, expansions, players Facet two graphcs- distribution &amp; scatter with rating</p>
+<pre class="r"><code>board_games_mech &lt;- board_games %&gt;% 
+  tidyr::separate_rows(mechanic, sep = &quot;,&quot;) %&gt;% 
+  filter(!is.na(mechanic))
+
+board_games_mech %&gt;% 
+  group_by(mechanic) %&gt;% 
+  tally() %&gt;% 
+  arrange(desc(n)) %&gt;% 
+  mutate(mechanic = fct_reorder(mechanic, n)) %&gt;% 
+  ggplot(aes(y = n, x = mechanic)) +
+  geom_bar(stat = &quot;identity&quot;, fill = pal[3]) +
+  coord_flip() +  
+  labs(x = &quot;Game mechanic&quot;,
+       y = &quot;Number of games&quot;) +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=14,face=&quot;bold&quot;),
+        plot.title=element_text(size=20,face=&quot;bold&quot;))</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-6-1.png" width="528" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># maybe use top 9 or 15? 3x3 or 3x5
+board_games_mech %&gt;% 
+  group_by(mechanic, year_published) %&gt;% 
+  tally() %&gt;% 
+  ungroup() %&gt;% 
+  mutate(mechanic_fct = fct_reorder(mechanic, year_published, min, .desc = T)) %&gt;% 
+  ggplot(aes(x = mechanic_fct, y = year_published, group = mechanic_fct, size = n)) + 
+  geom_point(color = pal[5]) +
+  coord_flip() +  
+  labs(y = &quot;Year published&quot;,
+       x = &quot;Game mechanic&quot;,
+       size = &quot;Number of games&quot;) +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=14,face=&quot;bold&quot;),
+        plot.title=element_text(size=20,face=&quot;bold&quot;),
+        legend.text=element_text(size=12))</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-7-1.png" width="528" style="display: block; margin: auto;" /></p>
+<p>Mechanics</p>
+<pre class="r"><code>board_games_mech &lt;- board_games %&gt;% 
+  tidyr::separate_rows(mechanic, sep = &quot;,&quot;) %&gt;% 
+  filter(!is.na(mechanic))
+
+n_distinct(board_games_mech$mechanic)</code></pre>
+<pre><code>## [1] 51</code></pre>
+<pre class="r"><code>board_games_mech %&gt;% 
+  group_by(name) %&gt;% 
+  summarize(n = n()) %&gt;% 
+  pull() %&gt;% 
+  range()</code></pre>
+<pre><code>## [1]  1 18</code></pre>
+<pre class="r"><code>board_games_mech %&gt;% 
+  group_by(mechanic) %&gt;% 
+  tally() %&gt;% 
+  arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 51 x 2
+##    mechanic                          n
+##    &lt;chr&gt;                         &lt;int&gt;
+##  1 Dice Rolling                   2438
+##  2 Hand Management                2176
+##  3 Set Collection                 1347
+##  4 Hex-and-Counter                1244
+##  5 Variable Player Powers         1223
+##  6 Tile Placement                  907
+##  7 Modular Board                   858
+##  8 Card Drafting                   844
+##  9 Area Control / Area Influence   803
+## 10 Auction/Bidding                 682
+## # … with 41 more rows</code></pre>
+<pre class="r"><code>top_mechs &lt;- board_games_mech %&gt;% 
+  group_by(mechanic) %&gt;% 
+  tally() %&gt;% 
+  arrange(desc(n)) %&gt;% 
+  mutate(mechanic = fct_reorder(mechanic, n, .desc = T)) %&gt;% 
+  head(9) %&gt;% 
+  pull(mechanic)
+
+board_games_mech %&gt;% 
+  filter(mechanic %in% top_mechs) %&gt;% 
+  ggplot(aes(x = users_rated, y = average_rating)) +
+  geom_point(alpha = .5) + 
+  scale_x_log10() +
+  geom_text(data = . %&gt;% group_by(mechanic) %&gt;% filter(average_rating == max(average_rating)), aes(label = name),hjust=.5,vjust=-.6, color = &quot;blue&quot;, size = 2.5) +
+  geom_text(data = . %&gt;% group_by(mechanic) %&gt;% filter(users_rated == max(users_rated)), aes(label = name),hjust=.8,vjust=-.6, color = &quot;blue&quot;, size = 2.5) +
+  ylim(0,10) +
+  facet_wrap(vars(mechanic), nrow = 3, ncol = 3) </code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>#Need to reorder facets by most popular</code></pre>
+<pre class="r"><code>rnorm(10)</code></pre>
+<pre><code>##  [1] -0.7881486 -1.3409934 -1.2602834  0.5612882  0.5364905 -0.1731590
+##  [7]  0.5068579  0.8118211  0.2667668  0.7945743</code></pre>

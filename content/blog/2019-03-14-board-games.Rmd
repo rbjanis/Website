@@ -1,0 +1,169 @@
+---
+title: Board Games
+author: ~
+date: '2019-03-15'
+slug: boardgames
+categories: []
+tags: []
+authors: []
+---
+
+First time participating in Tidy Tuesday, but board games + data (my two true loves in life) finally convinced me. 
+
+I first loaded packages I knew I would be using as well as the data from the Tidy Tuesday GitHub.
+```{r message=FALSE, warning=FALSE}
+require("tidyverse")
+require("magrittr")
+require("here")
+conflicted::conflict_prefer("filter", "dplyr")
+theme_set(theme_minimal())
+pal <- wesanderson::wes_palette("FantasticFox1", type = "discrete")
+
+board_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
+```
+
+Wanted to first get a sense of board game ratings over time, similar to 538, contextualizing it by labeling some of my favorite games. 
+
+```{r}
+favorites <- c("Small World", "7 Wonders", "Catan", "Carcassonne", "Dominion", 
+               "Codenames", "Betrayal at House on the Hill", "Incan Gold", 
+               "Citadels", "Caverna: The Cave Farmers", "Deception: Murder in Hong Kong")
+
+board_games %>% 
+  ggplot(aes(x = year_published, y = average_rating)) +
+  geom_point(alpha = .25, color = "lightskyblue") +
+  #geom_smooth(method = "loess", span = .5) + 
+  ggrepel::geom_text_repel(data = . %>% filter(name %in% favorites), 
+            aes(label = name),size = 4.3) + 
+  geom_point(data = . %>% filter(name %in% favorites), 
+             aes(x = year_published, y = average_rating), size = 2) +
+  labs(x = "Year published", 
+       y = "Average rating", 
+       title = "Average board game ratings over time") +
+  # ggthemes::theme_fivethirtyeight()
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=14,face="bold"),
+        plot.title=element_text(size=20,face="bold"))
+```
+
+Figuring out how to selectively label only some data points was a useful exercise, and I rarely think to perform additional data manipulation inside a `ggplot` geom. Because the labeled points were so close together, the labels overlapped, making them hard to read. Luckily, the `ggrepel` package came to the rescue in spacing them out a bit more. They're still a bit cramped, but much better than without it.  
+
+Two takeaways from this graph:  
+
+1. As noted by the [538](https://fivethirtyeight.com/features/designing-the-best-board-game-on-the-planet/) article that prompted the use of this data for Tidy Tuesday, board game ratings are increasing over time. 
+2. I seem to have pretty good taste in board games, at least based on their average ratings :) 
+
+I also wanted to get a sense for how number of ratings and average ratings are related. Do games that are more frequently rated have higher average ratings?
+```{r}
+
+```
+
+What do the other game attributes look like? 
+```{r}
+board_games <- board_games %>% 
+  splitstackshape::concat.split("expansion", sep = ",", structure = "list") %>% 
+  splitstackshape::concat.split("mechanic", sep = ",", structure = "list") %>% 
+  mutate(expansion_n = map(expansion_list, function(x) sum(!is.na(x))), 
+        mechanic_n = map(mechanic_list, function(x) sum(!is.na(x)))) %>% 
+  mutate(min_players_fct = as.factor(case_when(min_players == 0 ~ NA_character_,
+                                                  min_players == 1 ~ "1",
+                                                  min_players == 2 ~ "2",
+                                                  min_players == 3 ~ "3",
+                                                  min_players == 4 ~ "4", 
+                                                  min_players >= 5 ~ "5+",
+                                                  TRUE ~ NA_character_)))
+```
+
+Games by mechanic, expansions, players
+Facet two graphcs- distribution & scatter with rating
+```{r}
+
+```
+
+
+```{r fig.height = 7, fig.width= 5.5, fig.align="center"}
+board_games_mech <- board_games %>% 
+  tidyr::separate_rows(mechanic, sep = ",") %>% 
+  filter(!is.na(mechanic))
+
+board_games_mech %>% 
+  group_by(mechanic) %>% 
+  tally() %>% 
+  arrange(desc(n)) %>% 
+  mutate(mechanic = fct_reorder(mechanic, n)) %>% 
+  ggplot(aes(y = n, x = mechanic)) +
+  geom_bar(stat = "identity", fill = pal[3]) +
+  coord_flip() +  
+  labs(x = "Game mechanic",
+       y = "Number of games") +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=14,face="bold"),
+        plot.title=element_text(size=20,face="bold"))
+```
+
+```{r fig.height = 7, fig.width= 5.5, fig.align="center"}
+# maybe use top 9 or 15? 3x3 or 3x5
+board_games_mech %>% 
+  group_by(mechanic, year_published) %>% 
+  tally() %>% 
+  ungroup() %>% 
+  mutate(mechanic_fct = fct_reorder(mechanic, year_published, min, .desc = T)) %>% 
+  ggplot(aes(x = mechanic_fct, y = year_published, group = mechanic_fct, size = n)) + 
+  geom_point(color = pal[5]) +
+  coord_flip() +  
+  labs(y = "Year published",
+       x = "Game mechanic",
+       size = "Number of games") +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=14,face="bold"),
+        plot.title=element_text(size=20,face="bold"),
+        legend.text=element_text(size=12))
+```
+
+Mechanics
+```{r}
+board_games_mech <- board_games %>% 
+  tidyr::separate_rows(mechanic, sep = ",") %>% 
+  filter(!is.na(mechanic))
+
+n_distinct(board_games_mech$mechanic)
+
+board_games_mech %>% 
+  group_by(name) %>% 
+  summarize(n = n()) %>% 
+  pull() %>% 
+  range()
+
+board_games_mech %>% 
+  group_by(mechanic) %>% 
+  tally() %>% 
+  arrange(desc(n))
+
+top_mechs <- board_games_mech %>% 
+  group_by(mechanic) %>% 
+  tally() %>% 
+  arrange(desc(n)) %>% 
+  mutate(mechanic = fct_reorder(mechanic, n, .desc = T)) %>% 
+  head(9) %>% 
+  pull(mechanic)
+
+board_games_mech %>% 
+  filter(mechanic %in% top_mechs) %>% 
+  ggplot(aes(x = users_rated, y = average_rating)) +
+  geom_point(alpha = .5) + 
+  scale_x_log10() +
+  geom_text(data = . %>% group_by(mechanic) %>% filter(average_rating == max(average_rating)), aes(label = name),hjust=.5,vjust=-.6, color = "blue", size = 2.5) +
+  geom_text(data = . %>% group_by(mechanic) %>% filter(users_rated == max(users_rated)), aes(label = name),hjust=.8,vjust=-.6, color = "blue", size = 2.5) +
+  ylim(0,10) +
+  facet_wrap(vars(mechanic), nrow = 3, ncol = 3) 
+#Need to reorder facets by most popular
+```
+
+```{r}
+rnorm(10)
+```
+
+
