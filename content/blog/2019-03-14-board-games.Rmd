@@ -1,72 +1,93 @@
 ---
-title: Board Games
+title: "Board Games"
 author: ~
 date: '2019-03-15'
 slug: boardgames
 categories: []
-tags: []
+tags: 
+  - R
+  - visualization
+  - code
 authors: []
-draft: TRUE
 ---
+```{r include=FALSE}
+conflicted::conflict_prefer("filter", "dplyr")  # tells R to use filter from dplyr
+knitr::opts_chunk$set(comment = ">")
+```
 
-First time participating in Tidy Tuesday, but board games + data (my two true loves in life) finally convinced me. 
+This is my first time participating in Tidy Tuesday AND my first blog post. My love for board games finally convinced me to actually use my blog. 
 
 I first loaded packages I knew I would be using as well as the data from the Tidy Tuesday GitHub.
 ```{r message=FALSE, warning=FALSE}
-require("tidyverse")
-require("magrittr")
-require("here")
-conflicted::conflict_prefer("filter", "dplyr")
-theme_set(theme_minimal())
-pal <- wesanderson::wes_palette("FantasticFox1", type = "discrete")
+library("tidyverse")
+library("magrittr")
+pal <- wesanderson::wes_palette("FantasticFox1", type = "discrete") # set color palette
 
 board_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv")
 ```
 
-Wanted to first get a sense of board game ratings over time, similar to 538, contextualizing it by labeling some of my favorite games. 
+I wanted to first get a sense of board game ratings over time, contextualizing it by labeling some of my favorite games. 
 
-```{r}
-favorites <- c("Small World", "7 Wonders", "Catan", "Carcassonne", "Dominion", 
-               "Codenames", "Betrayal at House on the Hill", "Incan Gold", 
-               "Citadels", "Caverna: The Cave Farmers", "Deception: Murder in Hong Kong")
+```{r fig.align="center"}
+favorites <- c("Small World", "7 Wonders", "Dominion", "Codenames", 
+               "Betrayal at House on the Hill", "Citadels")
 
 board_games %>% 
   ggplot(aes(x = year_published, y = average_rating)) +
-  geom_point(alpha = .25, color = "lightskyblue") +
-  #geom_smooth(method = "loess", span = .5) + 
+  geom_point(alpha = .25, color = pal[3]) +
+  geom_smooth(method = "loess", span = .5, color = pal[5]) + 
   ggrepel::geom_text_repel(data = . %>% filter(name %in% favorites), 
             aes(label = name),size = 4.3) + 
   geom_point(data = . %>% filter(name %in% favorites), 
              aes(x = year_published, y = average_rating), size = 2) +
   labs(x = "Year published", 
        y = "Average rating", 
-       title = "Average board game ratings over time") +
-  # ggthemes::theme_fivethirtyeight()
+       title = "Average board game ratings increasing over time") +
   bbplot::bbc_style() + 
   theme(axis.text=element_text(size=12),
         axis.title=element_text(size=14,face="bold"),
-        plot.title=element_text(size=20,face="bold"))
+        plot.title=element_text(size=16,face="bold"))
 ```
 
-Figuring out how to selectively label only some data points was a useful exercise, and I rarely think to perform additional data manipulation inside a `ggplot` geom. Because the labeled points were so close together, the labels overlapped, making them hard to read. Luckily, the `ggrepel` package came to the rescue in spacing them out a bit more. They're still a bit cramped, but much better than without it.  
+Figuring out how to selectively label and color only some data points was a useful exercise, and I rarely think to perform additional data manipulation inside a `ggplot` geom. Because the labeled points were so close together, the labels overlapped, making them hard to read. Luckily, the `ggrepel` package came to the rescue in spacing them out a bit more. They're still a bit cramped, but much better than without it.  
+
+I'm also trying out the `bbplot::bbc_style` plot theme for all the graphs in this post, and I'm liking how clean the plots look.
 
 Two takeaways from this graph:  
 
 1. As noted by the [538](https://fivethirtyeight.com/features/designing-the-best-board-game-on-the-planet/) article that prompted the use of this data for Tidy Tuesday, board game ratings are increasing over time. 
 2. I seem to have pretty good taste in board games, at least based on their average ratings :) 
 
-I also wanted to get a sense for how number of ratings and average ratings are related. Do games that are more frequently rated have higher average ratings?
-```{r}
-
+I also wanted to get a sense for how number of ratings and average ratings are related. **Do games that are more frequently rated have higher average ratings?**
+```{r fig.align="center"}
+board_games %>% 
+  ggplot(aes(x = users_rated, y = average_rating)) +
+  geom_point(alpha = .25, color = pal[3]) + 
+  geom_smooth(method = "loess", span = .5) + 
+  scale_x_log10() +
+  ggrepel::geom_text_repel(data = . %>% filter(name %in% favorites), 
+            aes(label = name),size = 4.3) + 
+  geom_point(data = . %>% filter(name %in% favorites), 
+             aes(x = users_rated, y = average_rating), size = 2) +
+  labs(x = "Number of ratings (log)", 
+       y = "Average rating", 
+       title = "Average ratings increase with number of ratings") +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=14,face="bold"),
+        plot.title=element_text(size=16,face="bold"))
 ```
 
-What do the other game attributes look like? 
-```{r}
+It does seem that more frequently rated games also have higher ratings, and all of my favorite games are also have a lot of ratings. 
+
+# Game Characteristics
+**What do the other game attributes look like?** Specifically I was interested in a game's expansions and mechanics, which were each stored in a single column, with multiple expansions and mechanics separated by commas. I used `splitstackshape::concat.split` to create list columns inside the tibble with those values, then counted the number of items in the list for each game to get a count of expansions and mechanics. Minimum number of players also had a long tail, with values above 5 infrequent, so I lumped those into one category. 
+```{r fig.align="center"}
 board_games <- board_games %>% 
   splitstackshape::concat.split("expansion", sep = ",", structure = "list") %>% 
   splitstackshape::concat.split("mechanic", sep = ",", structure = "list") %>% 
-  mutate(expansion_n = map(expansion_list, function(x) sum(!is.na(x))), 
-        mechanic_n = map(mechanic_list, function(x) sum(!is.na(x)))) %>% 
+  mutate(expansion_n = map_dbl(expansion_list, function(x) sum(!is.na(x))), 
+        mechanic_n = map_dbl(mechanic_list, function(x) sum(!is.na(x)))) %>% 
   mutate(min_players_fct = as.factor(case_when(min_players == 0 ~ NA_character_,
                                                   min_players == 1 ~ "1",
                                                   min_players == 2 ~ "2",
@@ -76,95 +97,170 @@ board_games <- board_games %>%
                                                   TRUE ~ NA_character_)))
 ```
 
-Games by mechanic, expansions, players
-Facet two graphcs- distribution & scatter with rating
-```{r}
-
-```
-
-
-```{r fig.height = 7, fig.width= 5.5, fig.align="center"}
-board_games_mech <- board_games %>% 
-  tidyr::separate_rows(mechanic, sep = ",") %>% 
-  filter(!is.na(mechanic))
-
-board_games_mech %>% 
-  group_by(mechanic) %>% 
-  tally() %>% 
-  arrange(desc(n)) %>% 
-  mutate(mechanic = fct_reorder(mechanic, n)) %>% 
-  ggplot(aes(y = n, x = mechanic)) +
-  geom_bar(stat = "identity", fill = pal[3]) +
-  coord_flip() +  
-  labs(x = "Game mechanic",
+```{r  message=FALSE, warning=FALSE, fig.align="center"}
+p1 <- ggplot(board_games, aes(x = min_players_fct)) + 
+  geom_bar(fill = pal[1], stat = "count") +
+  labs(x = "Minimum number of players", 
        y = "Number of games") +
   bbplot::bbc_style() + 
-  theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=14,face="bold"),
-        plot.title=element_text(size=20,face="bold"))
-```
+  theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=12,face="bold"))
 
-```{r fig.height = 7, fig.width= 5.5, fig.align="center"}
-# maybe use top 9 or 15? 3x3 or 3x5
-board_games_mech %>% 
-  group_by(mechanic, year_published) %>% 
-  tally() %>% 
-  ungroup() %>% 
-  mutate(mechanic_fct = fct_reorder(mechanic, year_published, min, .desc = T)) %>% 
-  ggplot(aes(x = mechanic_fct, y = year_published, group = mechanic_fct, size = n)) + 
-  geom_point(color = pal[5]) +
-  coord_flip() +  
-  labs(y = "Year published",
-       x = "Game mechanic",
-       size = "Number of games") +
+p2 <- filter(board_games, playing_time <= 600) %>% 
+  ggplot(aes(x = playing_time)) + 
+  geom_histogram(fill = pal[1], bins = 15) +
+  labs(x = "Play time (min.)", 
+       y = "Number of games") +
   bbplot::bbc_style() + 
-  theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=14,face="bold"),
-        plot.title=element_text(size=20,face="bold"),
-        legend.text=element_text(size=12))
+  theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=12,face="bold"))
+
+p3 <- ggplot(board_games, aes(x = mechanic_n)) + 
+  geom_histogram(fill = pal[1], bins = 20) +
+  labs(x = "Number of mechanics", 
+       y = "Number of games") +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=12,face="bold"))
+
+p4 <- filter(board_games, expansion_n < 100) %>% 
+  ggplot(aes(x = expansion_n)) + 
+  geom_histogram(fill = pal[1], bins = 50) +
+  labs(x = "Number of expansions", 
+       y = "Number of games") +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=12,face="bold"))
+
+p <- cowplot::plot_grid(p1, p2, p3, p4, nrow = 2)
+title <- cowplot::ggdraw() + 
+  cowplot::draw_label("Distributions of game characteristics", 
+                      fontface='bold', size = 16)
+cowplot::plot_grid(title, p, ncol = 1, rel_heights=c(0.1, 1))
 ```
 
-Mechanics
-```{r}
+The `cowplot` package came to the rescue in getting all four plots into one figure. Most games require a minimum of two players, and the median play time is `r median(board_games$playing_time)` minutes. The plot only shows games <=10 hours, but there were `r sum(board_games$playing_time > 600)` board games with play time over 10 hours. These are likely a mix of games played over multiple sessions and erroneous data. 
+Most games employ several game mechanics, and most games don't have any expansions, but there were `r sum(board_games$expansion_n > 100)` games with more than 100 expansions that I removed from the plot, including one game with `r max(board_games$expansion_n)` expansions!  
+
+# Game Mechanics
+I was most interested in further exploring the game mechanics, and since each game can have multiple mechanics, I used `tidyr::separate_rows` to get each mechanic on its own line. 
+
+```{r fig.height= 8, fig.align="center"}
 board_games_mech <- board_games %>% 
   tidyr::separate_rows(mechanic, sep = ",") %>% 
-  filter(!is.na(mechanic))
-
-n_distinct(board_games_mech$mechanic)
-
-board_games_mech %>% 
-  group_by(name) %>% 
-  summarize(n = n()) %>% 
-  pull() %>% 
-  range()
-
-board_games_mech %>% 
+  filter(!is.na(mechanic)) %>% 
   group_by(mechanic) %>% 
-  tally() %>% 
-  arrange(desc(n))
+  add_tally() %>% 
+  ungroup() %>% 
+  mutate(mechanic = fct_reorder(mechanic, n))
 
-top_mechs <- board_games_mech %>% 
-  group_by(mechanic) %>% 
-  tally() %>% 
-  arrange(desc(n)) %>% 
-  mutate(mechanic = fct_reorder(mechanic, n, .desc = T)) %>% 
-  head(9) %>% 
-  pull(mechanic)
+p5 <- board_games_mech %>% 
+  ggplot(aes(x = mechanic)) + 
+  geom_bar(stat = "count", fill = pal[5]) +
+  coord_flip() + 
+  labs(x = "Game mechanic",
+      y = "Number of games") +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=12,face="bold"))
 
-board_games_mech %>% 
-  filter(mechanic %in% top_mechs) %>% 
-  ggplot(aes(x = users_rated, y = average_rating)) +
-  geom_point(alpha = .5) + 
-  scale_x_log10() +
-  geom_text(data = . %>% group_by(mechanic) %>% filter(average_rating == max(average_rating)), aes(label = name),hjust=.5,vjust=-.6, color = "blue", size = 2.5) +
-  geom_text(data = . %>% group_by(mechanic) %>% filter(users_rated == max(users_rated)), aes(label = name),hjust=.8,vjust=-.6, color = "blue", size = 2.5) +
-  ylim(0,10) +
-  facet_wrap(vars(mechanic), nrow = 3, ncol = 3) 
-#Need to reorder facets by most popular
+p6 <- board_games_mech %>% 
+  ggplot(aes(x = mechanic, y = average_rating)) +
+  geom_boxplot() +
+  coord_flip() +  
+    theme(axis.text.y = element_blank(),
+        axis.title.y = element_blank()) +
+  labs(y = "Average rating") +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=12,face="bold"))
+
+pp <- cowplot::plot_grid(p5, p6, nrow = 1)
+title <- cowplot::ggdraw() + cowplot::draw_label("Number of ratings and average rating of games by mechanic", fontface='bold', size = 16)
+cowplot::plot_grid(title, pp, ncol = 1, rel_heights=c(0.1, 1))
 ```
+
+```{r fig.align="center"}
+board_games_mech %>% 
+  group_by(mechanic) %>% 
+  summarize(n = n(), average_rating = mean(average_rating)) %>% 
+  ggplot(aes(x = n, y = average_rating)) + 
+  geom_point(color = pal[5]) + 
+    labs(x = "Number of games",
+       y = "Average rating", 
+       title = "Number of games and average rating of games by mechanic") +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=12,face="bold"),
+        plot.title=element_text(size=16,face="bold"))
+```
+
+There are `r n_distinct(board_games_mech$mechanic)` different mechanics, with Dice Rolling and Hand Management being the most frequent. There is some variability in rating across mechanics, and the ratings of the games in a mechanic do not seem related to the number of games in that mechanic. Notably, Roll/Spin and Move stands out as having comparably lower ratings.  
+
+Most rated and highest average rated game in each of the top 10 mechanics, to get a sense for what types of games they are. 
 
 ```{r}
-rnorm(10)
+
 ```
 
+# Board Game Mechanic Association Rules
+Since games frequently have multiple mechanics, **are there game mechanics that commonly co-occur?** To answer this question, I used association rules to identify commonly co-occuring game mechanics. In order to use the `arules` package for association rule mining, the data has to be in "transactions" format. In order to get it in this format, I first restructured the data so that each mechanic was on its own line. From there, I transformed the data into a list, where each item in the list represents a single game and contains a factor array of that game's mechanic(s). This can then be converted into "transactions" format.
 
+```{r message=FALSE, warning=FALSE}
+library("arules")
+library("arulesViz")
+
+board_games <- board_games %>% 
+  select(game_id, mechanic) %>% 
+  tidyr::separate_rows(mechanic, sep = ",") %>% 
+  filter(!is.na(mechanic)) %>% 
+  group_by(game_id) %>% 
+  # filter(n() > 1) %>% # removing games with only one mechanic
+  ungroup() %>% 
+  mutate_all(as.factor)
+
+mechanics_list <-  split(board_games$mechanic, board_games$game_id)
+mechanics_transactions <- as(mechanics_list, "transactions")
+summary(mechanics_transactions)
+```
+
+The board game data is now stored as a matrix. The density in a sparse matrix indicates the proportion of non-empty cells: `r round(summary(mechanics_transactions)@density,2)`. The most frequent items and itemset/transaction length distribution match the distributions above. If I had not already done this exploratory analysis, I would usually use `itemFrequencyPlot` to visualize the most frequent mechanics. 
+
+```{r message=FALSE, warning=FALSE}
+itemsets <- apriori(mechanics_transactions, 
+                    parameter = list(supp=0.01, minlen = 2, maxlen=5, 
+                                     target = "frequent itemsets"))
+summary(itemsets)
+```
+
+There are `r summary(itemsets)@items@Dim[1]` combinations of mechanics that occur in at least 1% of the data: `r summary(itemsets)@items@lengths[[1]]` two mechanic combinations, and `r summary(itemsets)@items@lengths[[2]]` three mechanic combinations.
+
+One important metric for frequent itemsets is **support**, which indicates how frequently the itemset appears in the dataset, or the proportion of games that contain the combination of mechanics. 
+
+Below are the 10 mechanic combinations with the highest support. The most frequent combination of mechanics is Dice Rolling and Variable Player Powers, which occurred in about 5% of all games. This combination makes sense, because those two mechanics occurred with high frequency (they were the 1st and 4th highest, respectively). Interestingly, the combination of the two most frequent mechanics, Dice Rolling and Hand Management, only occurs 6th most frequently as a pair.
+
+```{r}
+inspect(sort(itemsets, by = "support")[1:10])
+```
+
+Moving on to association rule mining, which gives output in the form of *if this then that* rules. For example, if a game employs mechanic X, it is likely to also employ mechanic Y.
+
+```{r message=FALSE, warning=FALSE}
+association_rules <- apriori(mechanics_transactions, 
+                             parameter = list(supp=0.001, conf=0.8, maxlen=5))
+summary(association_rules)
+```
+
+There are `r summary(association_rules)@length` association rules that occur in at least .1% of the data. The support threshold is very low for association rules because there are so many games with only one mechanic that don't fit any association rules. 
+
+Like with frequent itemsets, we can look to support to indicate the frequency of the left hand side item set in the data. Association rule mining employs an additional metric, **confidence**, which indicates how often the rule is true, or the proportion of games that have the LHS that also contain the RHS. Crayon Rail System only appears in <1% of games, but 82% of the time a game is labled as Crayon Rail System, it is also labeled as Route/Network Buiding and Pick-up and Deliver, with this association rule ocurring in 14 games.  
+
+```{r}
+inspect(association_rules[1:11])
+```
+
+Below are the 10 association rules with the higest confidence. For the first 5, in 100% of the games that the combination of left hand side mechanics occur, the right hand side mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games. 
+
+```{r}
+inspect(sort(association_rules, by = "confidence")[1:10])
+```

@@ -1,61 +1,79 @@
 ---
-title: Board Games
+title: "Board Games"
 author: ~
 date: '2019-03-15'
 slug: boardgames
 categories: []
-tags: []
+tags: 
+  - R
+  - visualization
+  - code
 authors: []
-draft: TRUE
 ---
 
 
 
-<p>First time participating in Tidy Tuesday, but board games + data (my two true loves in life) finally convinced me.</p>
+<p>This is my first time participating in Tidy Tuesday AND my first blog post. My love for board games finally convinced me to actually use my blog.</p>
 <p>I first loaded packages I knew I would be using as well as the data from the Tidy Tuesday GitHub.</p>
-<pre class="r"><code>require(&quot;tidyverse&quot;)
-require(&quot;magrittr&quot;)
-require(&quot;here&quot;)
-conflicted::conflict_prefer(&quot;filter&quot;, &quot;dplyr&quot;)
-theme_set(theme_minimal())
-pal &lt;- wesanderson::wes_palette(&quot;FantasticFox1&quot;, type = &quot;discrete&quot;)
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+library(&quot;magrittr&quot;)
+pal &lt;- wesanderson::wes_palette(&quot;FantasticFox1&quot;, type = &quot;discrete&quot;) # set color palette
 
 board_games &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-03-12/board_games.csv&quot;)</code></pre>
-<p>Wanted to first get a sense of board game ratings over time, similar to 538, contextualizing it by labeling some of my favorite games.</p>
-<pre class="r"><code>favorites &lt;- c(&quot;Small World&quot;, &quot;7 Wonders&quot;, &quot;Catan&quot;, &quot;Carcassonne&quot;, &quot;Dominion&quot;, 
-               &quot;Codenames&quot;, &quot;Betrayal at House on the Hill&quot;, &quot;Incan Gold&quot;, 
-               &quot;Citadels&quot;, &quot;Caverna: The Cave Farmers&quot;, &quot;Deception: Murder in Hong Kong&quot;)
+<p>I wanted to first get a sense of board game ratings over time, contextualizing it by labeling some of my favorite games.</p>
+<pre class="r"><code>favorites &lt;- c(&quot;Small World&quot;, &quot;7 Wonders&quot;, &quot;Dominion&quot;, &quot;Codenames&quot;, 
+               &quot;Betrayal at House on the Hill&quot;, &quot;Citadels&quot;)
 
 board_games %&gt;% 
   ggplot(aes(x = year_published, y = average_rating)) +
-  geom_point(alpha = .25, color = &quot;lightskyblue&quot;) +
-  #geom_smooth(method = &quot;loess&quot;, span = .5) + 
+  geom_point(alpha = .25, color = pal[3]) +
+  geom_smooth(method = &quot;loess&quot;, span = .5, color = pal[5]) + 
   ggrepel::geom_text_repel(data = . %&gt;% filter(name %in% favorites), 
             aes(label = name),size = 4.3) + 
   geom_point(data = . %&gt;% filter(name %in% favorites), 
              aes(x = year_published, y = average_rating), size = 2) +
   labs(x = &quot;Year published&quot;, 
        y = &quot;Average rating&quot;, 
-       title = &quot;Average board game ratings over time&quot;) +
-  # ggthemes::theme_fivethirtyeight()
+       title = &quot;Average board game ratings increasing over time&quot;) +
   bbplot::bbc_style() + 
   theme(axis.text=element_text(size=12),
         axis.title=element_text(size=14,face=&quot;bold&quot;),
-        plot.title=element_text(size=20,face=&quot;bold&quot;))</code></pre>
-<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Figuring out how to selectively label only some data points was a useful exercise, and I rarely think to perform additional data manipulation inside a <code>ggplot</code> geom. Because the labeled points were so close together, the labels overlapped, making them hard to read. Luckily, the <code>ggrepel</code> package came to the rescue in spacing them out a bit more. They’re still a bit cramped, but much better than without it.</p>
+        plot.title=element_text(size=16,face=&quot;bold&quot;))</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Figuring out how to selectively label and color only some data points was a useful exercise, and I rarely think to perform additional data manipulation inside a <code>ggplot</code> geom. Because the labeled points were so close together, the labels overlapped, making them hard to read. Luckily, the <code>ggrepel</code> package came to the rescue in spacing them out a bit more. They’re still a bit cramped, but much better than without it.</p>
+<p>I’m also trying out the <code>bbplot::bbc_style</code> plot theme for all the graphs in this post, and I’m liking how clean the plots look.</p>
 <p>Two takeaways from this graph:</p>
 <ol style="list-style-type: decimal">
 <li>As noted by the <a href="https://fivethirtyeight.com/features/designing-the-best-board-game-on-the-planet/">538</a> article that prompted the use of this data for Tidy Tuesday, board game ratings are increasing over time.</li>
 <li>I seem to have pretty good taste in board games, at least based on their average ratings :)</li>
 </ol>
-<p>I also wanted to get a sense for how number of ratings and average ratings are related. Do games that are more frequently rated have higher average ratings?</p>
-<p>What do the other game attributes look like?</p>
+<p>I also wanted to get a sense for how number of ratings and average ratings are related. <strong>Do games that are more frequently rated have higher average ratings?</strong></p>
+<pre class="r"><code>board_games %&gt;% 
+  ggplot(aes(x = users_rated, y = average_rating)) +
+  geom_point(alpha = .25, color = pal[3]) + 
+  geom_smooth(method = &quot;loess&quot;, span = .5) + 
+  scale_x_log10() +
+  ggrepel::geom_text_repel(data = . %&gt;% filter(name %in% favorites), 
+            aes(label = name),size = 4.3) + 
+  geom_point(data = . %&gt;% filter(name %in% favorites), 
+             aes(x = users_rated, y = average_rating), size = 2) +
+  labs(x = &quot;Number of ratings (log)&quot;, 
+       y = &quot;Average rating&quot;, 
+       title = &quot;Average ratings increase with number of ratings&quot;) +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=14,face=&quot;bold&quot;),
+        plot.title=element_text(size=16,face=&quot;bold&quot;))</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>It does seem that more frequently rated games also have higher ratings, and all of my favorite games are also have a lot of ratings.</p>
+<div id="game-characteristics" class="section level1">
+<h1>Game Characteristics</h1>
+<p><strong>What do the other game attributes look like?</strong> Specifically I was interested in a game’s expansions and mechanics, which were each stored in a single column, with multiple expansions and mechanics separated by commas. I used <code>splitstackshape::concat.split</code> to create list columns inside the tibble with those values, then counted the number of items in the list for each game to get a count of expansions and mechanics. Minimum number of players also had a long tail, with values above 5 infrequent, so I lumped those into one category.</p>
 <pre class="r"><code>board_games &lt;- board_games %&gt;% 
   splitstackshape::concat.split(&quot;expansion&quot;, sep = &quot;,&quot;, structure = &quot;list&quot;) %&gt;% 
   splitstackshape::concat.split(&quot;mechanic&quot;, sep = &quot;,&quot;, structure = &quot;list&quot;) %&gt;% 
-  mutate(expansion_n = map(expansion_list, function(x) sum(!is.na(x))), 
-        mechanic_n = map(mechanic_list, function(x) sum(!is.na(x)))) %&gt;% 
+  mutate(expansion_n = map_dbl(expansion_list, function(x) sum(!is.na(x))), 
+        mechanic_n = map_dbl(mechanic_list, function(x) sum(!is.na(x)))) %&gt;% 
   mutate(min_players_fct = as.factor(case_when(min_players == 0 ~ NA_character_,
                                                   min_players == 1 ~ &quot;1&quot;,
                                                   min_players == 2 ~ &quot;2&quot;,
@@ -63,94 +81,325 @@ board_games %&gt;%
                                                   min_players == 4 ~ &quot;4&quot;, 
                                                   min_players &gt;= 5 ~ &quot;5+&quot;,
                                                   TRUE ~ NA_character_)))</code></pre>
-<p>Games by mechanic, expansions, players Facet two graphcs- distribution &amp; scatter with rating</p>
-<pre class="r"><code>board_games_mech &lt;- board_games %&gt;% 
-  tidyr::separate_rows(mechanic, sep = &quot;,&quot;) %&gt;% 
-  filter(!is.na(mechanic))
-
-board_games_mech %&gt;% 
-  group_by(mechanic) %&gt;% 
-  tally() %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(mechanic = fct_reorder(mechanic, n)) %&gt;% 
-  ggplot(aes(y = n, x = mechanic)) +
-  geom_bar(stat = &quot;identity&quot;, fill = pal[3]) +
-  coord_flip() +  
-  labs(x = &quot;Game mechanic&quot;,
+<pre class="r"><code>p1 &lt;- ggplot(board_games, aes(x = min_players_fct)) + 
+  geom_bar(fill = pal[1], stat = &quot;count&quot;) +
+  labs(x = &quot;Minimum number of players&quot;, 
        y = &quot;Number of games&quot;) +
   bbplot::bbc_style() + 
-  theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=14,face=&quot;bold&quot;),
-        plot.title=element_text(size=20,face=&quot;bold&quot;))</code></pre>
-<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-6-1.png" width="528" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># maybe use top 9 or 15? 3x3 or 3x5
-board_games_mech %&gt;% 
-  group_by(mechanic, year_published) %&gt;% 
-  tally() %&gt;% 
-  ungroup() %&gt;% 
-  mutate(mechanic_fct = fct_reorder(mechanic, year_published, min, .desc = T)) %&gt;% 
-  ggplot(aes(x = mechanic_fct, y = year_published, group = mechanic_fct, size = n)) + 
-  geom_point(color = pal[5]) +
-  coord_flip() +  
-  labs(y = &quot;Year published&quot;,
-       x = &quot;Game mechanic&quot;,
-       size = &quot;Number of games&quot;) +
+  theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=12,face=&quot;bold&quot;))
+
+p2 &lt;- filter(board_games, playing_time &lt;= 600) %&gt;% 
+  ggplot(aes(x = playing_time)) + 
+  geom_histogram(fill = pal[1], bins = 15) +
+  labs(x = &quot;Play time (min.)&quot;, 
+       y = &quot;Number of games&quot;) +
   bbplot::bbc_style() + 
-  theme(axis.text=element_text(size=8),
-        axis.title=element_text(size=14,face=&quot;bold&quot;),
-        plot.title=element_text(size=20,face=&quot;bold&quot;),
-        legend.text=element_text(size=12))</code></pre>
-<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-7-1.png" width="528" style="display: block; margin: auto;" /></p>
-<p>Mechanics</p>
+  theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=12,face=&quot;bold&quot;))
+
+p3 &lt;- ggplot(board_games, aes(x = mechanic_n)) + 
+  geom_histogram(fill = pal[1], bins = 20) +
+  labs(x = &quot;Number of mechanics&quot;, 
+       y = &quot;Number of games&quot;) +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=12,face=&quot;bold&quot;))
+
+p4 &lt;- filter(board_games, expansion_n &lt; 100) %&gt;% 
+  ggplot(aes(x = expansion_n)) + 
+  geom_histogram(fill = pal[1], bins = 50) +
+  labs(x = &quot;Number of expansions&quot;, 
+       y = &quot;Number of games&quot;) +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=10),
+        axis.title=element_text(size=12,face=&quot;bold&quot;))
+
+p &lt;- cowplot::plot_grid(p1, p2, p3, p4, nrow = 2)
+title &lt;- cowplot::ggdraw() + 
+  cowplot::draw_label(&quot;Distributions of game characteristics&quot;, 
+                      fontface=&#39;bold&#39;, size = 16)
+cowplot::plot_grid(title, p, ncol = 1, rel_heights=c(0.1, 1))</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The <code>cowplot</code> package came to the rescue in getting all four plots into one figure. Most games require a minimum of two players, and the median play time is 45 minutes. The plot only shows games &lt;=10 hours, but there were 56 board games with play time over 10 hours. These are likely a mix of games played over multiple sessions and erroneous data. Most games employ several game mechanics, and most games don’t have any expansions, but there were 9 games with more than 100 expansions that I removed from the plot, including one game with 420 expansions!</p>
+</div>
+<div id="game-mechanics" class="section level1">
+<h1>Game Mechanics</h1>
+<p>I was most interested in further exploring the game mechanics, and since each game can have multiple mechanics, I used <code>tidyr::separate_rows</code> to get each mechanic on its own line.</p>
 <pre class="r"><code>board_games_mech &lt;- board_games %&gt;% 
   tidyr::separate_rows(mechanic, sep = &quot;,&quot;) %&gt;% 
-  filter(!is.na(mechanic))
+  filter(!is.na(mechanic)) %&gt;% 
+  group_by(mechanic) %&gt;% 
+  add_tally() %&gt;% 
+  ungroup() %&gt;% 
+  mutate(mechanic = fct_reorder(mechanic, n))
 
-n_distinct(board_games_mech$mechanic)</code></pre>
-<pre><code>## [1] 51</code></pre>
-<pre class="r"><code>board_games_mech %&gt;% 
-  group_by(name) %&gt;% 
-  summarize(n = n()) %&gt;% 
-  pull() %&gt;% 
-  range()</code></pre>
-<pre><code>## [1]  1 18</code></pre>
+p5 &lt;- board_games_mech %&gt;% 
+  ggplot(aes(x = mechanic)) + 
+  geom_bar(stat = &quot;count&quot;, fill = pal[5]) +
+  coord_flip() + 
+  labs(x = &quot;Game mechanic&quot;,
+      y = &quot;Number of games&quot;) +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=12,face=&quot;bold&quot;))
+
+p6 &lt;- board_games_mech %&gt;% 
+  ggplot(aes(x = mechanic, y = average_rating)) +
+  geom_boxplot() +
+  coord_flip() +  
+    theme(axis.text.y = element_blank(),
+        axis.title.y = element_blank()) +
+  labs(y = &quot;Average rating&quot;) +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=12,face=&quot;bold&quot;))
+
+pp &lt;- cowplot::plot_grid(p5, p6, nrow = 1)
+title &lt;- cowplot::ggdraw() + cowplot::draw_label(&quot;Number of ratings and average rating of games by mechanic&quot;, fontface=&#39;bold&#39;, size = 16)
+cowplot::plot_grid(title, pp, ncol = 1, rel_heights=c(0.1, 1))</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>board_games_mech %&gt;% 
   group_by(mechanic) %&gt;% 
-  tally() %&gt;% 
-  arrange(desc(n))</code></pre>
-<pre><code>## # A tibble: 51 x 2
-##    mechanic                          n
-##    &lt;chr&gt;                         &lt;int&gt;
-##  1 Dice Rolling                   2438
-##  2 Hand Management                2176
-##  3 Set Collection                 1347
-##  4 Hex-and-Counter                1244
-##  5 Variable Player Powers         1223
-##  6 Tile Placement                  907
-##  7 Modular Board                   858
-##  8 Card Drafting                   844
-##  9 Area Control / Area Influence   803
-## 10 Auction/Bidding                 682
-## # … with 41 more rows</code></pre>
-<pre class="r"><code>top_mechs &lt;- board_games_mech %&gt;% 
-  group_by(mechanic) %&gt;% 
-  tally() %&gt;% 
-  arrange(desc(n)) %&gt;% 
-  mutate(mechanic = fct_reorder(mechanic, n, .desc = T)) %&gt;% 
-  head(9) %&gt;% 
-  pull(mechanic)
+  summarize(n = n(), average_rating = mean(average_rating)) %&gt;% 
+  ggplot(aes(x = n, y = average_rating)) + 
+  geom_point(color = pal[5]) + 
+    labs(x = &quot;Number of games&quot;,
+       y = &quot;Average rating&quot;, 
+       title = &quot;Number of games and average rating of games by mechanic&quot;) +
+  bbplot::bbc_style() + 
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=12,face=&quot;bold&quot;),
+        plot.title=element_text(size=16,face=&quot;bold&quot;))</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>There are 51 different mechanics, with Dice Rolling and Hand Management being the most frequent. There is some variability in rating across mechanics, and the ratings of the games in a mechanic do not seem related to the number of games in that mechanic. Notably, Roll/Spin and Move stands out as having comparably lower ratings.</p>
+<p>Most rated and highest average rated game in each of the top 10 mechanics, to get a sense for what types of games they are.</p>
+</div>
+<div id="board-game-mechanic-association-rules" class="section level1">
+<h1>Board Game Mechanic Association Rules</h1>
+<p>Since games frequently have multiple mechanics, <strong>are there game mechanics that commonly co-occur?</strong> To answer this question, I used association rules to identify commonly co-occuring game mechanics. In order to use the <code>arules</code> package for association rule mining, the data has to be in “transactions” format. In order to get it in this format, I first restructured the data so that each mechanic was on its own line. From there, I transformed the data into a list, where each item in the list represents a single game and contains a factor array of that game’s mechanic(s). This can then be converted into “transactions” format.</p>
+<pre class="r"><code>library(&quot;arules&quot;)
+library(&quot;arulesViz&quot;)
 
-board_games_mech %&gt;% 
-  filter(mechanic %in% top_mechs) %&gt;% 
-  ggplot(aes(x = users_rated, y = average_rating)) +
-  geom_point(alpha = .5) + 
-  scale_x_log10() +
-  geom_text(data = . %&gt;% group_by(mechanic) %&gt;% filter(average_rating == max(average_rating)), aes(label = name),hjust=.5,vjust=-.6, color = &quot;blue&quot;, size = 2.5) +
-  geom_text(data = . %&gt;% group_by(mechanic) %&gt;% filter(users_rated == max(users_rated)), aes(label = name),hjust=.8,vjust=-.6, color = &quot;blue&quot;, size = 2.5) +
-  ylim(0,10) +
-  facet_wrap(vars(mechanic), nrow = 3, ncol = 3) </code></pre>
-<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<pre class="r"><code>#Need to reorder facets by most popular</code></pre>
-<pre class="r"><code>rnorm(10)</code></pre>
-<pre><code>##  [1]  1.30848680  0.71899815 -0.23497206  1.22456536 -0.39747611
-##  [6] -1.87624665 -1.71345906  0.84389499 -0.56886087 -0.09047219</code></pre>
+board_games &lt;- board_games %&gt;% 
+  select(game_id, mechanic) %&gt;% 
+  tidyr::separate_rows(mechanic, sep = &quot;,&quot;) %&gt;% 
+  filter(!is.na(mechanic)) %&gt;% 
+  group_by(game_id) %&gt;% 
+  # filter(n() &gt; 1) %&gt;% # removing games with only one mechanic
+  ungroup() %&gt;% 
+  mutate_all(as.factor)
+
+mechanics_list &lt;-  split(board_games$mechanic, board_games$game_id)
+mechanics_transactions &lt;- as(mechanics_list, &quot;transactions&quot;)
+summary(mechanics_transactions)</code></pre>
+<pre><code>&gt; transactions as itemMatrix in sparse format with
+&gt;  9582 rows (elements/itemsets/transactions) and
+&gt;  51 columns (items) and a density of 0.04900938 
+&gt; 
+&gt; most frequent items:
+&gt;           Dice Rolling        Hand Management         Set Collection 
+&gt;                   2438                   2176                   1347 
+&gt;        Hex-and-Counter Variable Player Powers                (Other) 
+&gt;                   1244                   1223                  15522 
+&gt; 
+&gt; element (itemset/transaction) length distribution:
+&gt; sizes
+&gt;    1    2    3    4    5    6    7    8    9   10   11   12   15   18 
+&gt; 2852 2716 1987 1113  524  217  111   30   23    4    2    1    1    1 
+&gt; 
+&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+&gt;   1.000   1.000   2.000   2.499   3.000  18.000 
+&gt; 
+&gt; includes extended item information - examples:
+&gt;                          labels
+&gt; 1                        Acting
+&gt; 2 Action / Movement Programming
+&gt; 3 Action Point Allowance System
+&gt; 
+&gt; includes extended transaction information - examples:
+&gt;   transactionID
+&gt; 1             1
+&gt; 2             2
+&gt; 3             3</code></pre>
+<p>The board game data is now stored as a matrix. The density in a sparse matrix indicates the proportion of non-empty cells: 0.05. The most frequent items and itemset/transaction length distribution match the distributions above. If I had not already done this exploratory analysis, I would usually use <code>itemFrequencyPlot</code> to visualize the most frequent mechanics.</p>
+<pre class="r"><code>itemsets &lt;- apriori(mechanics_transactions, 
+                    parameter = list(supp=0.01, minlen = 2, maxlen=5, 
+                                     target = &quot;frequent itemsets&quot;))</code></pre>
+<pre><code>&gt; Apriori
+&gt; 
+&gt; Parameter specification:
+&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen
+&gt;          NA    0.1    1 none FALSE            TRUE       5    0.01      2
+&gt;  maxlen            target   ext
+&gt;       5 frequent itemsets FALSE
+&gt; 
+&gt; Algorithmic control:
+&gt;  filter tree heap memopt load sort verbose
+&gt;     0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+&gt; 
+&gt; Absolute minimum support count: 95 
+&gt; 
+&gt; set item appearances ...[0 item(s)] done [0.00s].
+&gt; set transactions ...[51 item(s), 9582 transaction(s)] done [0.00s].
+&gt; sorting and recoding items ... [45 item(s)] done [0.00s].
+&gt; creating transaction tree ... done [0.00s].
+&gt; checking subsets of size 1 2 3 done [0.00s].
+&gt; writing ... [73 set(s)] done [0.00s].
+&gt; creating S4 object  ... done [0.00s].</code></pre>
+<pre class="r"><code>summary(itemsets)</code></pre>
+<pre><code>&gt; set of 73 itemsets
+&gt; 
+&gt; most frequent items:
+&gt;                  Dice Rolling               Hand Management 
+&gt;                            26                            19 
+&gt;        Variable Player Powers                Set Collection 
+&gt;                            16                            10 
+&gt; Area Control / Area Influence                       (Other) 
+&gt;                             9                            72 
+&gt; 
+&gt; element (itemset/transaction) length distribution:sizes
+&gt;  2  3 
+&gt; 67  6 
+&gt; 
+&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+&gt;   2.000   2.000   2.000   2.082   2.000   3.000 
+&gt; 
+&gt; summary of quality measures:
+&gt;     support            count      
+&gt;  Min.   :0.01012   Min.   : 97.0  
+&gt;  1st Qu.:0.01158   1st Qu.:111.0  
+&gt;  Median :0.01472   Median :141.0  
+&gt;  Mean   :0.01810   Mean   :173.5  
+&gt;  3rd Qu.:0.01993   3rd Qu.:191.0  
+&gt;  Max.   :0.05469   Max.   :524.0  
+&gt; 
+&gt; includes transaction ID lists: FALSE 
+&gt; 
+&gt; mining info:
+&gt;                    data ntransactions support confidence
+&gt;  mechanics_transactions          9582    0.01          1</code></pre>
+<p>There are 73 combinations of mechanics that occur in at least 1% of the data: 67 two mechanic combinations, and 6 three mechanic combinations.</p>
+<p>One important metric for frequent itemsets is <strong>support</strong>, which indicates how frequently the itemset appears in the dataset, or the proportion of games that contain the combination of mechanics.</p>
+<p>Below are the 10 mechanic combinations with the highest support. The most frequent combination of mechanics is Dice Rolling and Variable Player Powers, which occurred in about 5% of all games. This combination makes sense, because those two mechanics occurred with high frequency (they were the 1st and 4th highest, respectively). Interestingly, the combination of the two most frequent mechanics, Dice Rolling and Hand Management, only occurs 6th most frequently as a pair.</p>
+<pre class="r"><code>inspect(sort(itemsets, by = &quot;support&quot;)[1:10])</code></pre>
+<pre><code>&gt;      items                                    support    count
+&gt; [1]  {Dice Rolling,Variable Player Powers}    0.05468587 524  
+&gt; [2]  {Hand Management,Set Collection}         0.04487581 430  
+&gt; [3]  {Dice Rolling,Hex-and-Counter}           0.04383219 420  
+&gt; [4]  {Hand Management,Variable Player Powers} 0.04091004 392  
+&gt; [5]  {Card Drafting,Hand Management}          0.03903152 374  
+&gt; [6]  {Dice Rolling,Hand Management}           0.03590065 344  
+&gt; [7]  {Dice Rolling,Modular Board}             0.03360468 322  
+&gt; [8]  {Hex-and-Counter,Simulation}             0.03078689 295  
+&gt; [9]  {Area Movement,Dice Rolling}             0.02796911 268  
+&gt; [10] {Dice Rolling,Simulation}                0.02765602 265</code></pre>
+<p>Moving on to association rule mining, which gives output in the form of <em>if this then that</em> rules. For example, if a game employs mechanic X, it is likely to also employ mechanic Y.</p>
+<pre class="r"><code>association_rules &lt;- apriori(mechanics_transactions, 
+                             parameter = list(supp=0.001, conf=0.8, maxlen=5))</code></pre>
+<pre><code>&gt; Apriori
+&gt; 
+&gt; Parameter specification:
+&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen
+&gt;         0.8    0.1    1 none FALSE            TRUE       5   0.001      1
+&gt;  maxlen target   ext
+&gt;       5  rules FALSE
+&gt; 
+&gt; Algorithmic control:
+&gt;  filter tree heap memopt load sort verbose
+&gt;     0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+&gt; 
+&gt; Absolute minimum support count: 9 
+&gt; 
+&gt; set item appearances ...[0 item(s)] done [0.00s].
+&gt; set transactions ...[51 item(s), 9582 transaction(s)] done [0.00s].
+&gt; sorting and recoding items ... [51 item(s)] done [0.00s].
+&gt; creating transaction tree ... done [0.00s].
+&gt; checking subsets of size 1 2 3 4 5 done [0.00s].
+&gt; writing ... [51 rule(s)] done [0.00s].
+&gt; creating S4 object  ... done [0.00s].</code></pre>
+<pre class="r"><code>summary(association_rules)</code></pre>
+<pre><code>&gt; set of 51 rules
+&gt; 
+&gt; rule length distribution (lhs + rhs):sizes
+&gt;  3  4  5 
+&gt;  9 37  5 
+&gt; 
+&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+&gt;   3.000   4.000   4.000   3.922   4.000   5.000 
+&gt; 
+&gt; summary of quality measures:
+&gt;     support           confidence          lift            count      
+&gt;  Min.   :0.001044   Min.   :0.8000   Min.   : 3.144   Min.   :10.00  
+&gt;  1st Qu.:0.001148   1st Qu.:0.8363   1st Qu.: 3.983   1st Qu.:11.00  
+&gt;  Median :0.001357   Median :0.8667   Median : 7.123   Median :13.00  
+&gt;  Mean   :0.002089   Mean   :0.8826   Mean   :10.141   Mean   :20.02  
+&gt;  3rd Qu.:0.001513   3rd Qu.:0.9253   3rd Qu.:11.109   3rd Qu.:14.50  
+&gt;  Max.   :0.007201   Max.   :1.0000   Max.   :30.419   Max.   :69.00  
+&gt; 
+&gt; mining info:
+&gt;                    data ntransactions support confidence
+&gt;  mechanics_transactions          9582   0.001        0.8</code></pre>
+<p>There are 51 association rules that occur in at least .1% of the data. The support threshold is very low for association rules because there are so many games with only one mechanic that don’t fit any association rules.</p>
+<p>Like with frequent itemsets, we can look to support to indicate the frequency of the left hand side item set in the data. Association rule mining employs an additional metric, <strong>confidence</strong>, which indicates how often the rule is true, or the proportion of games that have the LHS that also contain the RHS. Crayon Rail System only appears in &lt;1% of games, but 82% of the time a game is labled as Crayon Rail System, it is also labeled as Route/Network Buiding and Pick-up and Deliver, with this association rule ocurring in 14 games.</p>
+<pre class="r"><code>inspect(association_rules[1:11])</code></pre>
+<pre><code>&gt;      lhs                         rhs                          support confidence      lift count
+&gt; [1]  {Crayon Rail System,                                                                       
+&gt;       Route/Network Building} =&gt; {Pick-up and Deliver}    0.001252348  0.8571429 24.015038    12
+&gt; [2]  {Crayon Rail System,                                                                       
+&gt;       Pick-up and Deliver}    =&gt; {Route/Network Building} 0.001252348  0.8571429 26.073469    12
+&gt; [3]  {Stock Holding,                                                                            
+&gt;       Tile Placement}         =&gt; {Route/Network Building} 0.004905030  0.8392857 25.530272    47
+&gt; [4]  {Deck / Pool Building,                                                                     
+&gt;       Take That}              =&gt; {Hand Management}        0.001461073  0.8235294  3.626406    14
+&gt; [5]  {Partnerships,                                                                             
+&gt;       Role Playing}           =&gt; {Variable Player Powers} 0.004174494  0.8000000  6.267866    40
+&gt; [6]  {Role Playing,                                                                             
+&gt;       Tile Placement}         =&gt; {Modular Board}          0.001252348  0.8571429  9.572428    12
+&gt; [7]  {Route/Network Building,                                                                   
+&gt;       Trading}                =&gt; {Dice Rolling}           0.001461073  0.8750000  3.438987    14
+&gt; [8]  {Auction/Bidding,                                                                          
+&gt;       Roll / Spin and Move}   =&gt; {Trading}                0.007201002  0.8625000 23.020822    69
+&gt; [9]  {Auction/Bidding,                                                                          
+&gt;       Roll / Spin and Move}   =&gt; {Set Collection}         0.007096640  0.8500000  6.046548    68
+&gt; [10] {Auction/Bidding,                                                                          
+&gt;       Stock Holding,                                                                            
+&gt;       Tile Placement}         =&gt; {Route/Network Building} 0.002400334  1.0000000 30.419048    23
+&gt; [11] {Auction/Bidding,                                                                          
+&gt;       Roll / Spin and Move,                                                                     
+&gt;       Stock Holding}          =&gt; {Trading}                0.001147986  1.0000000 26.690808    11</code></pre>
+<p>Below are the 10 association rules with the higest confidence. For the first 5, in 100% of the games that the combination of left hand side mechanics occur, the right hand side mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games.</p>
+<pre class="r"><code>inspect(sort(association_rules, by = &quot;confidence&quot;)[1:10])</code></pre>
+<pre><code>&gt;      lhs                                rhs                          support confidence      lift count
+&gt; [1]  {Auction/Bidding,                                                                                 
+&gt;       Stock Holding,                                                                                   
+&gt;       Tile Placement}                =&gt; {Route/Network Building} 0.002400334  1.0000000 30.419048    23
+&gt; [2]  {Auction/Bidding,                                                                                 
+&gt;       Roll / Spin and Move,                                                                            
+&gt;       Stock Holding}                 =&gt; {Trading}                0.001147986  1.0000000 26.690808    11
+&gt; [3]  {Roll / Spin and Move,                                                                            
+&gt;       Set Collection,                                                                                  
+&gt;       Stock Holding}                 =&gt; {Trading}                0.001147986  1.0000000 26.690808    11
+&gt; [4]  {Grid Movement,                                                                                   
+&gt;       Modular Board,                                                                                   
+&gt;       Role Playing,                                                                                    
+&gt;       Variable Player Powers}        =&gt; {Dice Rolling}           0.001356710  1.0000000  3.930271    13
+&gt; [5]  {Area Control / Area Influence,                                                                   
+&gt;       Area Movement,                                                                                   
+&gt;       Campaign / Battle Card Driven} =&gt; {Dice Rolling}           0.002087247  0.9523810  3.743115    20
+&gt; [6]  {Auction/Bidding,                                                                                 
+&gt;       Roll / Spin and Move,                                                                            
+&gt;       Set Collection}                =&gt; {Trading}                0.006679190  0.9411765 25.120760    64
+&gt; [7]  {Grid Movement,                                                                                   
+&gt;       Modular Board,                                                                                   
+&gt;       Role Playing}                  =&gt; {Dice Rolling}           0.001565435  0.9375000  3.684629    15
+&gt; [8]  {Grid Movement,                                                                                   
+&gt;       Role Playing,                                                                                    
+&gt;       Variable Player Powers}        =&gt; {Dice Rolling}           0.001461073  0.9333333  3.668253    14
+&gt; [9]  {Dice Rolling,                                                                                    
+&gt;       Partnerships,                                                                                    
+&gt;       Role Playing}                  =&gt; {Variable Player Powers} 0.001461073  0.9333333  7.312510    14
+&gt; [10] {Co-operative Play,                                                                               
+&gt;       Dice Rolling,                                                                                    
+&gt;       Point to Point Movement}       =&gt; {Variable Player Powers} 0.001461073  0.9333333  7.312510    14</code></pre>
+</div>

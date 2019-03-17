@@ -193,4 +193,8 @@ music2018 &lt;- dplyr::filter(music2018, Play.Duration.Milliseconds == Media.Dur
 <pre class="r"><code>music2018_songs &lt;- dplyr::group_by(music2018, Song.Name, Artist.Name) %&gt;% 
   dplyr::summarize(N = n()) %&gt;% 
   dplyr::arrange(-N)</code></pre>
-<p>Top songs Listening by month Listening by day of the week Songs with the highest skip Songs I listened to all the way through the most</p>
+<p>Top songs
+Listening by month
+Listening by day of the week
+Songs with the highest skip
+Songs I listened to all the way through the most</p>
