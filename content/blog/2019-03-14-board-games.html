@@ -44,10 +44,10 @@ board_games %&gt;%
 <p>I’m also trying out the <code>bbplot::bbc_style</code> plot theme for all the graphs in this post, and I’m liking how clean the plots look.</p>
 <p>Two takeaways from this graph:</p>
 <ol style="list-style-type: decimal">
-<li>As noted by the <a href="https://fivethirtyeight.com/features/designing-the-best-board-game-on-the-planet/">538</a> article that prompted the use of this data for Tidy Tuesday, board game ratings are increasing over time.</li>
+<li>As noted by the <a href="https://fivethirtyeight.com/features/designing-the-best-board-game-on-the-planet/">FiveThirtyEight</a> article that prompted the use of this data for Tidy Tuesday, board game ratings are increasing over time.</li>
 <li>I seem to have pretty good taste in board games, at least based on their average ratings :)</li>
 </ol>
-<p>I also wanted to get a sense for how number of ratings and average ratings are related. <strong>Do games that are more frequently rated have higher average ratings?</strong></p>
+<p>I also wanted to get a sense for how number of ratings and average ratings are related. <strong>Do more frequently rated games have higher average ratings?</strong></p>
 <pre class="r"><code>board_games %&gt;% 
   ggplot(aes(x = users_rated, y = average_rating)) +
   geom_point(alpha = .25, color = pal[3]) + 
@@ -121,7 +121,8 @@ title &lt;- cowplot::ggdraw() +
                       fontface=&#39;bold&#39;, size = 16)
 cowplot::plot_grid(title, p, ncol = 1, rel_heights=c(0.1, 1))</code></pre>
 <p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The <code>cowplot</code> package came to the rescue in getting all four plots into one figure. Most games require a minimum of two players, and the median play time is 45 minutes. The plot only shows games &lt;=10 hours, but there were 56 board games with play time over 10 hours. These are likely a mix of games played over multiple sessions and erroneous data. Most games employ several game mechanics, and most games don’t have any expansions, but there were 9 games with more than 100 expansions that I removed from the plot, including one game with 420 expansions!</p>
+<p>The <code>cowplot</code> package helped me get all four plots into one figure. Most games require a minimum of two players, and the median play time is 45 minutes. The plot only shows games &lt;=10 hours, but there were 56 board games with play time over 10 hours. These are likely a mix of games played over multiple sessions and erroneous data.
+Most games employ several game mechanics, and most games don’t have any expansions, but there were 9 games with more than 100 expansions that I removed from the plot, including one game with 420 expansions!</p>
 </div>
 <div id="game-mechanics" class="section level1">
 <h1>Game Mechanics</h1>
@@ -173,7 +174,74 @@ cowplot::plot_grid(title, pp, ncol = 1, rel_heights=c(0.1, 1))</code></pre>
         plot.title=element_text(size=16,face=&quot;bold&quot;))</code></pre>
 <p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>There are 51 different mechanics, with Dice Rolling and Hand Management being the most frequent. There is some variability in rating across mechanics, and the ratings of the games in a mechanic do not seem related to the number of games in that mechanic. Notably, Roll/Spin and Move stands out as having comparably lower ratings.</p>
-<p>Most rated and highest average rated game in each of the top 10 mechanics, to get a sense for what types of games they are.</p>
+<p>I’m not familiar with what all of these mechanics actually mean, so I wanted to see the highest rated and most rated game in the most popular mechanics to get an idea of the type of games that use those mechanics.</p>
+<pre class="r"><code>board_games_mech %&gt;% 
+  group_by(mechanic) %&gt;% 
+  summarize(top_rated = first(name, order_by = desc(average_rating)), most_rated = first(name, order_by = desc(users_rated))) %&gt;% 
+  arrange(desc(mechanic)) %&gt;% 
+  head(10) %&gt;% 
+  kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">mechanic</th>
+<th align="left">top_rated</th>
+<th align="left">most_rated</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Dice Rolling</td>
+<td align="left">Small World Designer Edition</td>
+<td align="left">Catan</td>
+</tr>
+<tr class="even">
+<td align="left">Hand Management</td>
+<td align="left">Through the Ages: A New Story of Civilization</td>
+<td align="left">Catan</td>
+</tr>
+<tr class="odd">
+<td align="left">Set Collection</td>
+<td align="left">Pandemic Legacy: Season 1</td>
+<td align="left">Pandemic</td>
+</tr>
+<tr class="even">
+<td align="left">Hex-and-Counter</td>
+<td align="left">Last Chance for Victory</td>
+<td align="left">Twilight Imperium (Third Edition)</td>
+</tr>
+<tr class="odd">
+<td align="left">Variable Player Powers</td>
+<td align="left">Small World Designer Edition</td>
+<td align="left">Pandemic</td>
+</tr>
+<tr class="even">
+<td align="left">Tile Placement</td>
+<td align="left">1817</td>
+<td align="left">Carcassonne</td>
+</tr>
+<tr class="odd">
+<td align="left">Modular Board</td>
+<td align="left">Mechs vs. Minions</td>
+<td align="left">Catan</td>
+</tr>
+<tr class="even">
+<td align="left">Card Drafting</td>
+<td align="left">Through the Ages: A New Story of Civilization</td>
+<td align="left">Dominion</td>
+</tr>
+<tr class="odd">
+<td align="left">Area Control / Area Influence</td>
+<td align="left">Small World Designer Edition</td>
+<td align="left">Carcassonne</td>
+</tr>
+<tr class="even">
+<td align="left">Auction/Bidding</td>
+<td align="left">Through the Ages: A New Story of Civilization</td>
+<td align="left">Power Grid</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="board-game-mechanic-association-rules" class="section level1">
 <h1>Board Game Mechanic Association Rules</h1>
@@ -222,31 +290,11 @@ summary(mechanics_transactions)</code></pre>
 &gt; 1             1
 &gt; 2             2
 &gt; 3             3</code></pre>
-<p>The board game data is now stored as a matrix. The density in a sparse matrix indicates the proportion of non-empty cells: 0.05. The most frequent items and itemset/transaction length distribution match the distributions above. If I had not already done this exploratory analysis, I would usually use <code>itemFrequencyPlot</code> to visualize the most frequent mechanics.</p>
+<p>The board game data is now stored as a matrix. The density in a sparse matrix indicates the proportion of non-empty cells: 0.05. The most frequent items and itemset/transaction length distribution match the distributions above, showing that Dice Rolling is the most frequent mechanic, and 2852 games only have one mechanic. If I had not already done this exploratory analysis, I would usually use <code>itemFrequencyPlot</code> to visualize the most frequent mechanics.</p>
+<p>First, I’m using the <code>frequent itemsets</code> target to find combinations of game mechanics that commonly occur together.</p>
 <pre class="r"><code>itemsets &lt;- apriori(mechanics_transactions, 
                     parameter = list(supp=0.01, minlen = 2, maxlen=5, 
                                      target = &quot;frequent itemsets&quot;))</code></pre>
-<pre><code>&gt; Apriori
-&gt; 
-&gt; Parameter specification:
-&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen
-&gt;          NA    0.1    1 none FALSE            TRUE       5    0.01      2
-&gt;  maxlen            target   ext
-&gt;       5 frequent itemsets FALSE
-&gt; 
-&gt; Algorithmic control:
-&gt;  filter tree heap memopt load sort verbose
-&gt;     0.1 TRUE TRUE  FALSE TRUE    2    TRUE
-&gt; 
-&gt; Absolute minimum support count: 95 
-&gt; 
-&gt; set item appearances ...[0 item(s)] done [0.00s].
-&gt; set transactions ...[51 item(s), 9582 transaction(s)] done [0.00s].
-&gt; sorting and recoding items ... [45 item(s)] done [0.00s].
-&gt; creating transaction tree ... done [0.00s].
-&gt; checking subsets of size 1 2 3 done [0.00s].
-&gt; writing ... [73 set(s)] done [0.00s].
-&gt; creating S4 object  ... done [0.00s].</code></pre>
 <pre class="r"><code>summary(itemsets)</code></pre>
 <pre><code>&gt; set of 73 itemsets
 &gt; 
@@ -281,43 +329,76 @@ summary(mechanics_transactions)</code></pre>
 &gt;  mechanics_transactions          9582    0.01          1</code></pre>
 <p>There are 73 combinations of mechanics that occur in at least 1% of the data: 67 two mechanic combinations, and 6 three mechanic combinations.</p>
 <p>One important metric for frequent itemsets is <strong>support</strong>, which indicates how frequently the itemset appears in the dataset, or the proportion of games that contain the combination of mechanics.</p>
-<p>Below are the 10 mechanic combinations with the highest support. The most frequent combination of mechanics is Dice Rolling and Variable Player Powers, which occurred in about 5% of all games. This combination makes sense, because those two mechanics occurred with high frequency (they were the 1st and 4th highest, respectively). Interestingly, the combination of the two most frequent mechanics, Dice Rolling and Hand Management, only occurs 6th most frequently as a pair.</p>
-<pre class="r"><code>inspect(sort(itemsets, by = &quot;support&quot;)[1:10])</code></pre>
-<pre><code>&gt;      items                                    support    count
-&gt; [1]  {Dice Rolling,Variable Player Powers}    0.05468587 524  
-&gt; [2]  {Hand Management,Set Collection}         0.04487581 430  
-&gt; [3]  {Dice Rolling,Hex-and-Counter}           0.04383219 420  
-&gt; [4]  {Hand Management,Variable Player Powers} 0.04091004 392  
-&gt; [5]  {Card Drafting,Hand Management}          0.03903152 374  
-&gt; [6]  {Dice Rolling,Hand Management}           0.03590065 344  
-&gt; [7]  {Dice Rolling,Modular Board}             0.03360468 322  
-&gt; [8]  {Hex-and-Counter,Simulation}             0.03078689 295  
-&gt; [9]  {Area Movement,Dice Rolling}             0.02796911 268  
-&gt; [10] {Dice Rolling,Simulation}                0.02765602 265</code></pre>
+<p>Below are the 10 mechanic combinations with the highest support. The most frequent combination of mechanics is Dice Rolling and Variable Player Powers, which occurred in about 5.5% of all games. This combination makes sense, because those two mechanics occurred with high frequency (they were the 1st and 4th highest, respectively). Interestingly, the combination of the two most frequent mechanics, Dice Rolling and Hand Management, only occurs 6th most frequently as a pair.</p>
+<pre class="r"><code>DATAFRAME(itemsets) %&gt;% 
+  arrange(desc(support)) %&gt;% 
+  head(10) %&gt;% 
+  rename(&quot;mechanics&quot; = items) %&gt;% 
+  kable(row.names = F, digits = 3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">mechanics</th>
+<th align="right">support</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">{Dice Rolling,Variable Player Powers}</td>
+<td align="right">0.055</td>
+<td align="right">524</td>
+</tr>
+<tr class="even">
+<td align="left">{Hand Management,Set Collection}</td>
+<td align="right">0.045</td>
+<td align="right">430</td>
+</tr>
+<tr class="odd">
+<td align="left">{Dice Rolling,Hex-and-Counter}</td>
+<td align="right">0.044</td>
+<td align="right">420</td>
+</tr>
+<tr class="even">
+<td align="left">{Hand Management,Variable Player Powers}</td>
+<td align="right">0.041</td>
+<td align="right">392</td>
+</tr>
+<tr class="odd">
+<td align="left">{Card Drafting,Hand Management}</td>
+<td align="right">0.039</td>
+<td align="right">374</td>
+</tr>
+<tr class="even">
+<td align="left">{Dice Rolling,Hand Management}</td>
+<td align="right">0.036</td>
+<td align="right">344</td>
+</tr>
+<tr class="odd">
+<td align="left">{Dice Rolling,Modular Board}</td>
+<td align="right">0.034</td>
+<td align="right">322</td>
+</tr>
+<tr class="even">
+<td align="left">{Hex-and-Counter,Simulation}</td>
+<td align="right">0.031</td>
+<td align="right">295</td>
+</tr>
+<tr class="odd">
+<td align="left">{Area Movement,Dice Rolling}</td>
+<td align="right">0.028</td>
+<td align="right">268</td>
+</tr>
+<tr class="even">
+<td align="left">{Dice Rolling,Simulation}</td>
+<td align="right">0.028</td>
+<td align="right">265</td>
+</tr>
+</tbody>
+</table>
 <p>Moving on to association rule mining, which gives output in the form of <em>if this then that</em> rules. For example, if a game employs mechanic X, it is likely to also employ mechanic Y.</p>
 <pre class="r"><code>association_rules &lt;- apriori(mechanics_transactions, 
                              parameter = list(supp=0.001, conf=0.8, maxlen=5))</code></pre>
-<pre><code>&gt; Apriori
-&gt; 
-&gt; Parameter specification:
-&gt;  confidence minval smax arem  aval originalSupport maxtime support minlen
-&gt;         0.8    0.1    1 none FALSE            TRUE       5   0.001      1
-&gt;  maxlen target   ext
-&gt;       5  rules FALSE
-&gt; 
-&gt; Algorithmic control:
-&gt;  filter tree heap memopt load sort verbose
-&gt;     0.1 TRUE TRUE  FALSE TRUE    2    TRUE
-&gt; 
-&gt; Absolute minimum support count: 9 
-&gt; 
-&gt; set item appearances ...[0 item(s)] done [0.00s].
-&gt; set transactions ...[51 item(s), 9582 transaction(s)] done [0.00s].
-&gt; sorting and recoding items ... [51 item(s)] done [0.00s].
-&gt; creating transaction tree ... done [0.00s].
-&gt; checking subsets of size 1 2 3 4 5 done [0.00s].
-&gt; writing ... [51 rule(s)] done [0.00s].
-&gt; creating S4 object  ... done [0.00s].</code></pre>
 <pre class="r"><code>summary(association_rules)</code></pre>
 <pre><code>&gt; set of 51 rules
 &gt; 
@@ -341,65 +422,217 @@ summary(mechanics_transactions)</code></pre>
 &gt;                    data ntransactions support confidence
 &gt;  mechanics_transactions          9582   0.001        0.8</code></pre>
 <p>There are 51 association rules that occur in at least .1% of the data. The support threshold is very low for association rules because there are so many games with only one mechanic that don’t fit any association rules.</p>
-<p>Like with frequent itemsets, we can look to support to indicate the frequency of the left hand side item set in the data. Association rule mining employs an additional metric, <strong>confidence</strong>, which indicates how often the rule is true, or the proportion of games that have the LHS that also contain the RHS. Crayon Rail System only appears in &lt;1% of games, but 82% of the time a game is labled as Crayon Rail System, it is also labeled as Route/Network Buiding and Pick-up and Deliver, with this association rule ocurring in 14 games.</p>
-<pre class="r"><code>inspect(association_rules[1:11])</code></pre>
-<pre><code>&gt;      lhs                         rhs                          support confidence      lift count
-&gt; [1]  {Crayon Rail System,                                                                       
-&gt;       Route/Network Building} =&gt; {Pick-up and Deliver}    0.001252348  0.8571429 24.015038    12
-&gt; [2]  {Crayon Rail System,                                                                       
-&gt;       Pick-up and Deliver}    =&gt; {Route/Network Building} 0.001252348  0.8571429 26.073469    12
-&gt; [3]  {Stock Holding,                                                                            
-&gt;       Tile Placement}         =&gt; {Route/Network Building} 0.004905030  0.8392857 25.530272    47
-&gt; [4]  {Deck / Pool Building,                                                                     
-&gt;       Take That}              =&gt; {Hand Management}        0.001461073  0.8235294  3.626406    14
-&gt; [5]  {Partnerships,                                                                             
-&gt;       Role Playing}           =&gt; {Variable Player Powers} 0.004174494  0.8000000  6.267866    40
-&gt; [6]  {Role Playing,                                                                             
-&gt;       Tile Placement}         =&gt; {Modular Board}          0.001252348  0.8571429  9.572428    12
-&gt; [7]  {Route/Network Building,                                                                   
-&gt;       Trading}                =&gt; {Dice Rolling}           0.001461073  0.8750000  3.438987    14
-&gt; [8]  {Auction/Bidding,                                                                          
-&gt;       Roll / Spin and Move}   =&gt; {Trading}                0.007201002  0.8625000 23.020822    69
-&gt; [9]  {Auction/Bidding,                                                                          
-&gt;       Roll / Spin and Move}   =&gt; {Set Collection}         0.007096640  0.8500000  6.046548    68
-&gt; [10] {Auction/Bidding,                                                                          
-&gt;       Stock Holding,                                                                            
-&gt;       Tile Placement}         =&gt; {Route/Network Building} 0.002400334  1.0000000 30.419048    23
-&gt; [11] {Auction/Bidding,                                                                          
-&gt;       Roll / Spin and Move,                                                                     
-&gt;       Stock Holding}          =&gt; {Trading}                0.001147986  1.0000000 26.690808    11</code></pre>
-<p>Below are the 10 association rules with the higest confidence. For the first 5, in 100% of the games that the combination of left hand side mechanics occur, the right hand side mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games.</p>
-<pre class="r"><code>inspect(sort(association_rules, by = &quot;confidence&quot;)[1:10])</code></pre>
-<pre><code>&gt;      lhs                                rhs                          support confidence      lift count
-&gt; [1]  {Auction/Bidding,                                                                                 
-&gt;       Stock Holding,                                                                                   
-&gt;       Tile Placement}                =&gt; {Route/Network Building} 0.002400334  1.0000000 30.419048    23
-&gt; [2]  {Auction/Bidding,                                                                                 
-&gt;       Roll / Spin and Move,                                                                            
-&gt;       Stock Holding}                 =&gt; {Trading}                0.001147986  1.0000000 26.690808    11
-&gt; [3]  {Roll / Spin and Move,                                                                            
-&gt;       Set Collection,                                                                                  
-&gt;       Stock Holding}                 =&gt; {Trading}                0.001147986  1.0000000 26.690808    11
-&gt; [4]  {Grid Movement,                                                                                   
-&gt;       Modular Board,                                                                                   
-&gt;       Role Playing,                                                                                    
-&gt;       Variable Player Powers}        =&gt; {Dice Rolling}           0.001356710  1.0000000  3.930271    13
-&gt; [5]  {Area Control / Area Influence,                                                                   
-&gt;       Area Movement,                                                                                   
-&gt;       Campaign / Battle Card Driven} =&gt; {Dice Rolling}           0.002087247  0.9523810  3.743115    20
-&gt; [6]  {Auction/Bidding,                                                                                 
-&gt;       Roll / Spin and Move,                                                                            
-&gt;       Set Collection}                =&gt; {Trading}                0.006679190  0.9411765 25.120760    64
-&gt; [7]  {Grid Movement,                                                                                   
-&gt;       Modular Board,                                                                                   
-&gt;       Role Playing}                  =&gt; {Dice Rolling}           0.001565435  0.9375000  3.684629    15
-&gt; [8]  {Grid Movement,                                                                                   
-&gt;       Role Playing,                                                                                    
-&gt;       Variable Player Powers}        =&gt; {Dice Rolling}           0.001461073  0.9333333  3.668253    14
-&gt; [9]  {Dice Rolling,                                                                                    
-&gt;       Partnerships,                                                                                    
-&gt;       Role Playing}                  =&gt; {Variable Player Powers} 0.001461073  0.9333333  7.312510    14
-&gt; [10] {Co-operative Play,                                                                               
-&gt;       Dice Rolling,                                                                                    
-&gt;       Point to Point Movement}       =&gt; {Variable Player Powers} 0.001461073  0.9333333  7.312510    14</code></pre>
+<p>Association rule mining employs an additional metric, <strong>confidence</strong>, which indicates how often the rule is true, or the proportion of games that have the left hand side (LHS) that also contain the right hand side (RHS). Crayon Rail System only appears in &lt;1% of games, but 86% of the time a game is labled as both Crayon Rail System and Route/Network Building, it is also labeled as Pick-up and Deliver, with this association rule ocurring in 12 games.</p>
+<pre class="r"><code>DATAFRAME(association_rules) %&gt;% 
+  head(11) %&gt;% 
+  kable(row.names = F, digits = 3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">LHS</th>
+<th align="left">RHS</th>
+<th align="right">support</th>
+<th align="right">confidence</th>
+<th align="right">lift</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">{Crayon Rail System,Route/Network Building}</td>
+<td align="left">{Pick-up and Deliver}</td>
+<td align="right">0.001</td>
+<td align="right">0.857</td>
+<td align="right">24.015</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">{Crayon Rail System,Pick-up and Deliver}</td>
+<td align="left">{Route/Network Building}</td>
+<td align="right">0.001</td>
+<td align="right">0.857</td>
+<td align="right">26.073</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">{Stock Holding,Tile Placement}</td>
+<td align="left">{Route/Network Building}</td>
+<td align="right">0.005</td>
+<td align="right">0.839</td>
+<td align="right">25.530</td>
+<td align="right">47</td>
+</tr>
+<tr class="even">
+<td align="left">{Deck / Pool Building,Take That}</td>
+<td align="left">{Hand Management}</td>
+<td align="right">0.001</td>
+<td align="right">0.824</td>
+<td align="right">3.626</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">{Partnerships,Role Playing}</td>
+<td align="left">{Variable Player Powers}</td>
+<td align="right">0.004</td>
+<td align="right">0.800</td>
+<td align="right">6.268</td>
+<td align="right">40</td>
+</tr>
+<tr class="even">
+<td align="left">{Role Playing,Tile Placement}</td>
+<td align="left">{Modular Board}</td>
+<td align="right">0.001</td>
+<td align="right">0.857</td>
+<td align="right">9.572</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">{Route/Network Building,Trading}</td>
+<td align="left">{Dice Rolling}</td>
+<td align="right">0.001</td>
+<td align="right">0.875</td>
+<td align="right">3.439</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">{Auction/Bidding,Roll / Spin and Move}</td>
+<td align="left">{Trading}</td>
+<td align="right">0.007</td>
+<td align="right">0.862</td>
+<td align="right">23.021</td>
+<td align="right">69</td>
+</tr>
+<tr class="odd">
+<td align="left">{Auction/Bidding,Roll / Spin and Move}</td>
+<td align="left">{Set Collection}</td>
+<td align="right">0.007</td>
+<td align="right">0.850</td>
+<td align="right">6.047</td>
+<td align="right">68</td>
+</tr>
+<tr class="even">
+<td align="left">{Auction/Bidding,Stock Holding,Tile Placement}</td>
+<td align="left">{Route/Network Building}</td>
+<td align="right">0.002</td>
+<td align="right">1.000</td>
+<td align="right">30.419</td>
+<td align="right">23</td>
+</tr>
+<tr class="odd">
+<td align="left">{Auction/Bidding,Roll / Spin and Move,Stock Holding}</td>
+<td align="left">{Trading}</td>
+<td align="right">0.001</td>
+<td align="right">1.000</td>
+<td align="right">26.691</td>
+<td align="right">11</td>
+</tr>
+</tbody>
+</table>
+<p>Below are the 10 association rules with the higest confidence. For the first 5, in 100% of the games that the combination of LHS mechanics occur, the RHS mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games.</p>
+<pre class="r"><code>DATAFRAME(association_rules) %&gt;% 
+  arrange(desc(confidence)) %&gt;% 
+  head(11) %&gt;% 
+  kable(row.names = F, digits = 3)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">LHS</th>
+<th align="left">RHS</th>
+<th align="right">support</th>
+<th align="right">confidence</th>
+<th align="right">lift</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">{Auction/Bidding,Stock Holding,Tile Placement}</td>
+<td align="left">{Route/Network Building}</td>
+<td align="right">0.002</td>
+<td align="right">1.000</td>
+<td align="right">30.419</td>
+<td align="right">23</td>
+</tr>
+<tr class="even">
+<td align="left">{Auction/Bidding,Roll / Spin and Move,Stock Holding}</td>
+<td align="left">{Trading}</td>
+<td align="right">0.001</td>
+<td align="right">1.000</td>
+<td align="right">26.691</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">{Roll / Spin and Move,Set Collection,Stock Holding}</td>
+<td align="left">{Trading}</td>
+<td align="right">0.001</td>
+<td align="right">1.000</td>
+<td align="right">26.691</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">{Grid Movement,Modular Board,Role Playing,Variable Player Powers}</td>
+<td align="left">{Dice Rolling}</td>
+<td align="right">0.001</td>
+<td align="right">1.000</td>
+<td align="right">3.930</td>
+<td align="right">13</td>
+</tr>
+<tr class="odd">
+<td align="left">{Area Control / Area Influence,Area Movement,Campaign / Battle Card Driven}</td>
+<td align="left">{Dice Rolling}</td>
+<td align="right">0.002</td>
+<td align="right">0.952</td>
+<td align="right">3.743</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="left">{Auction/Bidding,Roll / Spin and Move,Set Collection}</td>
+<td align="left">{Trading}</td>
+<td align="right">0.007</td>
+<td align="right">0.941</td>
+<td align="right">25.121</td>
+<td align="right">64</td>
+</tr>
+<tr class="odd">
+<td align="left">{Grid Movement,Modular Board,Role Playing}</td>
+<td align="left">{Dice Rolling}</td>
+<td align="right">0.002</td>
+<td align="right">0.938</td>
+<td align="right">3.685</td>
+<td align="right">15</td>
+</tr>
+<tr class="even">
+<td align="left">{Grid Movement,Role Playing,Variable Player Powers}</td>
+<td align="left">{Dice Rolling}</td>
+<td align="right">0.001</td>
+<td align="right">0.933</td>
+<td align="right">3.668</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">{Dice Rolling,Partnerships,Role Playing}</td>
+<td align="left">{Variable Player Powers}</td>
+<td align="right">0.001</td>
+<td align="right">0.933</td>
+<td align="right">7.313</td>
+<td align="right">14</td>
+</tr>
+<tr class="even">
+<td align="left">{Co-operative Play,Dice Rolling,Point to Point Movement}</td>
+<td align="left">{Variable Player Powers}</td>
+<td align="right">0.001</td>
+<td align="right">0.933</td>
+<td align="right">7.313</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">{Partnerships,Role Playing,Voting}</td>
+<td align="left">{Variable Player Powers}</td>
+<td align="right">0.001</td>
+<td align="right">0.929</td>
+<td align="right">7.275</td>
+<td align="right">13</td>
+</tr>
+</tbody>
+</table>
 </div>

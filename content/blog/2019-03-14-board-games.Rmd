@@ -13,6 +13,7 @@ authors: []
 ```{r include=FALSE}
 conflicted::conflict_prefer("filter", "dplyr")  # tells R to use filter from dplyr
 knitr::opts_chunk$set(comment = ">")
+library("knitr")
 ```
 
 This is my first time participating in Tidy Tuesday AND my first blog post. My love for board games finally convinced me to actually use my blog. 
@@ -55,10 +56,10 @@ I'm also trying out the `bbplot::bbc_style` plot theme for all the graphs in thi
 
 Two takeaways from this graph:  
 
-1. As noted by the [538](https://fivethirtyeight.com/features/designing-the-best-board-game-on-the-planet/) article that prompted the use of this data for Tidy Tuesday, board game ratings are increasing over time. 
+1. As noted by the [FiveThirtyEight](https://fivethirtyeight.com/features/designing-the-best-board-game-on-the-planet/) article that prompted the use of this data for Tidy Tuesday, board game ratings are increasing over time. 
 2. I seem to have pretty good taste in board games, at least based on their average ratings :) 
 
-I also wanted to get a sense for how number of ratings and average ratings are related. **Do games that are more frequently rated have higher average ratings?**
+I also wanted to get a sense for how number of ratings and average ratings are related. **Do more frequently rated games have higher average ratings?**
 ```{r fig.align="center"}
 board_games %>% 
   ggplot(aes(x = users_rated, y = average_rating)) +
@@ -139,13 +140,13 @@ title <- cowplot::ggdraw() +
 cowplot::plot_grid(title, p, ncol = 1, rel_heights=c(0.1, 1))
 ```
 
-The `cowplot` package came to the rescue in getting all four plots into one figure. Most games require a minimum of two players, and the median play time is `r median(board_games$playing_time)` minutes. The plot only shows games <=10 hours, but there were `r sum(board_games$playing_time > 600)` board games with play time over 10 hours. These are likely a mix of games played over multiple sessions and erroneous data. 
+The `cowplot` package helped me get all four plots into one figure. Most games require a minimum of two players, and the median play time is `r median(board_games$playing_time)` minutes. The plot only shows games <=10 hours, but there were `r sum(board_games$playing_time > 600)` board games with play time over 10 hours. These are likely a mix of games played over multiple sessions and erroneous data. 
 Most games employ several game mechanics, and most games don't have any expansions, but there were `r sum(board_games$expansion_n > 100)` games with more than 100 expansions that I removed from the plot, including one game with `r max(board_games$expansion_n)` expansions!  
 
 # Game Mechanics
 I was most interested in further exploring the game mechanics, and since each game can have multiple mechanics, I used `tidyr::separate_rows` to get each mechanic on its own line. 
 
-```{r fig.height= 8, fig.align="center"}
+```{r fig.height= 9, fig.align="center"}
 board_games_mech <- board_games %>% 
   tidyr::separate_rows(mechanic, sep = ",") %>% 
   filter(!is.na(mechanic)) %>% 
@@ -197,10 +198,15 @@ board_games_mech %>%
 
 There are `r n_distinct(board_games_mech$mechanic)` different mechanics, with Dice Rolling and Hand Management being the most frequent. There is some variability in rating across mechanics, and the ratings of the games in a mechanic do not seem related to the number of games in that mechanic. Notably, Roll/Spin and Move stands out as having comparably lower ratings.  
 
-Most rated and highest average rated game in each of the top 10 mechanics, to get a sense for what types of games they are. 
+I'm not familiar with what all of these mechanics actually mean, so I wanted to see the highest rated and most rated game in the most popular mechanics to get an idea of the type of games that use those mechanics.  
 
 ```{r}
-
+board_games_mech %>% 
+  group_by(mechanic) %>% 
+  summarize(top_rated = first(name, order_by = desc(average_rating)), most_rated = first(name, order_by = desc(users_rated))) %>% 
+  arrange(desc(mechanic)) %>% 
+  head(10) %>% 
+  kable()
 ```
 
 # Board Game Mechanic Association Rules
@@ -224,12 +230,17 @@ mechanics_transactions <- as(mechanics_list, "transactions")
 summary(mechanics_transactions)
 ```
 
-The board game data is now stored as a matrix. The density in a sparse matrix indicates the proportion of non-empty cells: `r round(summary(mechanics_transactions)@density,2)`. The most frequent items and itemset/transaction length distribution match the distributions above. If I had not already done this exploratory analysis, I would usually use `itemFrequencyPlot` to visualize the most frequent mechanics. 
+The board game data is now stored as a matrix. The density in a sparse matrix indicates the proportion of non-empty cells: `r round(summary(mechanics_transactions)@density,2)`. The most frequent items and itemset/transaction length distribution match the distributions above, showing that Dice Rolling is the most frequent mechanic, and 2852 games only have one mechanic. If I had not already done this exploratory analysis, I would usually use `itemFrequencyPlot` to visualize the most frequent mechanics. 
 
-```{r message=FALSE, warning=FALSE}
+First, I'm using the `frequent itemsets` target to find combinations of game mechanics that commonly occur together.
+
+```{r message=FALSE, warning=FALSE, results='hide'}
 itemsets <- apriori(mechanics_transactions, 
                     parameter = list(supp=0.01, minlen = 2, maxlen=5, 
                                      target = "frequent itemsets"))
+```
+
+```{r message=FALSE, warning=FALSE}
 summary(itemsets)
 ```
 
@@ -237,30 +248,42 @@ There are `r summary(itemsets)@items@Dim[1]` combinations of mechanics that occu
 
 One important metric for frequent itemsets is **support**, which indicates how frequently the itemset appears in the dataset, or the proportion of games that contain the combination of mechanics. 
 
-Below are the 10 mechanic combinations with the highest support. The most frequent combination of mechanics is Dice Rolling and Variable Player Powers, which occurred in about 5% of all games. This combination makes sense, because those two mechanics occurred with high frequency (they were the 1st and 4th highest, respectively). Interestingly, the combination of the two most frequent mechanics, Dice Rolling and Hand Management, only occurs 6th most frequently as a pair.
+Below are the 10 mechanic combinations with the highest support. The most frequent combination of mechanics is Dice Rolling and Variable Player Powers, which occurred in about 5.5% of all games. This combination makes sense, because those two mechanics occurred with high frequency (they were the 1st and 4th highest, respectively). Interestingly, the combination of the two most frequent mechanics, Dice Rolling and Hand Management, only occurs 6th most frequently as a pair.
 
 ```{r}
-inspect(sort(itemsets, by = "support")[1:10])
+DATAFRAME(itemsets) %>% 
+  arrange(desc(support)) %>% 
+  head(10) %>% 
+  rename("mechanics" = items) %>% 
+  kable(row.names = F, digits = 3)
 ```
 
 Moving on to association rule mining, which gives output in the form of *if this then that* rules. For example, if a game employs mechanic X, it is likely to also employ mechanic Y.
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, results='hide'}
 association_rules <- apriori(mechanics_transactions, 
                              parameter = list(supp=0.001, conf=0.8, maxlen=5))
+```
+
+```{r message=FALSE, warning=FALSE}
 summary(association_rules)
 ```
 
 There are `r summary(association_rules)@length` association rules that occur in at least .1% of the data. The support threshold is very low for association rules because there are so many games with only one mechanic that don't fit any association rules. 
 
-Like with frequent itemsets, we can look to support to indicate the frequency of the left hand side item set in the data. Association rule mining employs an additional metric, **confidence**, which indicates how often the rule is true, or the proportion of games that have the LHS that also contain the RHS. Crayon Rail System only appears in <1% of games, but 82% of the time a game is labled as Crayon Rail System, it is also labeled as Route/Network Buiding and Pick-up and Deliver, with this association rule ocurring in 14 games.  
+Association rule mining employs an additional metric, **confidence**, which indicates how often the rule is true, or the proportion of games that have the left hand side (LHS) that also contain the right hand side (RHS). Crayon Rail System only appears in <1% of games, but 86% of the time a game is labled as both Crayon Rail System and Route/Network Building, it is also labeled as Pick-up and Deliver, with this association rule ocurring in 12 games.  
 
 ```{r}
-inspect(association_rules[1:11])
+DATAFRAME(association_rules) %>% 
+  head(11) %>% 
+  kable(row.names = F, digits = 3)
 ```
 
-Below are the 10 association rules with the higest confidence. For the first 5, in 100% of the games that the combination of left hand side mechanics occur, the right hand side mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games. 
+Below are the 10 association rules with the higest confidence. For the first 5, in 100% of the games that the combination of LHS mechanics occur, the RHS mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games. 
 
 ```{r}
-inspect(sort(association_rules, by = "confidence")[1:10])
+DATAFRAME(association_rules) %>% 
+  arrange(desc(confidence)) %>% 
+  head(11) %>% 
+  kable(row.names = F, digits = 3)
 ```
