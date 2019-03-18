@@ -6,8 +6,9 @@ slug: boardgames
 categories: []
 tags: 
   - R
-  - visualization
+  - visualizations
   - code
+  - TidyTuesday
 authors: []
 ---
 ```{r include=FALSE}
