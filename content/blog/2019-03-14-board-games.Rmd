@@ -288,3 +288,5 @@ DATAFRAME(association_rules) %>%
   head(11) %>% 
   kable(row.names = F, digits = 3)
 ```
+
+
