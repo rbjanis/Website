@@ -1,0 +1,30 @@
+---
+title: Ggplot Themes and Color Palettes
+author: Rebecca Janis
+date: '2019-03-20'
+slug: themes-and-palettes
+categories: []
+tags:
+  - visualizations
+  - R
+authors: []
+---
+
+Most of my plotting is for internal exploratory use only, so I’ve tended to stick with the default theme in ggplot out of laziness. In an effort to up my plotting game above the default color palette, I decided to explore and aggregate for my future use some of the other color schemes the internet has to offer. This is by no means an exhaustive list, but just ones that appeal to me and a collection of color palettes I want to be able to draw from next time I create a plot.
+
+    * Rcolorbrewer
+    * LaCroixColoR
+    * Wesanderson
+    * VapoRwave
+    * Ggpomological
+        * Link to Will Chase’s tweet
+    * ggthemes::canva_pal
+    * Ggwatercolor
+    * ggthemes::theme_fivethirtyeight
+    * ggthemeassist
+    * BBC theme
+    * nord- https://cran.r-project.org/web/packages/nord/index.html
+    * http://jfly.iam.u-tokyo.ac.jp/color/
+    * Show sequential, categorical, and diverging graphs- 3 side by side
+    * For each color palette, display all the options available
+    * List of palettes- https://github.com/EmilHvitfeldt/r-color-palettes
