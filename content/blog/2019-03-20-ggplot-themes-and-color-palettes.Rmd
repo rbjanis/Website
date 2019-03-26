@@ -28,3 +28,4 @@ Most of my plotting is for internal exploratory use only, so I’ve tended to st
     * Show sequential, categorical, and diverging graphs- 3 side by side
     * For each color palette, display all the options available
     * List of palettes- https://github.com/EmilHvitfeldt/r-color-palettes
+https://github.com/EmilHvitfeldt/r-color-palettes/blob/master/type-sorted-palettes.md
