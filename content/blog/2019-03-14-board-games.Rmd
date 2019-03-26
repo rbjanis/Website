@@ -17,7 +17,9 @@ knitr::opts_chunk$set(comment = ">")
 library("knitr")
 ```
 
-This is my first time participating in Tidy Tuesday AND my first blog post. My love for board games finally convinced me to actually use my blog. 
+This is my first time participating in [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) AND my first blog post. My love for board games finally convinced me to actually post something to my blog. 
+
+In this post, I explore board game data from [Board Game Geek](https://boardgamegeek.com/) and dive deeper into game mechanics to identify game mechanics that frequently co-occur in games.  
 
 I first loaded packages I knew I would be using as well as the data from the Tidy Tuesday GitHub.
 ```{r message=FALSE, warning=FALSE}
@@ -211,7 +213,7 @@ board_games_mech %>%
 ```
 
 # Board Game Mechanic Association Rules
-Since games frequently have multiple mechanics, **are there game mechanics that commonly co-occur?** To answer this question, I used association rules to identify commonly co-occuring game mechanics. In order to use the `arules` package for association rule mining, the data has to be in "transactions" format. In order to get it in this format, I first restructured the data so that each mechanic was on its own line. From there, I transformed the data into a list, where each item in the list represents a single game and contains a factor array of that game's mechanic(s). This can then be converted into "transactions" format.
+Since games frequently have multiple mechanics, **are there game mechanics that commonly co-occur?** To answer this question, I used association rules to identify commonly co-occurring game mechanics. In order to use the `arules` package for association rule mining, the data has to be in "transactions" format. In order to get it in this format, I first restructured the data so that each mechanic was on its own line. From there, I transformed the data into a list, where each item in the list represents a single game and contains a factor array of that game's mechanic(s). This can then be converted into "transactions" format.
 
 ```{r message=FALSE, warning=FALSE}
 library("arules")
@@ -247,7 +249,7 @@ summary(itemsets)
 
 There are `r summary(itemsets)@items@Dim[1]` combinations of mechanics that occur in at least 1% of the data: `r summary(itemsets)@items@lengths[[1]]` two mechanic combinations, and `r summary(itemsets)@items@lengths[[2]]` three mechanic combinations.
 
-One important metric for frequent itemsets is **support**, which indicates how frequently the itemset appears in the dataset, or the proportion of games that contain the combination of mechanics. 
+One important metric for frequent itemsets is **support**, which indicates how frequently the itemset appears in the data set, or the proportion of games that contain the combination of mechanics. 
 
 Below are the 10 mechanic combinations with the highest support. The most frequent combination of mechanics is Dice Rolling and Variable Player Powers, which occurred in about 5.5% of all games. This combination makes sense, because those two mechanics occurred with high frequency (they were the 1st and 4th highest, respectively). Interestingly, the combination of the two most frequent mechanics, Dice Rolling and Hand Management, only occurs 6th most frequently as a pair.
 
@@ -272,7 +274,7 @@ summary(association_rules)
 
 There are `r summary(association_rules)@length` association rules that occur in at least .1% of the data. The support threshold is very low for association rules because there are so many games with only one mechanic that don't fit any association rules. 
 
-Association rule mining employs an additional metric, **confidence**, which indicates how often the rule is true, or the proportion of games that have the left hand side (LHS) that also contain the right hand side (RHS). Crayon Rail System only appears in <1% of games, but 86% of the time a game is labled as both Crayon Rail System and Route/Network Building, it is also labeled as Pick-up and Deliver, with this association rule ocurring in 12 games.  
+Association rule mining employs an additional metric, **confidence**, which indicates how often the rule is true, or the proportion of games that have the left hand side (LHS) that also contain the right hand side (RHS). Crayon Rail System only appears in <1% of games, but 86% of the time a game is labeled as both Crayon Rail System and Route/Network Building, it is also labeled as Pick-up and Deliver, with this association rule occurring in 12 games.  
 
 ```{r}
 DATAFRAME(association_rules) %>% 
@@ -280,7 +282,7 @@ DATAFRAME(association_rules) %>%
   kable(row.names = F, digits = 3)
 ```
 
-Below are the 10 association rules with the higest confidence. For the first 5, in 100% of the games that the combination of LHS mechanics occur, the RHS mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games. 
+Below are the 10 association rules with the highest confidence. For the first 5, in 100% of the games that the combination of LHS mechanics occur, the RHS mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games. 
 
 ```{r}
 DATAFRAME(association_rules) %>% 
