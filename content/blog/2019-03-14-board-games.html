@@ -251,7 +251,7 @@ cowplot::plot_grid(title, pp, ncol = 1, rel_heights=c(0.1, 1))</code></pre>
 <pre class="r"><code>library(&quot;arules&quot;)
 library(&quot;arulesViz&quot;)
 
-board_games &lt;- board_games %&gt;% 
+board_games_mech &lt;- board_games %&gt;% 
   select(game_id, mechanic) %&gt;% 
   tidyr::separate_rows(mechanic, sep = &quot;,&quot;) %&gt;% 
   filter(!is.na(mechanic)) %&gt;% 
@@ -260,7 +260,7 @@ board_games &lt;- board_games %&gt;%
   ungroup() %&gt;% 
   mutate_all(as.factor)
 
-mechanics_list &lt;-  split(board_games$mechanic, board_games$game_id)
+mechanics_list &lt;-  split(board_games_mech$mechanic, board_games_mech$game_id)
 mechanics_transactions &lt;- as(mechanics_list, &quot;transactions&quot;)
 summary(mechanics_transactions)</code></pre>
 <pre><code>&gt; transactions as itemMatrix in sparse format with
@@ -533,7 +533,7 @@ summary(mechanics_transactions)</code></pre>
 <p>Below are the 10 association rules with the highest confidence. For the first 5, in 100% of the games that the combination of LHS mechanics occur, the RHS mechanic occurs as well. So 100% of the games labeled as Auction/Bidding, Stock Holding, and Tile Placement are also labeled as Route/Network Building, and this association occurs in 23 games.</p>
 <pre class="r"><code>DATAFRAME(association_rules) %&gt;% 
   arrange(desc(confidence)) %&gt;% 
-  head(11) %&gt;% 
+  head(10) %&gt;% 
   kable(row.names = F, digits = 3)</code></pre>
 <table>
 <thead>
@@ -627,14 +627,30 @@ summary(mechanics_transactions)</code></pre>
 <td align="right">7.313</td>
 <td align="right">14</td>
 </tr>
-<tr class="odd">
-<td align="left">{Partnerships,Role Playing,Voting}</td>
-<td align="left">{Variable Player Powers}</td>
-<td align="right">0.001</td>
-<td align="right">0.929</td>
-<td align="right">7.275</td>
-<td align="right">13</td>
-</tr>
 </tbody>
 </table>
+</div>
+<div id="network-graph-of-game-mechanics" class="section level1">
+<h1>Network graph of game mechanics</h1>
+<p>This shows constellations of mechanics that frequently occur together.</p>
+<pre class="r"><code>require(widyr)
+require(igraph)
+require(ggraph)
+require(ggforce)
+
+board_games %&gt;% 
+  select(name, mechanic) %&gt;% 
+  tidyr::separate_rows(mechanic, sep = &quot;,&quot;) %&gt;% 
+  filter(!is.na(mechanic)) %&gt;% 
+  mutate_all(as.factor) %&gt;% 
+  pairwise_cor(mechanic, name, sort = T) %&gt;% 
+  filter(correlation &gt; .15) %&gt;% 
+  graph_from_data_frame() %&gt;% 
+  ggraph() +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = name), repel = T) + 
+  theme_void() + 
+  labs(title = &quot;Network of game mechanics that commonly occur together&quot;)</code></pre>
+<p><img src="/blog/2019-03-14-board-games_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>

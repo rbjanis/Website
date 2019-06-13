@@ -219,7 +219,7 @@ Since games frequently have multiple mechanics, **are there game mechanics that 
 library("arules")
 library("arulesViz")
 
-board_games <- board_games %>% 
+board_games_mech <- board_games %>% 
   select(game_id, mechanic) %>% 
   tidyr::separate_rows(mechanic, sep = ",") %>% 
   filter(!is.na(mechanic)) %>% 
@@ -228,7 +228,7 @@ board_games <- board_games %>%
   ungroup() %>% 
   mutate_all(as.factor)
 
-mechanics_list <-  split(board_games$mechanic, board_games$game_id)
+mechanics_list <-  split(board_games_mech$mechanic, board_games_mech$game_id)
 mechanics_transactions <- as(mechanics_list, "transactions")
 summary(mechanics_transactions)
 ```
@@ -287,8 +287,31 @@ Below are the 10 association rules with the highest confidence. For the first 5,
 ```{r}
 DATAFRAME(association_rules) %>% 
   arrange(desc(confidence)) %>% 
-  head(11) %>% 
+  head(10) %>% 
   kable(row.names = F, digits = 3)
 ```
 
+# Network graph of game mechanics
+This shows constellations of mechanics that frequently occur together.  
+```{r message=FALSE, warning=FALSE}
+require(widyr)
+require(igraph)
+require(ggraph)
+require(ggforce)
+
+board_games %>% 
+  select(name, mechanic) %>% 
+  tidyr::separate_rows(mechanic, sep = ",") %>% 
+  filter(!is.na(mechanic)) %>% 
+  mutate_all(as.factor) %>% 
+  pairwise_cor(mechanic, name, sort = T) %>% 
+  filter(correlation > .15) %>% 
+  graph_from_data_frame() %>% 
+  ggraph() +
+  geom_edge_link() +
+  geom_node_point() +
+  geom_node_text(aes(label = name), repel = T) + 
+  theme_void() + 
+  labs(title = "Network of game mechanics that commonly occur together")
+```
 
