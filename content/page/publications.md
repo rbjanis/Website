@@ -4,12 +4,13 @@ description:
 menu: main
 weight: -210
 ---
+Hayes, J.A., Petrovich, J.P., **Janis, R.A.**, Yang, Y., Castonguay, L.G., & Locke, B.D. (In press). Suicide among College Students in Psychotherapy: Individual Predictors and Latent Classes. *The Journal of Counseling Psychology.*  
 
-Lefevor, G. T., Boyd-Rogers, C. C., Sprague, B. M., & **Janis, R. A.** (in press). Health Disparities between Transgender, Genderqueer, and Cisgender Individuals: An Extension of Minority Stress Theory. *Journal of Counseling Psychology*.  
+Lefevor, G. T., Boyd-Rogers, C. C., Sprague, B. M., & **Janis, R. A.** (2019). Health Disparities between Transgender, Genderqueer, and Cisgender Individuals: An Extension of Minority Stress Theory. *Journal of Counseling Psychology, 66*(4), 385-395.  
+
+Lefevor, G.T., **Janis, R.A.**, Fraklin, A., Stone, & W.M. (2019). Initial distress and change through therapy among transgender and gender non-conforming racial and ethnic minorities. *The Counseling Psychologist, 47*(1), 34-58.  
 
 Lefevor, G. T., Jensen, D. R., Jones, P. J., **Janis, R. A.**, & Hsieh, C. H. (2018). An Undergraduate Positive Psychology Course as Prevention and Outreach. Retrieved from [osf.io/uj7na](https://osf.io/uj7na/).  
-
-Lefevor, G.T., **Janis, R.A.**, Fraklin, A., Stone, & W.M. (in press). Initial distress and change through therapy among transgender and gender non-conforming racial and ethnic minorities. The Counseling Psychologist.
 
 **Janis, R.A.**, Burlingame, G.M. & Olsen, J.A. (2018). Developing a therapeutic relationship monitoring system for group treatment. *Psychotherapy, 55*(2), 105-115.
 
