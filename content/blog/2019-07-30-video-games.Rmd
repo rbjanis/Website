@@ -1,0 +1,52 @@
+---
+title: "Video games"
+author: ~
+date: '2019-07-30'
+slug: videogames
+categories: []
+tags: 
+  - R
+  - visualizations
+  - code
+  - TidyTuesday
+authors: []
+---
+```{r include=FALSE}
+conflicted::conflict_prefer("filter", "dplyr")  # tells R to use filter from dplyr
+knitr::opts_chunk$set(comment = ">", warning = F, message = F)
+library("knitr")
+```
+
+The data from this post exploring video games comes from [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday)
+```{r}
+library("tidyverse")
+library("magrittr")
+theme_set(theme_minimal())
+video_games <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-30/video_games.csv") %>% 
+  mutate(owners = str_replace(owners, "\\s\\.\\.\\s", "-")) %>%  # this replaces " .. " with "-"
+  mutate(owners = fct_relevel(owners, "0-20,000", "20,000-50,000", "50,000-100,000", "100,000-200,000", "200,000-500,000", "500,000-1,000,000", "1,000,000-2,000,000", "2,000,000-5,000,000", "5,000,000-10,000,000", "10,000,000-20,000,000", "20,000,000-50,000,000", "50,000,000-100,000,000"))
+```
+
+Not knowing much about video game developers or publishers, I was interested in first getting a feel for who the most prolific developers and publishers are, as well as what some of their most popular games are.  
+
+```{r}
+video_games %>% 
+  filter(!is.na(publisher)) %>% 
+  group_by(publisher) %>% 
+  add_count() %>% 
+  arrange(desc(median_playtime)) %>% 
+  slice(1) %>% 
+  ungroup() %>% 
+  mutate(publisher = fct_reorder(publisher, n)) %>% 
+  View()
+  arrange(desc(publisher)) %>% 
+  top_n(10) %>% 
+  ggplot(aes(x = publisher, y = n)) + 
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  labs(x = "Publisher",
+       y = "Number of games",
+       title = "Top 10 video game publishers") +
+  scale_y_continuous(limits = c(0,300))
+```
+

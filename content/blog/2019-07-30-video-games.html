@@ -1,0 +1,36 @@
+---
+title: "Video games"
+author: ~
+date: '2019-07-30'
+slug: videogames
+categories: []
+tags: 
+  - R
+  - visualizations
+  - code
+  - TidyTuesday
+authors: []
+---
+
+
+
+<p>The data from this post exploring video games comes from <a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday</a></p>
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+library(&quot;magrittr&quot;)
+theme_set(theme_minimal())
+video_games &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-07-30/video_games.csv&quot;)</code></pre>
+<p>Not knowing much about video game developers or publishers, I was interested in first getting a feel for who the most prolific developers and publishers are, as well as what some of their most popular games are.</p>
+<pre class="r"><code>video_games %&gt;% 
+  filter(!is.na(publisher)) %&gt;% 
+  add_count(publisher) %&gt;% 
+  mutate(publisher = fct_reorder(publisher, n)) %&gt;% 
+  arrange(desc(publisher)) %&gt;% 
+  top_n(10) %&gt;% 
+  ggplot(aes(x = publisher, y = n)) + 
+  geom_bar(stat = &quot;identity&quot;) +
+  coord_flip() +
+  labs(x = &quot;Publisher&quot;,
+       y = &quot;Number of games&quot;,
+       title = &quot;Top 10 video game publishers&quot;) +
+  scale_y_continuous(limits = c(0,300))</code></pre>
+<p><img src="/blog/2019-07-30-video-games_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
