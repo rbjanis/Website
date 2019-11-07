@@ -8,10 +8,10 @@ weight: -230
 ---
 ## EXPERIENCE
 
-**Data Analyst**: The Center for Collegiate Mental Health, August 2018 -- present
+**Data Analyst**: [The Center for Collegiate Mental Health](https://ccmh.psu.edu), August 2018 -- present
 
 - Maintained graduate research assistant responsibilities, while taking on ownership of data cleaning, standardization, management and analysis of large multiyear longitudinal psychotherapy data sets.  
-- Created an R package to standardize R functions for internal use (https://github.com/CCMH-PSU/CCMHr).  
+- Created an [R package](https://github.com/CCMH-PSU/CCMHr) to standardize R functions for internal use.  
 - Created [annual reports](https://ccmh.psu.edu/publications/) distilling quantitative data on college student mental health to primary stakeholders.  
 - Produced and prepared data for standardized reporting templates and online reporting platforms, allowing hundreds of counseling centers to view key metrics from their local data.
 - Created a [Shiny app](https://ccmh.shinyapps.io/CLI-app/) advocacy tool allowing hundreds of counseling centers to evaluate their staffing levels and advocate for more resources.  
