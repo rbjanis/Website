@@ -1,0 +1,36 @@
+---
+title: Rescue Time
+author: Rebecca Janis
+date: '2019-07-31'
+slug: rescue-time
+categories: []
+tags:
+  - code
+  - R
+authors: []
+draft: true
+---
+
+```{r}
+require(tidyverse)
+require(httr)
+require(jsonlite)
+rescue_api_key <- "B631lDfdA0Wuti3a5Bmm0gZ8b99YFIpLW8FyqO_O"
+
+start.date <-  as.Date("2014-08-16")
+end.date <- lubridate::today()
+connection.url <- 'https://www.rescuetime.com/anapi/data'
+query.params <- list()
+query.response <- GET(connection.url,
+                      query = list(
+                        key = rescue_api_key,
+                        perspective = "interval",
+                        resolution_time = "minute",
+                        format = "csv",
+                        restrict_begin = start.date,
+                        restrict_end = end.date
+                      ))
+
+parsed.data <- content(query.response, "parsed")
+```
+
