@@ -6,6 +6,16 @@ slug: Resume
 menu: main
 weight: -230
 ---
+
+## EDUCATION
+Ph.D. Psychology- Pennsylvania State University 2020
+
+M.S. Psychology- Pennsylvania State University 2017
+
+B.S. Psychology- Brigham Young University 2014
+
+---
+
 ## EXPERIENCE
 
 **Data Analyst**: [The Center for Collegiate Mental Health](https://ccmh.psu.edu), August 2018 -- present
@@ -26,14 +36,14 @@ weight: -230
 - Consulted with outside researchers to provide data and analyses to answer research questions.
 - Conducted independent research, including building statistical models from psychotherapy data to generate clinically relevant prediction systems: Client recovery trajectories, client risk of suicide attempts, client resource utilization.  
 
-**Research Assistant**: Brigham Young University, Winter 2013 -- Summer 2014
+**Research Assistant**: Brigham Young University, August 2013 -- July 2014
 
 - Conducted analyses to confirm the factor structure of a group psychotherapy measure using multilevel structural equation modeling, allowing for its implementation in clinical settings.
 - Coded, managed, and analyzed data for two meta-analyses comparing individual to group psychotherapy.
 - Analyzed data for a trial of an inpatient wellness program, resulting in optimized treatment delivery.
 - Authored a methodological publication on performing multilevel confirmatory factor analysis.  
 
-**Data Analyst**: Counseling and Career Center, Brigham Young University, Summer 2012 -- Summer 2014
+**Data Analyst**: Counseling and Career Center, Brigham Young University, May 2012 -- July 2014
 
 - Managed a longitudinal database of psychotherapy outcome data from 3,000+ clients per year and integrated this data with other academic databases.
 - Conducted analyses with faculty to answer research questions that improved clinical practice.
@@ -61,11 +71,4 @@ Pennsylvania State University Clinical Psychology Graduate Scholar Award 2014
 
 Psychology Valedictorian- Brigham Young University 2014
 
----
 
-## EDUCATION
-Ph.D. Psychology- Pennsylvania State University Expected 2020
-
-M.S. Psychology- Pennsylvania State University 2017
-
-B.S. Psychology- Brigham Young University 2014
