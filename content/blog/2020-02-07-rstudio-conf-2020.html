@@ -1,0 +1,71 @@
+---
+title: RStudio::Conf 2020
+author: Rebecca Janis
+date: '2020-02-07'
+slug: rstudio-conf-2020
+draft: TRUE
+tags:
+  - R
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>This year was my second time attending RStudio Conference, with last year in Austin being the first.
+There were about 2,400 people in attendance this year, and it felt much bigger than last year, but still just as great. Since being more active on <a href="https://twitter.com/hashtag/rstats?src=hashtag_click">#rstats Twitter</a> this year, it was so fun to meet Twitter friends in person and meet new R friends. My introvert self was definitely exhausted by the end of the week, and I think RStudio Conf is my biggest expenditure of social energy all year. That said, even for an introvert like me, the R community and everyone at RStudio Conf were so open and friendly!</p>
+<p>Both years, I’ve attended a preconference <a href="#applied-machine-learning-workshop">workshop</a> and the <a href="#rstudioconf">main conference</a>. I’d have a hard time recommending to someone to just do one or the other, as I feel I got very different things out of each. The conference feels a bit like drinking out of an Rstats firehose. You jump from 20 minute talk to 20 minute talk, just getting a taste of cool new things you didn’t know you could do in R. I leave the conference with lots of notes of things to dig in to more after the conference is over. The workshops, on the other hand, are a deeper hands-on dive into a specific topin in R, and I left both workshops with lots of example code and immediately applicable new skills. The workshops are also a great chance to ask any questions of R experts. My takeaway, if you’re able to, definitely attend both!</p>
+<p>Like last year, I collected many hex stickers, far more than can fit on my computer. I’m currently working on turning them into magnets I can display on a magnet board in my office, which I’m very excited about. It seemed like hex-mania was dialed up to 11 this year, and people went crazy every time stickers were dropped during breaks. The most elusive stickers were only available from the package maintainers themselves, which was a great excuse to talk to them about their cool packages.</p>
+<div id="applied-machine-learning-workshop" class="section level1">
+<h1>Applied Machine Learning workshop</h1>
+<p>My week started with the Applied Machine Learning workshop with <a href="https://twitter.com/topepos">Max Kuhn</a>. The workshop was a great overview of the <a href="https://github.com/tidymodels/tidymodels"><code>tidymodels</code></a> suite of packages for modeling. The packages within <code>tidymodels</code> that we focused on included:</p>
+<ul>
+<li><code>recipes</code>: feature engineering and preprocessing</li>
+<li><code>parnsip</code>: model creation</li>
+<li><code>rsample</code>: resampling</li>
+<li><code>dials</code>: creating model tuning parameters</li>
+<li><code>tune</code>: optimizing model tuning parameters</li>
+<li><code>yardstick</code>: evaluating model accuracy</li>
+</ul>
+<p>This is by no means a comprehensive review of everything covered, but I wanted to highlight a few things I learned that stuck out to me. I hope to do a longer blog post about <code>tidymodels</code> in the future to help myself consolidate what I learned.</p>
+<ul>
+<li>One of the major benefits of <code>parsnip</code> is that it returns missing data out when there is missingness in the original data instaed of silently dropping observations with missing data. This is a huge help when you try to join predictions back to the original data because the lengths will be the same and they will join cleanly.</li>
+<li>Variable prep should be done on the training data only, not the full data set. This includes things like standardizing predictors, creating dummy variables, etc. This is so you can evaluate these data prep steps as part of model evaluation.</li>
+</ul>
+</div>
+<div id="rstudioconf" class="section level1">
+<h1>RStudio::Conf</h1>
+<div id="keynotes" class="section level2">
+<h2>Keynotes</h2>
+<p>The conference kicked off with JJ Alaire’s keynote about <a href="https://blog.rstudio.com/2020/01/29/rstudio-pbc">RStudio becoming a Public Benefit Corporation</a>, which was super exciting. He was followed by</p>
+<p>On day two, Jenny Bryan gave an awesome talk about debugging called “Object of Type Closure is Not Subsettable,” which got quite a laugh from the room full of R users. After taking her What They Forgot To Teach You About R workshop last year, which covered a lot of the same material, this was a great refresher. Her suggested steps for debugging are:</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Try the same thing again with no success. Definitely been there!<br />
+</li>
+<li>Restart R! (There’s even a keyboard shortcut! cmd+shft+0 on Mac)</li>
+<li>Make a reprex. Often creating a minimal reproducible example will help you pinpoint your problem. If not, it will help others pinpoint your problem. Make the reprex as simple as possible while still generating the error. Remove all packages and functions not necessary for the error.</li>
+<li>Use R’s build in debugging tools.
+<ul>
+<li><code>traceback()</code> shows the call stack that led to the error</li>
+<li><code>options(error=recover)</code> pauses execution at the error and opens debugger model to let you explore your environment at the time of the error and step through the funciton line by line</li>
+<li>Insert <code>browser()</code> into a function to pause execution and open debugger mode</li>
+<li><code>debug(function)</code> and <code>debugonce(function)</code> open the debugger mode every time you fun the function or the next time you run it. I typically use <code>debugonce()</code> but end up running it several times, so I should just learn to call <code>debug()</code> the first time…</li>
+</ul></li>
+<li>Run checks often if you’re building a package. R CMD check and the testthat package help with this.</li>
+</ol>
+</div>
+<div id="talks" class="section level2">
+<h2>Talks</h2>
+<p>Like last year, there was serious within conference FOMO, as there were three tracks of talks running at the same time and always multiple talks I wished I could go to. The FOMO was eased by knowing that all the talks would be posted to watch later.</p>
+<p>A few of the highlights for me:<br />
+- <a href="https://rstudio.com/resources/rstudioconf-2020/the-glamour-of-graphics/">Will Chase’s “The Glamour of Graphics”</a> on making better graphics.<br />
+- <a href="https://rstudio.com/resources/rstudioconf-2020/learning-r-with-humorous-side-projects/">Ryan Timpe’s “Learning R with humorous side projects”</a> highlighting some of the cool projects he’s done to learn different things in R.<br />
+- <a href="https://rstudio.com/resources/rstudioconf-2020/styling-shiny-apps-with-sass-and-bootstrap-4/">Joe Cheng’s “Styling Shiny apps with Sass and Bootstrap 4”</a> on an easier way to customize Shiny apps with CSS.<br />
+- <a href="https://rstudio.com/resources/rstudioconf-2020/don-t-repeat-yourself-talk-to-yourself-repeated-reporting-in-the-r-universe/">Sharla Gelfand’s “Don’t repeat yourself, talk to yourself! Repeated reporting in the R universe”</a> on an R package she wrote for performing repeated reporting tasks.</p>
+</div>
+</div>
+<div id="tidyverse-developers-day" class="section level1">
+<h1>Tidyverse Developers’ Day</h1>
+<p>Being able to attend Tidyverse Dev Day this year was a great opportunity to see how the Tidyverse packages come together. Ahead of time, the Tidyverse team had curated package issues that would be easy for beginners to close. Many of these had to do with fleshing out documentation for different function. These issues were on sticky notes on the wall. We all went and grabbed one and got to work. There were many mentors, including the Tidyverse team, who were available to help throughout the process. I worked on documentation for two functions, <code>dplyr::distinct()</code> and <code>tibble::rownames</code>. Writing the documentation for <code>distinct()</code> allowed me to learn about the new <code>dplyr</code> function, <code>across()</code>. Anytime anyone closed a pull request on an issue they were working on, they got to ring a gong, and everyone clapped for them.</p>
+<p>Working on these issues gave me a great opportunity to practice using a fork -&gt; clone -&gt; edit -&gt; PR workflow using the <code>usethis</code> package. This consisted of using <code>usethis::create_from_github()</code> to forks and clone the repository, set upstream remote, and set master branch, then using <code>usethis::pr_init()</code> to create a branch in my repo to work on. After making the edits that addressed the issue, I ran <code>document()</code> to update the documentation, and <code>check()</code> to make sure my edits hadn’t introduced any new problems. Finally, I committed my changes and used <code>usethis::pr_pull_upstream()</code> to pull any changes that had happened since I made my changes, <code>usethis::pr_push()</code> and to push my changes. Then someone from the team would review my PR and either suggest additional changes, or merge the PR.</p>
+{{% tweet "1223349350622998532" %}}
+</div>
