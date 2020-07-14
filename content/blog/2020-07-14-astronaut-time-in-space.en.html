@@ -1,0 +1,95 @@
+---
+title: Astronaut Time in Space
+author: Rebecca Janis
+date: '2020-07-14'
+slug: astronaut-time-in-space
+tags: 
+  - R
+  - visualizations
+  - code
+  - TidyTuesday
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+library(&quot;patchwork&quot;)
+theme_set(theme_minimal())
+
+tt_gh &lt;- tidytuesdayR::tt_load_gh(&quot;2020-07-14&quot;)
+astronauts &lt;- tidytuesdayR::tt_download_file(tt_gh, 1)</code></pre>
+<p>This week’s <a href="https://github.com/rfordatascience/tidytuesday">Tidy Tuesday</a> data set includes astronauts and their space voyages. Two of the variables included in the data are <code>total_hrs_sum</code> (total duration of all missions in hours) and <code>total_eva_hrs</code> (total duration of all extravehicular activities in hours). I decided to use use these variables to see which astronauts had spent the most time in space, as well as the most time on spacewalks and other activities outside their spacecraft. While there are far more male astronauts in the data set, I was interested to see if any women made it on to the list of astronauts who have spent the most time in space. I also broke it down by astronaut nationality.</p>
+<pre class="r"><code># Creating a data set with each astronaut&#39;s total time in space, sex, and nationality
+# Using slice to select only the top 10 astronauts
+# Converting hours in space to days in space
+# Adding html formatting to female astronauts&#39; names so I can use the ggtext package to make their axis labels a different color
+
+space_hours &lt;- group_by(astronauts, name) %&gt;%
+  summarize(sex = first(sex),
+            nationality = first(nationality),
+            total_hrs_sum = first(total_hrs_sum)) %&gt;% 
+  arrange(-total_hrs_sum) %&gt;%
+  slice(1:10) %&gt;%
+  mutate(total_days_sum = total_hrs_sum/24,
+         name = ifelse(sex == &quot;female&quot;,
+                               glue::glue(&quot;&lt;strong&gt;&lt;span style=&#39;color:mediumvioletred&#39;&gt;{name}&lt;/span&gt;&lt;/strong&gt;&quot;),
+                               as.character(name)),
+         name = fct_reorder(name, total_hrs_sum))
+
+# Using the same process to create a data set with each astronaut&#39;s total eva time
+eva_hours &lt;- group_by(astronauts, name) %&gt;%
+  summarize(sex = first(sex),
+            nationality = first(nationality),
+            total_eva_hrs = first(total_eva_hrs)) %&gt;% 
+  arrange(-total_eva_hrs) %&gt;%
+  slice(1:10) %&gt;%
+  mutate(eva_days_sum = total_eva_hrs/24,
+         name = ifelse(sex == &quot;female&quot;,
+                               glue::glue(&quot;&lt;strong&gt;&lt;span style=&#39;color:mediumvioletred&#39;&gt;{name}&lt;/span&gt;&lt;/strong&gt;&quot;),
+                               as.character(name)),
+         name = fct_reorder(name, total_eva_hrs))</code></pre>
+<pre class="r"><code># Creating a plot of the top 10 astronauts&#39; total time in space
+# ggtext::element_markdown renders the html that I added to the female astronauts&#39; names, making the text a different color
+(p1 &lt;- space_hours %&gt;%
+  ggplot(aes(x = total_days_sum, y = name, fill = nationality)) +
+  geom_col() +
+  labs(x = &quot;Total mission time (days)&quot;,
+       y = &quot;&quot;,
+       fill = &quot;&quot;) +
+  scale_fill_manual(values = c(&quot;blue3&quot;, &quot;red3&quot;)) +
+  theme(plot.title.position = &quot;plot&quot;,
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, color = &quot;gray25&quot;),
+        axis.text.y = ggtext::element_markdown(size = 16),
+        panel.grid = element_line(color = &quot;grey&quot;)))</code></pre>
+<p><img src="/blog/2020-07-14-astronaut-time-in-space.en_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Creating a plot of the top 10 astronauts&#39; total eva time
+# ggtext::element_markdown renders the html that I added to the female astronauts&#39; names, making the text a different color
+(p2 &lt;- eva_hours %&gt;% 
+  ggplot(aes(x = eva_days_sum, y = name, fill = nationality)) +
+  geom_col() +
+  labs(x = &quot;Total extravehicular activity time (days)&quot;,
+       y = &quot;&quot;,
+       fill = &quot;&quot;) +
+  scale_fill_manual(values = c(&quot;blue3&quot;, &quot;red3&quot;)) +
+  theme(plot.title.position = &quot;plot&quot;,
+        axis.title = element_text(size = 16),
+        axis.text = element_text(size = 14, color = &quot;gray25&quot;),
+        axis.text.y = ggtext::element_markdown(size = 16),
+        panel.grid = element_line(color = &quot;grey&quot;)))</code></pre>
+<p><img src="/blog/2020-07-14-astronaut-time-in-space.en_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>After making individual graphs of total time in space and eva time, I wanted to be able to compare them side by side, so I used the <code>patchwork</code> package to combine the plots into one.</p>
+<pre class="r"><code># Using html formatting and ggtext::element_markdown to make the font in the subtitle match the nationality colors in the plots
+# This makes it so I don&#39;t need to use a legend for just two categories
+
+p1 + p2 +
+  plot_layout(guides=&quot;collect&quot;) +
+  plot_annotation(title = &quot;Top 10 astronauts with the most mission time and extravehicular activity time&quot;,
+                  subtitle = &quot;&lt;span style=&#39;color:red3&#39;;&gt;U.S.S.R./Russian astronauts&lt;/span&gt; have more time in space, while &lt;span style=&#39;color:blue3&#39;;&gt;U.S. astronauts&lt;/span&gt; have more extravehicular hours.&lt;br&gt;
+                  Most of the astronauts in the top 10 are men, but a few &lt;strong&gt;&lt;span style=&#39;color:mediumvioletred&#39;&gt;women&lt;/span&gt;&lt;/strong&gt; made the list as well.&quot;,
+                  theme = theme(plot.title = element_text(size = 24, hjust = .5),
+                                plot.subtitle = ggtext::element_markdown(size = 16, hjust = .5),
+                                plot.background = element_rect(fill = &quot;gray95&quot;),
+                                legend.position = &quot;none&quot;))</code></pre>
+<p><img src="/blog/2020-07-14-astronaut-time-in-space.en_files/figure-html/unnamed-chunk-6-1.png" width="1344" /></p>
