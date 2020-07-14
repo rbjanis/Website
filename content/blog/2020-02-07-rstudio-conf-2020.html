@@ -12,7 +12,7 @@ tags:
 
 <p>This year was my second time attending RStudio Conference, with last year in Austin being the first.
 There were about 2,400 people in attendance this year, and it felt much bigger than last year, but still just as great. Since being more active on <a href="https://twitter.com/hashtag/rstats?src=hashtag_click">#rstats Twitter</a> this year, it was so fun to meet Twitter friends in person and meet new R friends. My introvert self was definitely exhausted by the end of the week, and I think RStudio Conf is my biggest expenditure of social energy all year. That said, even for an introvert like me, the R community and everyone at RStudio Conf were so open and friendly!</p>
-<p>Both years, I’ve attended a preconference <a href="#applied-machine-learning-workshop">workshop</a> and the <a href="#rstudioconf">main conference</a>. I’d have a hard time recommending to someone to just do one or the other, as I feel I got very different things out of each. The conference feels a bit like drinking out of an Rstats firehose. You jump from 20 minute talk to 20 minute talk, just getting a taste of cool new things you didn’t know you could do in R. I leave the conference with lots of notes of things to dig in to more after the conference is over. The workshops, on the other hand, are a deeper hands-on dive into a specific topin in R, and I left both workshops with lots of example code and immediately applicable new skills. The workshops are also a great chance to ask any questions of R experts. My takeaway, if you’re able to, definitely attend both!</p>
+<p>Both years, I’ve attended a preconference <a href="#applied-machine-learning-workshop">workshop</a> and the <a href="#rstudioconf">main conference</a>. I’d have a hard time recommending to someone to just do one or the other, as I feel I got very different things out of each. The conference feels a bit like drinking out of an Rstats firehose. You jump from 20 minute talk to 20 minute talk, just getting a taste of cool new things you didn’t know you could do in R. I leave the conference with lots of notes of things to dig in to more after the conference is over. The workshops, on the other hand, are a deeper hands-on dive into a specific topic in R, and I left both workshops with lots of example code and immediately applicable new skills. The workshops are also a great chance to ask any questions of R experts. My takeaway, if you’re able to, definitely attend both!</p>
 <p>Like last year, I collected many hex stickers, far more than can fit on my computer. I’m currently working on turning them into magnets I can display on a magnet board in my office, which I’m very excited about. It seemed like hex-mania was dialed up to 11 this year, and people went crazy every time stickers were dropped during breaks. The most elusive stickers were only available from the package maintainers themselves, which was a great excuse to talk to them about their cool packages.</p>
 <div id="applied-machine-learning-workshop" class="section level1">
 <h1>Applied Machine Learning workshop</h1>
@@ -27,7 +27,7 @@ There were about 2,400 people in attendance this year, and it felt much bigger t
 </ul>
 <p>This is by no means a comprehensive review of everything covered, but I wanted to highlight a few things I learned that stuck out to me. I hope to do a longer blog post about <code>tidymodels</code> in the future to help myself consolidate what I learned.</p>
 <ul>
-<li>One of the major benefits of <code>parsnip</code> is that it returns missing data out when there is missingness in the original data instaed of silently dropping observations with missing data. This is a huge help when you try to join predictions back to the original data because the lengths will be the same and they will join cleanly.</li>
+<li>One of the major benefits of <code>parsnip</code> is that it returns missing data out when there is missingness in the original data instated of silently dropping observations with missing data. This is a huge help when you try to join predictions back to the original data because the lengths will be the same and they will join cleanly.</li>
 <li>Variable prep should be done on the training data only, not the full data set. This includes things like standardizing predictors, creating dummy variables, etc. This is so you can evaluate these data prep steps as part of model evaluation.</li>
 </ul>
 </div>
@@ -35,7 +35,7 @@ There were about 2,400 people in attendance this year, and it felt much bigger t
 <h1>RStudio::Conf</h1>
 <div id="keynotes" class="section level2">
 <h2>Keynotes</h2>
-<p>The conference kicked off with JJ Alaire’s keynote about <a href="https://blog.rstudio.com/2020/01/29/rstudio-pbc">RStudio becoming a Public Benefit Corporation</a>, which was super exciting. He was followed by</p>
+<p>The conference kicked off with JJ Alaire’s keynote about <a href="https://blog.rstudio.com/2020/01/29/rstudio-pbc">RStudio becoming a Public Benefit Corporation</a>, which was super exciting.</p>
 <p>On day two, Jenny Bryan gave an awesome talk about debugging called “Object of Type Closure is Not Subsettable,” which got quite a laugh from the room full of R users. After taking her What They Forgot To Teach You About R workshop last year, which covered a lot of the same material, this was a great refresher. Her suggested steps for debugging are:</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Try the same thing again with no success. Definitely been there!<br />
@@ -45,11 +45,11 @@ There were about 2,400 people in attendance this year, and it felt much bigger t
 <li>Use R’s build in debugging tools.
 <ul>
 <li><code>traceback()</code> shows the call stack that led to the error</li>
-<li><code>options(error=recover)</code> pauses execution at the error and opens debugger model to let you explore your environment at the time of the error and step through the funciton line by line</li>
+<li><code>options(error=recover)</code> pauses execution at the error and opens debugger model to let you explore your environment at the time of the error and step through the function line by line</li>
 <li>Insert <code>browser()</code> into a function to pause execution and open debugger mode</li>
 <li><code>debug(function)</code> and <code>debugonce(function)</code> open the debugger mode every time you fun the function or the next time you run it. I typically use <code>debugonce()</code> but end up running it several times, so I should just learn to call <code>debug()</code> the first time…</li>
 </ul></li>
-<li>Run checks often if you’re building a package. R CMD check and the testthat package help with this.</li>
+<li>Run checks often if you’re building a package. R CMD check and the <code>testthat</code> package help with this.</li>
 </ol>
 </div>
 <div id="talks" class="section level2">
