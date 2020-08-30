@@ -7,7 +7,7 @@ menu: main
 weight: -230
 ---
 
-## EDUCATION
+## Education
 Ph.D. Psychology- Pennsylvania State University 2020
 
 M.S. Psychology- Pennsylvania State University 2017
@@ -50,7 +50,7 @@ Sole data analyst in charge of managing and analyzing multiyear database of long
 
 ---
 
-## SKILLS
+## Skills
 
 **Software and Programming Languages**: R, SQL, Git, SPSS, Tableau, SAS, Mplus, Stata  
 
@@ -58,7 +58,7 @@ Sole data analyst in charge of managing and analyzing multiyear database of long
 
 ---
 
-## AWARDS
+## Awards
 
 Marty Murphy Award for excellence - Penn State Psychology Department 2017
 
