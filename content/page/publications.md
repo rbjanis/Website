@@ -4,7 +4,18 @@ description:
 menu: main
 weight: -210
 ---
-Hayes, J.A., Petrovich, J.P., **Janis, R.A.**, Yang, Y., Castonguay, L.G., & Locke, B.D. (In press). Suicide among College Students in Psychotherapy: Individual Predictors and Latent Classes. *The Journal of Counseling Psychology.*  
+
+**Janis, R.A.**, Burlingame, G.M., Svien, H., Jensen, J., & Lundgreen, R. (In press). Group Therapy for Mood Disorders: A Meta-Analysis. *Psychotherapy Research*.  
+
+Carney, D. M., Castonguay, L. G., **Janis, R. A.**, Scofield, B. E., Hayes, J. A., & Locke, B. D. (In press). Center effects: Counseling center variables as predictors of psychotherapy outcomes. *The Counseling Psychologist*.  
+
+Kilcullen, J.R., Castonguay, L.G., **Janis, R.A.**, Hallquist, M.N., Hayes, J.A., & Locke, B.D. (In press). Predicting future courses of psychotherapy within a grouped LASSO framework. *Psychotherapy Research*.  
+
+Niileksela, C.R., Ghosh, A., & **Janis, R.A.** (In press). Dynamic Relationships among Changes in Anxiety and Depression during Counseling. *The Journal of Counseling Psychology*.  
+
+Ghosh, A., Nileksela, C., Parham, A., & **Janis, R.** (2020). Investigating Factorial Invariance of the Counseling Center Assessment of Psychological Symptoms – 34 (CCAPS-34) with Military and Non-Military Students. *Measurement and Evaluation in Counseling and Development*, 1-14.  
+
+Hayes, J.A., Petrovich, J.P., **Janis, R.A.**, Yang, Y., Castonguay, L.G., & Locke, B.D. (2020). Suicide among College Students in Psychotherapy: Individual Predictors and Latent Classes. *The Journal of Counseling Psychology, 67*(1), 104.    
 
 Lefevor, G. T., Boyd-Rogers, C. C., Sprague, B. M., & **Janis, R. A.** (2019). Health Disparities between Transgender, Genderqueer, and Cisgender Individuals: An Extension of Minority Stress Theory. *Journal of Counseling Psychology, 66*(4), 385-395.  
 
