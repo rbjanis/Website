@@ -16,46 +16,45 @@ B.S. Psychology- Brigham Young University 2014
 
 ---
 
-## EXPERIENCE
+## Experience
+#### Data Analyst 
+*[The Center for Collegiate Mental Health](https://ccmh.psu.edu) (2018-Present)*  
 
-**Data Analyst**: [The Center for Collegiate Mental Health](https://ccmh.psu.edu), August 2018 -- present
+Sole data analyst in charge of managing and analyzing multiyear database of longitudinal psychotherapy data from 1,000,000+ clients at 300+ college counseling centers. 
 
-- Maintained graduate research assistant responsibilities, while taking on ownership of data cleaning, standardization, management and analysis of large multiyear longitudinal psychotherapy data sets.  
-- Created an [R package](https://github.com/CCMH-PSU/CCMHr) to standardize R functions for internal use.  
-- Created [annual reports](https://ccmh.psu.edu/publications/) distilling quantitative data on college student mental health to primary stakeholders.  
-- Produced and prepared data for standardized reporting templates and online reporting platforms, allowing hundreds of counseling centers to view key metrics from their local data.
-- Created a [Shiny app](https://ccmh.shinyapps.io/CLI-app/) advocacy tool allowing hundreds of counseling centers to evaluate their staffing levels and advocate for more resources.  
-- Consulted with outside researchers to provide data and analyses to answer research questions. 
-- Conducted my own research on topics such as risk factors for suicide in college counseling centers.  
+**Programming**  
+•	Converted all legacy code from SPSS to R, making data processes more efficient and reproducible.  
+•	Created [R packages](https://github.com/CCMH-PSU/CCMHr) that standardize data management, analysis, and reporting, reducing time to clean data and produce routine reports from weeks to hours.  
+•	Built a [Shiny app](https://ccmh.shinyapps.io/CLI-app/) used by hundreds of counseling centers to better allocate mental health services and advocate for more resources.  
+ 
+**Modeling**  
+•	Built an algorithm and early warning system predicting client failure to improve during treatment – used daily by 7,000+ therapists.  
+•	Used mixed effects modeling and machine learning methods to predict clinical outcomes such as client recovery trajectories, risk of suicide attempts, and resource utilization.  
+ 
+**Reporting**  
+•	Generated and published industry-leading [annual reports](https://ccmh.psu.edu/reports-publications) presenting trends in college student mental health.  
+•	Produced standardized reporting templates and online reporting platforms, allowing hundreds of counseling centers to view key metrics from their local data in comparison to national benchmarks.  
 
-**Graduate Research Assistant**: The Center for Collegiate Mental Health, August 2014 -- August 2018  
+#### Graduate Research Assistant
+*Pennsylvania State University (2014-2018)*  
+•	Published 23 articles in peer reviewed academic journals.  
+•	Collaborated with interdisciplinary teams within and outside Penn State to produce psychology research.  
+•	Gave talks presenting research at international academic conferences.  
+•	Managed and mentored junior graduate students and undergraduate research assistants.  
 
-- Managed large databases of longitudinal psychotherapy data from 700,000+ clients and 200+ college counseling centers, including data merging and cleaning.
-- Converted data management, analysis and reporting system from SPSS to R, making data processes more efficient and reproducible.
-- Prepared data for an online reporting platform accessible to outside parties.
-- Consulted with outside researchers to provide data and analyses to answer research questions.
-- Conducted independent research, including building statistical models from psychotherapy data to generate clinically relevant prediction systems: Client recovery trajectories, client risk of suicide attempts, client resource utilization.  
-
-**Research Assistant**: Brigham Young University, August 2013 -- July 2014
-
-- Conducted analyses to confirm the factor structure of a group psychotherapy measure using multilevel structural equation modeling, allowing for its implementation in clinical settings.
-- Coded, managed, and analyzed data for two meta-analyses comparing individual to group psychotherapy.
-- Analyzed data for a trial of an inpatient wellness program, resulting in optimized treatment delivery.
-- Authored a methodological publication on performing multilevel confirmatory factor analysis.  
-
-**Data Analyst**: Counseling and Career Center, Brigham Young University, May 2012 -- July 2014
-
-- Managed a longitudinal database of psychotherapy outcome data from 3,000+ clients per year and integrated this data with other academic databases.
-- Conducted analyses with faculty to answer research questions that improved clinical practice.
-- Generated a predictive equation for psychotherapy treatment failure based on client data.  
+#### Research Assistant
+*Brigham Young University (2012-2014)*  
+•	Analyzed the factor structure of a group psychotherapy measure using multilevel structural equation modeling, allowing for its implementation in clinical settings.  
+•	Conducted two meta-analyses on group psychotherapy in collaboration with an international research team.  
+•	Authored a methodological publication on performing multilevel structural equation modeling.  
 
 ---
 
-## TECHNICAL SKILLS
+## SKILLS
 
-**Software and Programming Languages**: R (tidyverse, shiny, Rmarkdown), SPSS, Tableau, SAS, Mplus, Stata, SQL, Excel
+**Software and Programming Languages**: R, SQL, Git, SPSS, Tableau, SAS, Mplus, Stata  
 
-**Statistical Methods**: general linear modeling, mixed effects modeling, multivariate analyses, structural equation modeling, Bayesian estimation, meta-analysis, data mining, data visualization
+**Statistical Methods**: regressions, mixed effects modeling, structural equation modeling, data visualization, R Shiny application development, R package development 
 
 ---
 
