@@ -32,7 +32,7 @@ Sole data analyst in charge of managing and analyzing multiyear database of long
 •	Used mixed effects modeling and machine learning methods to predict clinical outcomes such as client recovery trajectories, risk of suicide attempts, and resource utilization.  
  
 **Reporting**  
-•	Generated and published industry-leading [annual reports](https://ccmh.psu.edu/reports-publications) presenting trends in college student mental health.  
+•	Generated and published industry-leading [annual reports](https://ccmh.psu.edu/annual-reports) presenting trends in college student mental health.  
 •	Produced standardized reporting templates and online reporting platforms, allowing hundreds of counseling centers to view key metrics from their local data in comparison to national benchmarks.  
 
 #### Graduate Research Assistant
