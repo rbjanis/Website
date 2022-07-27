@@ -6,9 +6,9 @@ menu:
 weight: -270
 ---
 
-I recently graduated with a PhD in psychology from Pennsylvania State University. I am now a data analyst for [The Center for Collegiate Mental Health (CCMH)](http://ccmh.psu.edu), a network of 600+ college counseling centers collecting standardized data on college students seeking mental health treatment. The [Annual Report](https://sites.psu.edu/ccmh/files/2019/09/2018-Annual-Report-9.27.19-FINAL.pdf) CCMH produces each year is a great introduction to what I do.  
+I am currently the associate director of data science at [The Center for Collegiate Mental Health (CCMH)](http://ccmh.psu.edu), a network of 700+ college counseling centers collecting standardized data on college students seeking mental health treatment. The [CCMH Annual Report](https://ccmh.psu.edu/assets/docs/2021-CCMH-Annual-Report.pdf), [CCMH Blog](https://ccmh.psu.edu/blog), and [CLI Shiny App](https://ccmh.shinyapps.io/CLI-app/) are great introductions to what I do with CCMH.  
 
-Much of my time is spent playing with data in R, both for work and for fun. I enjoy visualizations, tidy data, and knitting Rmarkdown documents. This blog is a way for me to consolidate and share things I learn in R.  On my [blog](blog/), you can check out some projects I've done. You can also find a list of my [publications](publications/) and my [resume](resume/). Enjoy!
+In my free time, I enjoy spending time with my family, playing board games, and traveling.  
 
 ![Rebecca and Derek at Acadia](/./_index_files/acadia2.png)  
 
