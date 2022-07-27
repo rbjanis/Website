@@ -18,8 +18,8 @@ B.S. Psychology- Brigham Young University 2014
 ---
 
 ## Experience
-#### Associate Director of Data Science
-*[The Center for Collegiate Mental Health](https://ccmh.psu.edu) (May 2022-present)*  
+#### Associate Director of Data Science (May 2022-present)
+*[The Center for Collegiate Mental Health](https://ccmh.psu.edu)*  
 
 Lead data analyst in charge of team managing and analyzing multiyear database of longitudinal psychotherapy data from 1,000,000+ clients at 300+ college counseling centers. 
 
@@ -29,24 +29,24 @@ Lead data analyst in charge of team managing and analyzing multiyear database of
 •	Produced standardized reports, allowing hundreds of counseling centers to view key metrics from their local data in comparison to national benchmarks.  
 
 
-#### Research Data Analyst
-*[The Center for Collegiate Mental Health](https://ccmh.psu.edu) (August 2018-April 2022)*  
+#### Research Data Analyst (August 2018-April 2022)
+*[The Center for Collegiate Mental Health](https://ccmh.psu.edu)*  
 • Sole data analyst in charge of managing and analyzing multiyear database of longitudinal psychotherapy data.  
 •	Converted all legacy code from SPSS to R, making data processes more efficient and reproducible.  
 •	Built an algorithm and early warning system predicting client failure to improve during treatment – used daily by 7,000+ therapists.  
 •	Used mixed effects modeling and machine learning methods to predict clinical outcomes such as client recovery trajectories, risk of suicide attempts, and resource utilization. 
 
 
-#### Graduate Research Assistant
-*Pennsylvania State University (2014-2018)*  
+#### Graduate Research Assistant (August 2014-August 2018)
+*Pennsylvania State University*  
 •	Published 23 articles in peer reviewed academic journals.  
 •	Collaborated with interdisciplinary teams within and outside Penn State to produce psychology research.  
 •	Gave talks presenting research at international academic conferences.  
 •	Managed and mentored junior graduate students and undergraduate research assistants.  
 
 
-#### Research Assistant
-*Brigham Young University (2012-2014)*  
+#### Research Assistant (January 2012-August 2014)
+*Brigham Young University*  
 •	Analyzed the factor structure of a group psychotherapy measure using multilevel structural equation modeling, allowing for its implementation in clinical settings.  
 •	Conducted two meta-analyses on group psychotherapy in collaboration with an international research team.  
 •	Authored a methodological publication on performing multilevel structural equation modeling.  
