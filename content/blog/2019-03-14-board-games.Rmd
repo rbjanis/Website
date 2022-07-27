@@ -82,7 +82,7 @@ board_games %>%
         plot.title=element_text(size=16,face="bold"))
 ```
 
-It does seem that more frequently rated games also have higher ratings, and all of my favorite games are also have a lot of ratings. 
+It does seem that more frequently rated games also have higher ratings, and all of my favorite games also have a lot of ratings. 
 
 # Game Characteristics
 **What do the other game attributes look like?** Specifically I was interested in a game's expansions and mechanics, which were each stored in a single column, with multiple expansions and mechanics separated by commas. I used `splitstackshape::concat.split` to create list columns inside the tibble with those values, then counted the number of items in the list for each game to get a count of expansions and mechanics. Minimum number of players also had a long tail, with values above 5 infrequent, so I lumped those into one category. 
