@@ -6,7 +6,7 @@ menu: main
 weight: -230
 ---
 
-[Download resume](/static/files/Rebecca-Janis-Resume.pdf)
+[Download resume](/files/Rebecca-Janis-Resume.pdf)
 
 ## Education
 Ph.D. Psychology- Pennsylvania State University 2020
